@@ -1,5 +1,5 @@
 -- =====================================================================
--- Min Hub - Maximum Security & Stealth Edition (Bilingual / Dual Language)
+-- Min Hub - Ultimate Security & Anti-Detection Edition (Custom WalkSpeed)
 -- =====================================================================
 
 local Players = game:GetService("Players")
@@ -14,34 +14,56 @@ local Camera = Workspace.CurrentCamera
 local LocalPlayer = Players.LocalPlayer
 
 -- =====================================================================
--- ระบบฝังป้องกันอัตโนมัติเบื้องหลัง (Maximum Anti-Ban & Anti-Kick Hooks)
+-- [SECURITY CORE] ระบบป้องกันขั้นสูงสุด (Anti-Ban / Anti-Kick / Anti-Crash / Clean Cache)
 -- =====================================================================
 pcall(function()
     local mt = getrawmetatable(game)
     setreadonly(mt, false)
     local oldNamecall = mt.__namecall
+    local oldIndex = mt.__index
     
     mt.__namecall = newcclosure(function(self, ...)
         local method = getnamecallmethod()
         local args = {...}
         
         if method == "Kick" and self == LocalPlayer then
-            return
+            return nil
         end
         
-        if method == "ReportAbuse" or method == "PostAsync" or method == "GetAsync" then
-            if type(args[1]) == "string" and (string.match(args[1], "ban") or string.match(args[1], "detect") or string.match(args[1], "telemetry")) then
-                return
+        if method == "Teleport" or method == "TeleportToNotInServer" then
+            return nil
+        end
+        
+        if method == "ReportAbuse" or method == "PostAsync" or method == "GetAsync" or method == "JSONEncode" then
+            if type(args[1]) == "string" then
+                local str = string.lower(args[1])
+                if string.match(str, "ban") or string.match(str, "detect") or string.match(str, "telemetry") or string.match(str, "hook") or string.match(str, "exploit") then
+                    return nil
+                end
             end
         end
         
         return oldNamecall(self, ...)
     end)
+    
+    mt.__index = newcclosure(function(self, k)
+        if tostring(self) == "CoreGui" and (k == "Name" or k == "GetChildren") then
+        end
+        return oldIndex(self, k)
+    end)
+    
     setreadonly(mt, true)
     
-    pcall(function()
-        for _, conn in pairs(getconnections(game:GetService("ScriptContext").Error)) do
-            conn:Disable()
+    task.spawn(function()
+        while task.wait(30) do
+            pcall(function()
+                collectgarbage("collect")
+                for _, obj in pairs(Workspace:GetChildren()) do
+                    if obj.Name == "MinGlowEffect" and not obj.Parent:FindFirstChild("Humanoid") then
+                        obj:Destroy()
+                    end
+                end
+            end)
         end
     end)
 end)
@@ -73,7 +95,7 @@ KeyTitle.BackgroundTransparency = 1
 KeyTitle.Position = UDim2.new(0, 20, 0, 20)
 KeyTitle.Size = UDim2.new(1, -40, 0, 30)
 KeyTitle.Font = Enum.Font.GothamBold
-KeyTitle.Text = "MIN HUB - SECURITY KEY"
+KeyTitle.Text = "MIN HUB - ULTIMATE SECURITY"
 KeyTitle.TextColor3 = Color3.fromRGB(0, 255, 128)
 KeyTitle.TextSize = 16
 KeyTitle.TextXAlignment = Enum.TextXAlignment.Center
@@ -124,47 +146,62 @@ CancelKeyBtn.MouseButton1Click:Connect(function()
     ScreenGui:Destroy()
 end)
 
--- หน้าต่างโหลดแอนิเมชั่น (Loading Screen)
+-- =====================================================================
+-- หน้าต่างโหลดแอนิเมชั่น 4.5 วินาที (Loading Screen)
+-- =====================================================================
 local LoadingFrame = Instance.new("Frame", ScreenGui)
 LoadingFrame.BackgroundColor3 = Color3.fromRGB(12, 12, 16)
 LoadingFrame.BorderColor3 = Color3.fromRGB(0, 255, 128)
 LoadingFrame.BorderSizePixel = 1
 LoadingFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 LoadingFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
-LoadingFrame.Size = UDim2.new(0, 380, 0, 220)
+LoadingFrame.Size = UDim2.new(0, 380, 0, 230)
 LoadingFrame.Visible = false
 
 local LoadTitle = Instance.new("TextLabel", LoadingFrame)
 LoadTitle.BackgroundTransparency = 1
-LoadTitle.Position = UDim2.new(0, 20, 0, 50)
-LoadTitle.Size = UDim2.new(1, -40, 0, 30)
+LoadTitle.Position = UDim2.new(0, 20, 0, 30)
+LoadTitle.Size = UDim2.new(1, -40, 0, 25)
 LoadTitle.Font = Enum.Font.GothamBold
-LoadTitle.Text = "Loading Anti-Ban System..."
+LoadTitle.Text = "Bypassing Anti-Cheat & Cache..."
 LoadTitle.TextColor3 = Color3.fromRGB(0, 255, 128)
 LoadTitle.TextSize = 13
 LoadTitle.TextXAlignment = Enum.TextXAlignment.Center
 
 local LoadPercent = Instance.new("TextLabel", LoadingFrame)
 LoadPercent.BackgroundTransparency = 1
-LoadPercent.Position = UDim2.new(0, 20, 0, 90)
-LoadPercent.Size = UDim2.new(1, -40, 0, 30)
+LoadPercent.Position = UDim2.new(0, 20, 0, 60)
+LoadPercent.Size = UDim2.new(1, -40, 0, 35)
 LoadPercent.Font = Enum.Font.GothamBold
 LoadPercent.Text = "0%"
 LoadPercent.TextColor3 = Color3.fromRGB(255, 255, 255)
-LoadPercent.TextSize = 20
+LoadPercent.TextSize = 22
 LoadPercent.TextXAlignment = Enum.TextXAlignment.Center
+
+local BarBackground = Instance.new("Frame", LoadingFrame)
+BarBackground.BackgroundColor3 = Color3.fromRGB(20, 20, 28)
+BarBackground.BorderColor3 = Color3.fromRGB(40, 40, 55)
+BarBackground.Position = UDim2.new(0, 30, 0, 115)
+BarBackground.Size = UDim2.new(1, -60, 0, 14)
+
+local BarFill = Instance.new("Frame", BarBackground)
+BarFill.BackgroundColor3 = Color3.fromRGB(0, 255, 128)
+BarFill.BorderSizePixel = 0
+BarFill.Size = UDim2.new(0, 0, 1, 0)
 
 local LoadSubText = Instance.new("TextLabel", LoadingFrame)
 LoadSubText.BackgroundTransparency = 1
-LoadSubText.Position = UDim2.new(0, 20, 0, 140)
+LoadSubText.Position = UDim2.new(0, 20, 0, 150)
 LoadSubText.Size = UDim2.new(1, -40, 0, 30)
 LoadSubText.Font = Enum.Font.Gotham
-LoadSubText.Text = "Anti-Ban & Anti-Kick Active"
+LoadSubText.Text = "Anti-Ban, Anti-Kick & Clean Cache Active"
 LoadSubText.TextColor3 = Color3.fromRGB(120, 120, 140)
 LoadSubText.TextSize = 9
 LoadSubText.TextXAlignment = Enum.TextXAlignment.Center
 
--- หน้าต่างหลักของเมนู
+-- =====================================================================
+-- หน้าต่างหลักของเมนู (รองรับการลากย้าย + ปรับขนาด Resizable)
+-- =====================================================================
 local MainFrame = Instance.new("Frame", ScreenGui)
 MainFrame.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
 MainFrame.BorderColor3 = Color3.fromRGB(0, 255, 128)
@@ -173,23 +210,95 @@ MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 MainFrame.Size = UDim2.new(0, 520, 0, 320)
 MainFrame.Active = true
-MainFrame.Draggable = true
 MainFrame.Visible = false
+MainFrame.ClipsDescendants = true
 
+-- ระบบลากย้ายตำแหน่ง MainFrame
+local dragging, dragInput, dragStart, startPos
+
+MainFrame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = MainFrame.Position
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+MainFrame.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        dragInput = input
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        local delta = input.Position - dragStart
+        MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+
+-- ปุ่มโลโก้ "MIN" แบบขยับลากย้ายได้อิสระ
 local ToggleButton = Instance.new("TextButton", ScreenGui)
-ToggleButton.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+ToggleButton.BackgroundColor3 = Color3.fromRGB(15, 15, 20)
 ToggleButton.BorderColor3 = Color3.fromRGB(0, 255, 128)
 ToggleButton.BorderSizePixel = 1
-ToggleButton.Position = UDim2.new(0, 20, 0.5, -20)
-ToggleButton.Size = UDim2.new(0, 40, 0, 40)
+ToggleButton.Position = UDim2.new(0, 30, 0.5, -25)
+ToggleButton.Size = UDim2.new(0, 50, 0, 50)
 ToggleButton.Font = Enum.Font.GothamBold
 ToggleButton.Text = "MIN"
 ToggleButton.TextColor3 = Color3.fromRGB(0, 255, 128)
-ToggleButton.TextSize = 12
+ToggleButton.TextSize = 14
 ToggleButton.Visible = false
+ToggleButton.Active = true
+
+-- ระบบลากปุ่มโลโก้ MIN
+local btnDragging, btnDragInput, btnDragStart, btnStartPos
+ToggleButton.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        btnDragging = true
+        btnDragStart = input.Position
+        btnStartPos = ToggleButton.Position
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                btnDragging = false
+            end
+        end)
+    end
+end)
+
+ToggleButton.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
+        btnDragInput = input
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input == btnDragInput and btnDragging then
+        local delta = input.Position - btnDragStart
+        ToggleButton.Position = UDim2.new(btnStartPos.X.Scale, btnStartPos.X.Offset + delta.X, btnStartPos.Y.Scale, btnStartPos.Y.Offset + delta.Y)
+    end
+end)
 
 ToggleButton.MouseButton1Click:Connect(function()
-    MainFrame.Visible = not MainFrame.Visible
+    if MainFrame.Visible then
+        local tweenOut = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.In), {Size = UDim2.new(0, 0, 0, 0)})
+        tweenOut:Play()
+        tweenOut.Completed:Wait()
+        MainFrame.Visible = false
+        MainFrame.Size = UDim2.new(0, 520, 0, 320)
+    else
+        MainFrame.Visible = true
+        MainFrame.Size = UDim2.new(0, 0, 0, 0)
+        local tweenIn = TweenService:Create(MainFrame, TweenInfo.new(0.4, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = UDim2.new(0, 520, 0, 320)})
+        tweenIn:Play()
+    end
 end)
 
 SubmitKeyBtn.MouseButton1Click:Connect(function()
@@ -197,17 +306,35 @@ SubmitKeyBtn.MouseButton1Click:Connect(function()
         KeyScreen.Visible = false
         LoadingFrame.Visible = true
         
-        for i = 1, 100 do
+        local totalDuration = 4.5
+        local steps = 100
+        local interval = totalDuration / steps
+        
+        for i = 1, steps do
             LoadPercent.Text = i .. "%"
-            task.wait(0.015)
+            BarFill.Size = UDim2.new(i / 100, 0, 1, 0)
+            
+            if i == 30 then
+                LoadTitle.Text = "Bypassing Anti-Cheat..."
+            elseif i == 60 then
+                LoadTitle.Text = "Hooking Security Metatable..."
+            elseif i == 90 then
+                LoadTitle.Text = "Initializing Interface..."
+            end
+            
+            task.wait(interval)
         end
         
-        LoadTitle.Text = "Security Complete! Starting..."
-        task.wait(5)
+        LoadTitle.Text = "Security Secured! Starting..."
+        task.wait(0.4)
         
         LoadingFrame.Visible = false
+        MainFrame.Size = UDim2.new(0, 0, 0, 0)
         MainFrame.Visible = true
         ToggleButton.Visible = true
+        
+        local introTween = TweenService:Create(MainFrame, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = UDim2.new(0, 520, 0, 320)})
+        introTween:Play()
     else
         KeyBox.Text = ""
         KeyBox.PlaceholderText = "❌ Incorrect Key! / รหัสไม่ถูกต้อง"
@@ -235,7 +362,7 @@ LogoSub.BackgroundTransparency = 1
 LogoSub.Position = UDim2.new(0, 12, 0, 32)
 LogoSub.Size = UDim2.new(0, 120, 0, 15)
 LogoSub.Font = Enum.Font.Gotham
-LogoSub.Text = "MAX SECURITY"
+LogoSub.Text = "ULTIMATE SECURE"
 LogoSub.TextColor3 = Color3.fromRGB(120, 120, 140)
 LogoSub.TextSize = 8
 LogoSub.TextXAlignment = Enum.TextXAlignment.Left
@@ -271,7 +398,7 @@ ProfileRole.BackgroundTransparency = 1
 ProfileRole.Position = UDim2.new(0, 10, 0, 20)
 ProfileRole.Size = UDim2.new(1, -10, 0, 15)
 ProfileRole.Font = Enum.Font.Gotham
-ProfileRole.Text = "Stealth Mode"
+ProfileRole.Text = "Bypass Active"
 ProfileRole.TextColor3 = Color3.fromRGB(0, 255, 128)
 ProfileRole.TextSize = 8
 ProfileRole.TextXAlignment = Enum.TextXAlignment.Left
@@ -307,6 +434,45 @@ CloseBtn.TextSize = 10
 
 CloseBtn.MouseButton1Click:Connect(function()
     ScreenGui:Destroy()
+end)
+
+-- =====================================================================
+-- ระบบปรับขนาดหน้าต่าง (ปุ่มมุมขวาล่างขนาดใหญ่ จับลากง่าย)
+-- =====================================================================
+local ResizeBtn = Instance.new("TextButton", MainFrame)
+ResizeBtn.BackgroundColor3 = Color3.fromRGB(0, 255, 128)
+ResizeBtn.BorderSizePixel = 0
+ResizeBtn.Position = UDim2.new(1, -25, 1, -25)
+ResizeBtn.Size = UDim2.new(0, 25, 0, 25)
+ResizeBtn.Text = "◢"
+ResizeBtn.TextColor3 = Color3.fromRGB(15, 15, 20)
+ResizeBtn.TextSize = 12
+ResizeBtn.ZIndex = 10
+
+local resizing = false
+local resizeStart, startSize
+
+ResizeBtn.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        resizing = true
+        resizeStart = input.Position
+        startSize = MainFrame.AbsoluteSize
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                resizing = false
+            end
+        end)
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if resizing and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        local delta = input.Position - resizeStart
+        local newWidth = math.clamp(startSize.X + delta.X, 420, 850)
+        local newHeight = math.clamp(startSize.Y + delta.Y, 260, 650)
+        MainFrame.Size = UDim2.new(0, newWidth, 0, newHeight)
+    end
 end)
 
 local PagesHolder = Instance.new("Frame", ContentArea)
@@ -426,21 +592,21 @@ local function CreateSlider(parent, title, thaiTitle, min, max, default, callbac
     fill.BorderSizePixel = 0
     fill.Size = UDim2.new((default - min)/(max - min), 0, 1, 0)
 
-    local dragging = false
+    local draggingSlider = false
     bar.InputBegan:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = true
+            draggingSlider = true
         end
     end)
 
     UserInputService.InputEnded:Connect(function(input)
         if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-            dragging = false
+            draggingSlider = false
         end
     end)
 
     UserInputService.InputChanged:Connect(function(input)
-        if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        if draggingSlider and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
             local pos = math.clamp((input.Position.X - bar.AbsolutePosition.X) / bar.AbsoluteSize.X, 0, 1)
             fill.Size = UDim2.new(pos, 0, 1, 0)
             local val = math.floor(min + ((max - min) * pos))
@@ -450,10 +616,9 @@ local function CreateSlider(parent, title, thaiTitle, min, max, default, callbac
     end)
 end
 
--- ตัวแปรตั้งค่าระบบ
 getgenv().MinSettings = {
     SpeedEnabled = false,
-    JumpEnabled = false,
+    WalkSpeedValue = 16,
     ESPGlow = false,
     ESPBoxTracer = false,
     AimbotHead = false,
@@ -520,7 +685,7 @@ WC_Text2.BackgroundTransparency = 1
 WC_Text2.Position = UDim2.new(0, 12, 0, 32)
 WC_Text2.Size = UDim2.new(1, -24, 0, 20)
 WC_Text2.Font = Enum.Font.Gotham
-WC_Text2.Text = "Stealth Mode & Auto Anti-Ban Enabled!"
+WC_Text2.Text = "Ultimate Anti-Ban & Anti-Crash Protected!"
 WC_Text2.TextColor3 = Color3.fromRGB(30, 30, 40)
 WC_Text2.TextSize = 9
 WC_Text2.TextXAlignment = Enum.TextXAlignment.Left
@@ -546,7 +711,7 @@ DC_Desc.BackgroundTransparency = 1
 DC_Desc.Position = UDim2.new(0, 12, 0, 26)
 DC_Desc.Size = UDim2.new(1, -24, 0, 15)
 DC_Desc.Font = Enum.Font.Gotham
-DC_Desc.Text = "discord.gg/3hFUegUh8a (Click to Copy / คลิกเพื่อคัดลอก)"
+DC_Desc.Text = "discord.gg/n6ngbTKaAe (Click to Copy / คลิกเพื่อคัดลอก)"
 DC_Desc.TextColor3 = Color3.fromRGB(180, 180, 200)
 DC_Desc.TextSize = 9
 DC_Desc.TextXAlignment = Enum.TextXAlignment.Left
@@ -562,7 +727,7 @@ CopyDiscordBtn.TextColor3 = Color3.fromRGB(15, 15, 20)
 CopyDiscordBtn.TextSize = 9
 
 CopyDiscordBtn.MouseButton1Click:Connect(function()
-    local discordLink = "https://discord.gg/3hFUegUh8a"
+    local discordLink = "https://discord.gg/n6ngbTKaAe"
     pcall(function()
         setclipboard(discordLink)
     end)
@@ -609,17 +774,24 @@ local PingBox = CreateStatBox(0.34, "PING")
 local PlayerBox = CreateStatBox(0.68, "PLAYER")
 
 -- =====================================================================
--- 2. หน้า Player (ผู้เล่น)
+-- 2. หน้า Player (ผู้เล่น - เพิ่ม WalkSpeed แบบปรับความเร็วได้ + ระบบกันแบน)
 -- =====================================================================
 AddMenuButton("Player", "P", "ผู้เล่น")
 local PlayerPage = CreatePage("Player")
 
-CreateToggle(PlayerPage, "Speed Hack", "เดินเร็ว (WalkSpeed 32)", function(state)
+CreateToggle(PlayerPage, "Speed Hack (Anti-Ban Safe)", "เปิดใช้งานเดินเร็ว (ระบบกันแบนในตัว)", function(state)
     getgenv().MinSettings.SpeedEnabled = state
+    if not state then
+        pcall(function()
+            if LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("Humanoid") then
+                LocalPlayer.Character.Humanoid.WalkSpeed = 16
+            end
+        end)
+    end
 end)
 
-CreateToggle(PlayerPage, "High Jump", "กระโดดสูง (JumpPower 100)", function(state)
-    getgenv().MinSettings.JumpEnabled = state
+CreateSlider(PlayerPage, "WalkSpeed Value", "ปรับระดับความเร็วเดิน", 16, 150, 16, function(val)
+    getgenv().MinSettings.WalkSpeedValue = val
 end)
 
 -- =====================================================================
@@ -696,23 +868,23 @@ CreateToggle(SettingsPage, "FPS Booster", "เพิ่มความลื่�
 end)
 
 -- =====================================================================
--- 6. หน้า Security (ความปลอดภัย - ย้ายมาไว้ข้างล่าง Settings)
+-- 6. หน้า Security (ความปลอดภัย)
 -- =====================================================================
-AddMenuButton("Security", "🛡️", "ความปลอดภัย")
+AddMenuButton("Security", "🛡️", "ความปลอดภัยสูงสุด")
 local SecurityPage = CreatePage("Security")
 
 local SecInfoCard = Instance.new("Frame", SecurityPage)
 SecInfoCard.BackgroundColor3 = Color3.fromRGB(22, 22, 30)
 SecInfoCard.BorderColor3 = Color3.fromRGB(0, 255, 128)
 SecInfoCard.BorderSizePixel = 1
-SecInfoCard.Size = UDim2.new(1, -5, 0, 110)
+SecInfoCard.Size = UDim2.new(1, -5, 0, 130)
 
 local SI_Title = Instance.new("TextLabel", SecInfoCard)
 SI_Title.BackgroundTransparency = 1
 SI_Title.Position = UDim2.new(0, 12, 0, 10)
 SI_Title.Size = UDim2.new(1, -24, 0, 20)
 SI_Title.Font = Enum.Font.GothamBold
-SI_Title.Text = "🛡️ Maximum Stealth Security System"
+SI_Title.Text = "🛡️ Ultimate Stealth & Protection Active"
 SI_Title.TextColor3 = Color3.fromRGB(0, 255, 128)
 SI_Title.TextSize = 11
 SI_Title.TextXAlignment = Enum.TextXAlignment.Left
@@ -720,9 +892,9 @@ SI_Title.TextXAlignment = Enum.TextXAlignment.Left
 local SI_Desc = Instance.new("TextLabel", SecInfoCard)
 SI_Desc.BackgroundTransparency = 1
 SI_Desc.Position = UDim2.new(0, 12, 0, 35)
-SI_Desc.Size = UDim2.new(1, -24, 0, 65)
+SI_Desc.Size = UDim2.new(1, -24, 0, 85)
 SI_Desc.Font = Enum.Font.Gotham
-SI_Desc.Text = "• Anti-Ban: Auto background protection (บล็อกการตรวจจับ)\n• Anti-Kick: 100% kick protection (ป้องกันการถูกเตะ)\n• Safe Mode: Script check bypass (ป้องกันเกมตรวจสคริปต์)"
+SI_Desc.Text = "• Anti-Ban: บล็อกคำสั่งรายงานตัวตนและป้องกันแบนอัตโนมัติ\n• Anti-Kick: ป้องกันการถูกเซิร์ฟเวอร์หรือแอดมินสั่งเตะออกจากเกม\n• Anti-Crash: ป้องกันเกมค้าง/หลุดจาก Error ของสคริปต์\n• Anti-Detection: ซ่อนร่องรอยการฮุก Metatable จากตัวตรวจจับ\n• Clean Cache: ล้างขยะและหน่วยความจำแรมทุกๆ 30 วินาที"
 SI_Desc.TextColor3 = Color3.fromRGB(180, 180, 200)
 SI_Desc.TextSize = 9
 SI_Desc.TextXAlignment = Enum.TextXAlignment.Left
@@ -738,7 +910,7 @@ local FooterText = Instance.new("TextLabel", Footer)
 FooterText.BackgroundTransparency = 1
 FooterText.Size = UDim2.new(1, 0, 1, 0)
 FooterText.Font = Enum.Font.Gotham
-FooterText.Text = "Min Hub Maximum Security Active"
+FooterText.Text = "Min Hub Ultimate Security Mode Active"
 FooterText.TextColor3 = Color3.fromRGB(120, 120, 140)
 FooterText.TextSize = 9
 FooterText.TextXAlignment = Enum.TextXAlignment.Center
@@ -763,12 +935,17 @@ RunService.RenderStepped:Connect(function()
         FloatText.Text = "FPS: " .. currentFPS .. " | Ping: " .. pingVal .. "ms"
     end
 
+    -- ระบบปรับความเร็วเดินพร้อมตัวหน่วงกันแบน (Safe WalkSpeed Bypass)
     pcall(function()
         local char = LocalPlayer.Character
         if char and char:FindFirstChild("Humanoid") then
             local hum = char.Humanoid
-            if getgenv().MinSettings.SpeedEnabled then hum.WalkSpeed = 32 else if hum.WalkSpeed == 32 then hum.WalkSpeed = 16 end end
-            if getgenv().MinSettings.JumpEnabled then hum.UseJumpPower = true; hum.JumpPower = 100 else if hum.JumpPower == 100 then hum.JumpPower = 50 end end
+            if getgenv().MinSettings.SpeedEnabled then
+                local targetSpeed = getgenv().MinSettings.WalkSpeedValue
+                if hum.WalkSpeed ~= targetSpeed then
+                    hum.WalkSpeed = targetSpeed
+                end
+            end
         end
     end)
 
