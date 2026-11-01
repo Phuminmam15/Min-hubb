@@ -1,5 +1,5 @@
 -- =====================================================================
--- Premium script by.Nongmin - Ultimate Hub v7.7 (Delta Mobile Fix)
+-- Premium script by.Nongmin - Ultimate Hub v7.5 (Dev & Admin Fix Version)
 -- =====================================================================
 
 local Players = game:GetService("Players")
@@ -14,8 +14,11 @@ local VirtualUser = game:GetService("VirtualUser")
 local Camera = Workspace.CurrentCamera
 local LocalPlayer = Players.LocalPlayer
 
+-- กำหนดรายชื่อ Owner/Dev และ Admin ที่นี่
 local Owners = {["Terx_83"] = true}
-local Admins = {["AdminFriend01"] = true}
+local Admins = {["AdminFriend01"] = true} -- สามารถเพิ่มชื่อเพื่อนที่เป็นแอดมินได้ตรงนี้
+
+-- ใส่ลิงก์ Discord Webhook ของคุณ
 local WEBHOOK_URL = "https://discord.com/api/webhooks/1566517565755363499/iuxqTJwHVaHVzBTxwJRbBYUkvDeL5sZIzRfdAt4mF004cyLRGyWz8W1-piHHL3cH-dnh"
 
 local function SendDiscordWebhook(title, description, colorCode)
@@ -26,7 +29,7 @@ local function SendDiscordWebhook(title, description, colorCode)
                 ["title"] = title,
                 ["description"] = description,
                 ["color"] = colorCode or 3447003,
-                ["footer"] = {["text"] = "Nongmin Ultimate Hub | Delta Fixed Version"}
+                ["footer"] = {["text"] = "Nongmin Ultimate Hub | Discord: https://discord.gg/FuC9cme7ht"}
             }}
         }
         local encodedData = HttpService:JSONEncode(data)
@@ -51,21 +54,30 @@ for _, v in pairs(CoreGui:GetChildren()) do
     end
 end
 
--- ป้องกันเมทาทเบิลพังใน Delta มือถือ
 pcall(function()
-    if getrawmetatable then
-        local mt = getrawmetatable(game)
-        setreadonly(mt, false)
-        local oldNamecall = mt.__namecall
-        mt.__namecall = newcclosure(function(self, ...)
-            local method = getnamecallmethod()
-            local args = {...}
-            if method == "Kick" and self == LocalPlayer then return nil end
-            if method == "Teleport" or method == "TeleportToNotInServer" then return nil end
-            return oldNamecall(self, ...)
-        end)
-        setreadonly(mt, true)
-    end
+    local mt = getrawmetatable(game)
+    setreadonly(mt, false)
+    local oldNamecall = mt.__namecall
+    
+    mt.__namecall = newcclosure(function(self, ...)
+        local method = getnamecallmethod()
+        local args = {...}
+        
+        if method == "Kick" and self == LocalPlayer then return nil end
+        if method == "Teleport" or method == "TeleportToNotInServer" then return nil end
+        
+        if method == "ReportAbuse" or method == "PostAsync" or method == "GetAsync" or method == "JSONEncode" then
+            if type(args[1]) == "string" then
+                local str = string.lower(args[1])
+                if string.match(str, "ban") or string.match(str, "detect") or string.match(str, "telemetry") or string.match(str, "exploit") then
+                    return nil
+                end
+            end
+        end
+        
+        return oldNamecall(self, ...)
+    end)
+    setreadonly(mt, true)
 end)
 
 local ScreenGui = Instance.new("ScreenGui")
@@ -76,19 +88,12 @@ ScreenGui.ResetOnSpawn = false
 local MinimalRGBStrokes = {}
 local RenderConnection = nil
 local ESPContainer = {}
-
--- ป้องกัน Drawing พังบนมือถือ
-local FOVCircle = nil
-pcall(function()
-    if Drawing then
-        FOVCircle = Drawing.new("Circle")
-        FOVCircle.Visible = false
-        FOVCircle.Thickness = 2.0
-        FOVCircle.NumSides = 64
-        FOVCircle.Filled = false
-        FOVCircle.Transparency = 0.9
-    end
-end)
+local FOVCircle = Drawing.new("Circle")
+FOVCircle.Visible = false
+FOVCircle.Thickness = 2.0
+FOVCircle.NumSides = 64
+FOVCircle.Filled = false
+FOVCircle.Transparency = 0.9
 
 local function AddRGBStroke(parent, thickness)
     local stroke = Instance.new("UIStroke")
@@ -314,6 +319,7 @@ BarFill.BorderSizePixel = 0
 BarFill.Size = UDim2.new(0, 0, 1, 0)
 Instance.new("UICorner", BarFill).CornerRadius = UDim.new(1, 0)
 
+-- Popup แจ้งเตือนสิทธิ์แอดมิน (กรณีสร้างคีย์ถาวรไม่ได้)
 local AlertPopup = Instance.new("Frame", ScreenGui)
 AlertPopup.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
 AlertPopup.BorderSizePixel = 0
@@ -397,6 +403,7 @@ SubmitKeyBtn.MouseButton1Click:Connect(function()
     local userKey = KeyBox.Text
     local keyData = KeyDatabase[userKey]
     
+    -- หากเป็น Owner หรือ Admin สามารถเข้าใช้ Hub ได้ทันทีโดยไม่ต้องใช้คีย์
     if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
         getgenv().CurrentKeyInfo = {Key = "DEVELOPER / ADMIN PASS", ExpiresAt = 0}
         KeyScreen.Visible = false
@@ -596,7 +603,7 @@ local function UnloadAllScript()
         if espData.NameTag then pcall(function() espData.NameTag:Remove() end) end
     end
     ESPContainer = {}
-    pcall(function() if FOVCircle then FOVCircle:Remove() end end)
+    pcall(function() FOVCircle:Remove() end)
     ScreenGui:Destroy()
 end
 
@@ -823,6 +830,7 @@ AddTabButton("🏠 Home", "หน้าหลัก")
 MenuButtons[1].Button.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
 MenuButtons[1].Button.TextColor3 = Color3.fromRGB(255, 255, 255)
 
+-- ระบบแสดงเวลาคีย์หมดอายุที่หน้า Home
 local KeyInfoCard = Instance.new("Frame", HomePage)
 KeyInfoCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
 KeyInfoCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
@@ -1078,7 +1086,7 @@ CreateToggle(AimbotPage, "🎯 Aimbot - Torso Lock", "ล็อคตัว", ge
 end)
 CreateToggle(AimbotPage, "🔮 Show FOV", "แสดงวง FOV", getgenv().UltimateStg.ShowFOV, function(state)
     getgenv().UltimateStg.ShowFOV = state
-    if FOVCircle then FOVCircle.Visible = state end
+    FOVCircle.Visible = state
     ShowNotification("Aimbot", "Show FOV: " .. tostring(state))
 end)
 CreateSlider(AimbotPage, "⚙️ FOV Size", "ขนาด FOV", 30, 500, getgenv().UltimateStg.FOVSize, function(val) getgenv().UltimateStg.FOVSize = val end)
@@ -1163,7 +1171,7 @@ SI_Desc.TextColor3 = Color3.fromRGB(160, 180, 210)
 SI_Desc.TextSize = 8
 SI_Desc.TextXAlignment = Enum.TextXAlignment.Left
 
--- 7. DEV & ADMIN PANEL
+-- 7. DEV & ADMIN PANEL (แผงควบคุมสำหรับ Dev และ Admin)
 if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
     local DevPage = CreatePage("🛠️ DEV / ADMIN", 460)
     AddTabButton("🛠️ DEV", "ระบบแอดมิน")
@@ -1180,7 +1188,7 @@ if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
     DC_Head.Position = UDim2.new(0, 10, 0, 8)
     DC_Head.Size = UDim2.new(1, -20, 0, 16)
     DC_Head.Font = Enum.Font.GothamBold
-    local roleText = Owners[LocalPlayer.Name] and "⭐ OWNER KEY GENERATOR PANEL" : "🛡️ ADMIN KEY GENERATOR PANEL"
+    local roleText = Owners[LocalPlayer.Name] and "⭐ OWNER KEY GENERATOR PANEL" or "🛡️ ADMIN KEY GENERATOR PANEL"
     DC_Head.Text = roleText
     DC_Head.TextColor3 = Color3.fromRGB(255, 200, 0)
     DC_Head.TextSize = 9
@@ -1224,6 +1232,7 @@ if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
         Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 4)
         
         btn.MouseButton1Click:Connect(function()
+            -- เช็คว่าถ้าเป็น Admin แล้วกดเลือก "ถาวร" (daysVal == 0) ให้เด้ง Popup เตือนทันที
             if daysVal == 0 and not Owners[LocalPlayer.Name] then
                 AlertPopup.Visible = true
                 return
@@ -1282,7 +1291,7 @@ end
 
 RenderConnection = RunService.RenderStepped:Connect(function(dt)
     if not getgenv().HubLoaded then
-        if FOVCircle then FOVCircle.Visible = false end
+        FOVCircle.Visible = false
         for _, espData in pairs(ESPContainer) do
             if espData.Box then espData.Box.Visible = false end
             if espData.Tracer then espData.Tracer.Visible = false end
@@ -1365,114 +1374,108 @@ RenderConnection = RunService.RenderStepped:Connect(function(dt)
         end
     end)
 
-    pcall(function()
-        for _, plr in pairs(Players:GetPlayers()) do
-            if plr ~= LocalPlayer then
-                if getgenv().UltimateStg.ESPBox or getgenv().UltimateStg.ESPTracer or getgenv().UltimateStg.ESPNameInfo then
-                    if not ESPContainer[plr] then
-                        local box, tracer, nameTag = nil, nil, nil
-                        pcall(function()
-                            if Drawing then
-                                box = Drawing.new("Square")
-                                box.Visible = false
-                                box.Color = Color3.fromRGB(0, 162, 255)
-                                box.Thickness = 1.5
-                                box.Filled = false
+    for _, plr in pairs(Players:GetPlayers()) do
+        if plr ~= LocalPlayer then
+            if getgenv().UltimateStg.ESPBox or getgenv().UltimateStg.ESPTracer or getgenv().UltimateStg.ESPNameInfo then
+                if not ESPContainer[plr] then
+                    local box = Drawing.new("Square")
+                    box.Visible = false
+                    box.Color = Color3.fromRGB(0, 162, 255)
+                    box.Thickness = 1.5
+                    box.Filled = false
 
-                                tracer = Drawing.new("Line")
-                                tracer.Visible = false
-                                tracer.Color = Color3.fromRGB(150, 100, 255)
-                                tracer.Thickness = 1
-                                tracer.Transparency = 0.7
+                    local tracer = Drawing.new("Line")
+                    tracer.Visible = false
+                    tracer.Color = Color3.fromRGB(150, 100, 255)
+                    tracer.Thickness = 1
+                    tracer.Transparency = 0.7
 
-                                nameTag = Drawing.new("Text")
-                                nameTag.Visible = false
-                                nameTag.Center = true
-                                nameTag.Outline = true
-                                nameTag.Color = Color3.fromRGB(255, 255, 255)
-                                nameTag.Size = 12
-                                nameTag.Font = 2
-                            end
-                        end)
-                        ESPContainer[plr] = {Box = box, Tracer = tracer, NameTag = nameTag}
-                    end
+                    local nameTag = Drawing.new("Text")
+                    nameTag.Visible = false
+                    nameTag.Center = true
+                    nameTag.Outline = true
+                    nameTag.Color = Color3.fromRGB(255, 255, 255)
+                    nameTag.Size = 12
+                    nameTag.Font = 2
 
-                    local char = plr.Character
-                    local myRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
-                    if char and char:FindFirstChild("HumanoidRootPart") and char:FindFirstChild("Humanoid") and char.Humanoid.Health > 0 and myRoot then
-                        local hrp = char.HumanoidRootPart
-                        local head = char:FindFirstChild("Head")
-                        local dist = (myRoot.Position - hrp.Position).Magnitude
+                    ESPContainer[plr] = {Box = box, Tracer = tracer, NameTag = nameTag}
+                end
 
-                        if head and dist <= getgenv().UltimateStg.ESPDistanceMax then
-                            local topPosition = head.Position + Vector3.new(0, 0.7, 0)
-                            local bottomPosition = hrp.Position - Vector3.new(0, 2.8, 0)
-                            local topPos, topOnScreen = Camera:WorldToViewportPoint(topPosition)
-                            local bottomPos, bottomOnScreen = Camera:WorldToViewportPoint(bottomPosition)
+                local char = plr.Character
+                local myRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                if char and char:FindFirstChild("HumanoidRootPart") and char:FindFirstChild("Humanoid") and char.Humanoid.Health > 0 and myRoot then
+                    local hrp = char.HumanoidRootPart
+                    local head = char:FindFirstChild("Head")
+                    local dist = (myRoot.Position - hrp.Position).Magnitude
 
-                            if topOnScreen or bottomOnScreen then
-                                local box = ESPContainer[plr].Box
-                                local tracer = ESPContainer[plr].Tracer
-                                local nameTag = ESPContainer[plr].NameTag
-                                local height = math.abs(bottomPos.Y - topPos.Y)
-                                local width = height / 2
+                    if head and dist <= getgenv().UltimateStg.ESPDistanceMax then
+                        local topPosition = head.Position + Vector3.new(0, 0.7, 0)
+                        local bottomPosition = hrp.Position - Vector3.new(0, 2.8, 0)
+                        local topPos, topOnScreen = Camera:WorldToViewportPoint(topPosition)
+                        local bottomPos, bottomOnScreen = Camera:WorldToViewportPoint(bottomPosition)
 
-                                if getgenv().UltimateStg.ESPBox and box then
-                                    box.Size = Vector2.new(width, height)
-                                    box.Position = Vector2.new(topPos.X - width / 2, topPos.Y)
-                                    box.Visible = true
-                                elseif box then
-                                    box.Visible = false
-                                end
+                        if topOnScreen or bottomOnScreen then
+                            local box = ESPContainer[plr].Box
+                            local tracer = ESPContainer[plr].Tracer
+                            local nameTag = ESPContainer[plr].NameTag
+                            local height = math.abs(bottomPos.Y - topPos.Y)
+                            local width = height / 2
 
-                                if getgenv().UltimateStg.ESPTracer and tracer then
-                                    tracer.From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y - 20)
-                                    tracer.To = Vector2.new(bottomPos.X, bottomPos.Y)
-                                    tracer.Visible = true
-                                elseif tracer then
-                                    tracer.Visible = false
-                                end
-
-                                if getgenv().UltimateStg.ESPNameInfo and nameTag then
-                                    local health = math.floor(char.Humanoid.Health)
-                                    nameTag.Text = "👤 " .. plr.Name .. " | 💖 " .. health .. " HP | 📍 " .. math.floor(dist) .. "m"
-                                    nameTag.Position = Vector2.new(topPos.X, topPos.Y - 20)
-                                    nameTag.Visible = true
-                                elseif nameTag then
-                                    nameTag.Visible = false
-                                end
+                            if getgenv().UltimateStg.ESPBox then
+                                box.Size = Vector2.new(width, height)
+                                box.Position = Vector2.new(topPos.X - width / 2, topPos.Y)
+                                box.Visible = true
                             else
-                                if ESPContainer[plr].Box then ESPContainer[plr].Box.Visible = false end
-                                if ESPContainer[plr].Tracer then ESPContainer[plr].Tracer.Visible = false end
-                                if ESPContainer[plr].NameTag then ESPContainer[plr].NameTag.Visible = false end
+                                box.Visible = false
+                            end
+
+                            if getgenv().UltimateStg.ESPTracer then
+                                tracer.From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y - 20)
+                                tracer.To = Vector2.new(bottomPos.X, bottomPos.Y)
+                                tracer.Visible = true
+                            else
+                                tracer.Visible = false
+                            end
+
+                            if getgenv().UltimateStg.ESPNameInfo then
+                                local health = math.floor(char.Humanoid.Health)
+                                nameTag.Text = "👤 " .. plr.Name .. " | 💖 " .. health .. " HP | 📍 " .. math.floor(dist) .. "m"
+                                nameTag.Position = Vector2.new(topPos.X, topPos.Y - 20)
+                                nameTag.Visible = true
+                            else
+                                nameTag.Visible = false
                             end
                         else
-                            if ESPContainer[plr] then
-                                if ESPContainer[plr].Box then ESPContainer[plr].Box.Visible = false end
-                                if ESPContainer[plr].Tracer then ESPContainer[plr].Tracer.Visible = false end
-                                if ESPContainer[plr].NameTag then ESPContainer[plr].NameTag.Visible = false end
-                            end
+                            ESPContainer[plr].Box.Visible = false
+                            ESPContainer[plr].Tracer.Visible = false
+                            ESPContainer[plr].NameTag.Visible = false
                         end
                     else
                         if ESPContainer[plr] then
-                            if ESPContainer[plr].Box then ESPContainer[plr].Box.Visible = false end
-                            if ESPContainer[plr].Tracer then ESPContainer[plr].Tracer.Visible = false end
-                            if ESPContainer[plr].NameTag then ESPContainer[plr].NameTag.Visible = false end
+                            ESPContainer[plr].Box.Visible = false
+                            ESPContainer[plr].Tracer.Visible = false
+                            ESPContainer[plr].NameTag.Visible = false
                         end
                     end
                 else
                     if ESPContainer[plr] then
-                        if ESPContainer[plr].Box then ESPContainer[plr].Box.Visible = false end
-                        if ESPContainer[plr].Tracer then ESPContainer[plr].Tracer.Visible = false end
-                        if ESPContainer[plr].NameTag then ESPContainer[plr].NameTag.Visible = false end
+                        ESPContainer[plr].Box.Visible = false
+                        ESPContainer[plr].Tracer.Visible = false
+                        ESPContainer[plr].NameTag.Visible = false
                     end
+                end
+            else
+                if ESPContainer[plr] then
+                    if ESPContainer[plr].Box then ESPContainer[plr].Box.Visible = false end
+                    if ESPContainer[plr].Tracer then ESPContainer[plr].Tracer.Visible = false end
+                    if ESPContainer[plr].NameTag then ESPContainer[plr].NameTag.Visible = false end
                 end
             end
         end
     end
 
     pcall(function()
-        if FOVCircle and getgenv().UltimateStg.ShowFOV then
+        if getgenv().UltimateStg.ShowFOV then
             FOVCircle.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
             FOVCircle.Radius = getgenv().UltimateStg.FOVSize
             local mode = getgenv().UltimateStg.FOVColorMode
@@ -1483,7 +1486,7 @@ RenderConnection = RunService.RenderStepped:Connect(function(dt)
                 FOVCircle.Color = FOVColorList[mode - 1]
             end
             FOVCircle.Visible = true
-        elseif FOVCircle then
+        else
             FOVCircle.Visible = false
         end
     end)
