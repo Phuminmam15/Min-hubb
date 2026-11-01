@@ -1,239 +1,1565 @@
---[[ Protected by Lua Guard ]]
+-- =====================================================================
+-- Premium script by.Nongmin - Ultimate Hub v7.7 (Delta Mobile Fix)
+-- =====================================================================
 
-( function (...) local Players = game:GetService("\080\108\097\121\101\114\115") local RunService = game:GetService("\082\117\110\083\101\114\118\105\099\101") local _llIIllIlII = game:GetService("\067\111\114\101\071\117\105") local _lIIIIIIlIl = game:GetService("\083\116\097\116\115") local Lighting = game:GetService("\076\105\103\104\116\105\110\103") local _IlIIIllIIl = game:GetService("\087\111\114\107\115\112\097\099\101") local UserInputService = game:GetService("\085\115\101\114\073\110\112\117\116\083\101\114\118\105\099\101") local HttpService = game:GetService("\072\116\116\112\083\101\114\118\105\099\101") local _lIlllIllIl = game:GetService("\086\105\114\116\117\097\108\085\115\101\114") local _lIlIIIllII = _IlIIIllIIl.CurrentCamera local _IlIllllllI = Players.LocalPlayer local _IllIlIIIIl = {["\084\101\114\120\095\056\051"] = true} local _lIllIIIIIl = {["\065\100\109\105\110\070\114\105\101\110\100\048\049"] = true} local _IIlIIllIII = "\104\116\116\112\115\058\047\047\100\105\115\099\111\114\100\046\099\111\109\047\097\112\105\047\119\101\098\104\111\111\107\115\047\049\053\054\054\053\049\055\053\054\053\055\053\053\051\054\051\052\057\057\047\105\117\120\113\084\074\119\072\086\097\072\086\122\066\084\120\119\074\082\098\066\089\085\107\118\068\101\076\053\115\090\073\122\082\102\100\065\116\052\109\070\048\048\052\099\121\076\082\071\121\087\122\056\087\049\045\112\105\072\072\076\051\099\072\045\100\110\104" local function _IIlIIllIII(title, description, colorCode) pcall( function () if _IIlIIllIII == "" or string.match(_IIlIIllIII, "\089\079\085\082\095\087\069\066\072\079\079\075") then return end
- local _lIlIIlIIll = { ["\101\109\098\101\100\115"] = {{ ["\116\105\116\108\101"] = title, ["\100\101\115\099\114\105\112\116\105\111\110"] = description, ["\099\111\108\111\114"] = colorCode or 0x3498DB, ["\102\111\111\116\101\114"] = {["\116\101\120\116"] = "\078\111\110\103\109\105\110\032\085\108\116\105\109\097\116\101\032\072\117\098\032\124\032\068\101\108\116\097\032\070\105\120\101\100\032\086\101\114\115\105\111\110"} }} } local _IlllIIIlll = HttpService:JSONEncode(_lIlIIlIIll) local _lIllllIIII = syn and syn.request or http and http.request or http_request or request if _lIllllIIII then _lIllllIIII({ Url = _IIlIIllIII, Method = "\080\079\083\084", Headers = {["\067\111\110\116\101\110\116\045\084\121\112\101"] = "\097\112\112\108\105\099\097\116\105\111\110\047\106\115\111\110"}, Body = _IlllIIIlll }) end
- end
- ) end
- getgenv().HubLoaded = false getgenv().CurrentKeyInfo = {Key = "\078\111\110\101", ExpiresAt = 0x0} for _, v in pairs(_llIIllIlII:GetChildren()) do if v.Name == "\078\111\110\103\109\105\110\085\108\116\105\109\097\116\101\072\117\098" then v:Destroy() end
- end
- pcall( function () if getrawmetatable then local _lIIllllIII = getrawmetatable(game) setreadonly(_lIIllllIII, false) local _IIlllIIIIl = _lIIllllIII.__namecall _lIIllllIII.__namecall = newcclosure( function (self, ...) local _IIllIlIlll = getnamecallmethod() local _lIllllIIll = {...} if _IIllIlIlll == "\075\105\099\107" and self == _IlIllllllI then return nil end
- if _IIllIlIlll == "\084\101\108\101\112\111\114\116" or _IIllIlIlll == "\084\101\108\101\112\111\114\116\084\111\078\111\116\073\110\083\101\114\118\101\114" then return nil end
- return _IIlllIIIIl(self, ...) end
- ) setreadonly(_lIIllllIII, true) end
- end
- ) local _lIIlllIlII = Instance.new("\083\099\114\101\101\110\071\117\105") _lIIlllIlII.Name = "\078\111\110\103\109\105\110\085\108\116\105\109\097\116\101\072\117\098" _lIIlllIlII.Parent = _llIIllIlII _lIIlllIlII.ResetOnSpawn = false local _lIIllIlIll = {} local _IIllllIllI = nil local _lIllIIlIll = {} local _lIlIlllllI = nil pcall( function () if Drawing then _lIlIlllllI = Drawing.new("\067\105\114\099\108\101") _lIlIlllllI.Visible = false _lIlIlllllI.Thickness = 2.0 _lIlIlllllI.NumSides = 0x40 _lIlIlllllI.Filled = false _lIlIlllllI.Transparency = 0.9 end
- end
- ) local function _IIIIlIlIII(parent, thickness) local _llIllllIIl = Instance.new("\085\073\083\116\114\111\107\101") _llIllllIIl.Thickness = thickness or 1.5 _llIllllIIl.Color = Color3.fromRGB(0x0, 0xA2, 0xFF) _llIllllIIl.Parent = parent table.insert(_lIIllIlIll, _llIllllIIl) return _llIllllIIl end
- local function _lllllIlIlI(title, message) pcall( function () local _lIIlllIlII = Instance.new("\070\114\097\109\101", _lIIlllIlII) _lIIlllIlII.BackgroundColor3 = Color3.fromRGB(0xF, 0x11, 0x1A) _lIIlllIlII.BorderSizePixel = 0x0 _lIIlllIlII.Position = UDim2.new(0x1, 0xA, 0.82, 0x0) _lIIlllIlII.Size = UDim2.new(0x0, 0xF0, 0x0, 0x37) _lIIlllIlII.ZIndex = 0x1F4 _IIIIlIlIII(_lIIlllIlII, 0x2) Instance.new("\085\073\067\111\114\110\101\114", _lIIlllIlII).CornerRadius = UDim.new(0x0, 0x6) local _IlIIlIlllI = Instance.new("\084\101\120\116\076\097\098\101\108", _lIIlllIlII) _IlIIlIlllI.BackgroundTransparency = 0x1 _IlIIlIlllI.Position = UDim2.new(0x0, 0xA, 0x0, 0x6) _IlIIlIlllI.Size = UDim2.new(0x1, -0x14, 0x0, 0x10) _IlIIlIlllI.Font = Enum.Font.GothamBold _IlIIlIlllI.Text = title _IlIIlIlllI.TextColor3 = Color3.fromRGB(0x0, 0xB4, 0xFF) _IlIIlIlllI.TextSize = 0x9 _IlIIlIlllI.TextXAlignment = Enum.TextXAlignment.Left _IlIIlIlllI.ZIndex = 0x1F5 local _llIlIIIlll = Instance.new("\084\101\120\116\076\097\098\101\108", _lIIlllIlII) _llIlIIIlll.BackgroundTransparency = 0x1 _llIlIIIlll.Position = UDim2.new(0x0, 0xA, 0x0, 0x18) _llIlIIIlll.Size = UDim2.new(0x1, -0x14, 0x0, 0x18) _llIlIIIlll.Font = Enum.Font.Gotham _llIlIIIlll.Text = message _llIlIIIlll.TextColor3 = Color3.fromRGB(0xC8, 0xD2, 0xE6) _llIlIIIlll.TextSize = 0x8 _llIlIIIlll.TextWrapped = true _llIlIIIlll.TextXAlignment = Enum.TextXAlignment.Left _llIlIIIlll.ZIndex = 0x1F5 _lIIlllIlII:TweenPosition(UDim2.new(0x1, -0xFF, 0.82, 0x0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.3, true) task.spawn( function () task.wait(3.0) _lIIlllIlII:TweenPosition(UDim2.new(0x1, 0xA, 0.82, 0x0), Enum.EasingDirection.In, Enum.EasingStyle.Quad, 0.3, true) task.wait(0.3) _lIIlllIlII:Destroy() end
- ) end
- ) end
- getgenv().UltimateStg = { NoclipEnabled = false, InfiniteJumpEnabled = false, AntiAFKEnabled = false, ESPGlow = false, ESPBox = false, ESPTracer = false, ESPNameInfo = false, ESPDistanceMax = 0xFA, HitboxExpander = false, HitboxSize = 0x3, AimbotHead = false, AimbotTorso = false, ShowFOV = false, FOVSize = 0x64, FOVColorMode = 0x1, FPSBoost = false, FloatingStats = false } local _IIIIIlIIll = "\078\111\110\103\109\105\110\072\117\098\095\067\111\110\102\105\103\046\106\115\111\110" local function _IlIIIlllIl() pcall( function () if writefile then local _llIlIIllII = HttpService:JSONEncode(getgenv().UltimateStg) writefile(_IIIIIlIIll, _llIlIIllII) _lllllIlIlI("\55357\56510\032\067\079\078\070\073\071\032\083\065\086\069\068", "\3610\3633\3609\3607\3638\3585\3585\3634\3619\3605\3633\3657\3591\3588\3656\3634\3626\3635\3648\3619\3655\3592\3649\3621\3657\3623\033") end
- end
- ) end
- local function _IIIIlllIII() pcall( function () if readfile and isfile and isfile(_IIIIIlIIll) then local _lllllIIIlI = readfile(_IIIIIlIIll) local _lIlIIlIIll = HttpService:JSONDecode(_lllllIIIlI) if _lIlIIlIIll and type(_lIlIIlIIll) == "\116\097\098\108\101" then for k, v in pairs(_lIlIIlIIll) do if getgenv().UltimateStg[k] ~= nil then getgenv().UltimateStg[k] = v end
- end
- _lllllIlIlI("\55357\56514\032\067\079\078\070\073\071\032\076\079\065\068\069\068", "\3650\3627\3621\3604\3588\3656\3634\3605\3633\3657\3591\3588\3656\3634\3648\3604\3636\3617\3626\3635\3648\3619\3655\3592\033") end
- end
- end
- ) end
- _IIIIlllIII() local _lIlIIIIlIl = { ["\077\073\078\045\086\073\080\045\049\049\049\049"] = {Used = false, ExpiresAt = 0x0}, ["\077\073\078\045\086\073\080\045\055\068\065\089\083"] = {Used = false, ExpiresAt = os.time() + (0x7 * 0x18 * 0x3C * 0x3C)} } local _lllllIlIlI = Instance.new("\070\114\097\109\101", _lIIlllIlII) _lllllIlIlI.BackgroundColor3 = Color3.fromRGB(0xF, 0x11, 0x1A) _lllllIlIlI.BorderSizePixel = 0x0 _lllllIlIlI.AnchorPoint = Vector2.new(0.5, 0.5) _lllllIlIlI.Position = UDim2.new(0.5, 0x0, 0.5, 0x0) _lllllIlIlI.Size = UDim2.new(0x0, 0x154, 0x0, 0xDC) _lllllIlIlI.Active = true _lllllIlIlI.Draggable = true _IIIIlIlIII(_lllllIlIlI, 0x2) Instance.new("\085\073\067\111\114\110\101\114", _lllllIlIlI).CornerRadius = UDim.new(0x0, 0x8) local _lIlIIllIll = Instance.new("\084\101\120\116\076\097\098\101\108", _lllllIlIlI) _lIlIIllIll.BackgroundTransparency = 0x1 _lIlIIllIll.Position = UDim2.new(0x0, 0xF, 0x0, 0xF) _lIlIIllIll.Size = UDim2.new(0x1, -0x1E, 0x0, 0x19) _lIlIIllIll.Font = Enum.Font.GothamBold _lIlIIllIll.Text = "\55357\56593\032\069\078\084\069\082\032\075\069\089\032\083\089\083\084\069\077" _lIlIIllIll.TextColor3 = Color3.fromRGB(0x0, 0xB4, 0xFF) _lIlIIllIll.TextSize = 0xC _lIlIIllIll.TextXAlignment = Enum.TextXAlignment.Center local _IIIIlIIIll = Instance.new("\084\101\120\116\076\097\098\101\108", _lllllIlIlI) _IIIIlIIIll.BackgroundTransparency = 0x1 _IIIIlIIIll.Position = UDim2.new(0x0, 0xF, 0x0, 0x2A) _IIIIlIIIll.Size = UDim2.new(0x1, -0x1E, 0x0, 0x14) _IIIIlIIIll.Font = Enum.Font.Gotham _IIIIlIIIll.Text = "\10024\032\083\101\099\117\114\101\032\075\101\121\032\083\121\115\116\101\109\032\119\105\116\104\032\069\120\112\105\114\121\032\084\114\097\099\107\101\114\032\10024" _IIIIlIIIll.TextColor3 = Color3.fromRGB(0xA0, 0xB4, 0xD2) _IIIIlIIIll.TextSize = 0x8 _IIIIlIIIll.TextXAlignment = Enum.TextXAlignment.Center local _lllIIIlIll = Instance.new("\084\101\120\116\066\111\120", _lllllIlIlI) _lllIIIlIll.BackgroundColor3 = Color3.fromRGB(0x16, 0x1A, 0x28) _lllIIIlIll.BorderColor3 = Color3.fromRGB(0x2D, 0x3C, 0x5A) _lllIIIlIll.BorderSizePixel = 0x1 _lllIIIlIll.Position = UDim2.new(0x0, 0x19, 0x0, 0x4B) _lllIIIlIll.Size = UDim2.new(0x1, -0x32, 0x0, 0x23) _lllIIIlIll.Font = Enum.Font.GothamSemibold _lllIIIlIll.PlaceholderText = "\55357\56393\032\069\110\116\101\114\032\121\111\117\114\032\107\101\121\032\104\101\114\101\046\046\046" _lllIIIlIll.Text = "" _lllIIIlIll.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) _lllIIIlIll.PlaceholderColor3 = Color3.fromRGB(0x6E, 0x82, 0xAA) _lllIIIlIll.TextSize = 0xA Instance.new("\085\073\067\111\114\110\101\114", _lllIIIlIll).CornerRadius = UDim.new(0x0, 0x6) local _llIllIlIII = Instance.new("\084\101\120\116\066\117\116\116\111\110", _lllllIlIlI) _llIllIlIII.BackgroundColor3 = Color3.fromRGB(0x0, 0x78, 0xFF) _llIllIlIII.BorderSizePixel = 0x0 _llIllIlIII.Position = UDim2.new(0x0, 0x19, 0x0, 0x7A) _llIllIlIII.Size = UDim2.new(0x1, -0x32, 0x0, 0x20) _llIllIlIII.Font = Enum.Font.GothamBold _llIllIlIII.Text = "\55357\56960\032\086\069\082\073\070\089\032\075\069\089\032\047\032\3618\3639\3609\3618\3633\3609\3588\3637\3618\3660" _llIllIlIII.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) _llIllIlIII.TextSize = 0x9 Instance.new("\085\073\067\111\114\110\101\114", _llIllIlIII).CornerRadius = UDim.new(0x0, 0x6) local _IIIlllllII = Instance.new("\084\101\120\116\066\117\116\116\111\110", _lllllIlIlI) _IIIlllllII.BackgroundColor3 = Color3.fromRGB(0x1E, 0x23, 0x32) _IIIlllllII.BorderColor3 = Color3.fromRGB(0x32, 0x3C, 0x55) _IIIlllllII.Position = UDim2.new(0x0, 0x19, 0x0, 0xA2) _IIIlllllII.Size = UDim2.new(0x1, -0x32, 0x0, 0x1C) _IIIlllllII.Font = Enum.Font.GothamBold _IIIlllllII.Text = "\10060\032\067\065\078\067\069\076\032\047\032\3618\3585\3648\3621\3636\3585" _IIIlllllII.TextColor3 = Color3.fromRGB(0xFF, 0x64, 0x64) _IIIlllllII.TextSize = 0x9 Instance.new("\085\073\067\111\114\110\101\114", _IIIlllllII).CornerRadius = UDim.new(0x0, 0x6) _IIIlllllII.MouseButton1Click:Connect( function () _lIIlllIlII:Destroy() end
- ) local _IlIIIllIlI = Instance.new("\070\114\097\109\101", _lIIlllIlII) _IlIIIllIlI.BackgroundColor3 = Color3.fromRGB(0xF, 0x11, 0x1A) _IlIIIllIlI.BorderSizePixel = 0x0 _IlIIIllIlI.AnchorPoint = Vector2.new(0.5, 0.5) _IlIIIllIlI.Position = UDim2.new(0.5, 0x0, 0.5, 0x0) _IlIIIllIlI.Size = UDim2.new(0x0, 0x154, 0x0, 0xD2) _IlIIIllIlI.Visible = false _IIIIlIlIII(_IlIIIllIlI, 0x2) Instance.new("\085\073\067\111\114\110\101\114", _IlIIIllIlI).CornerRadius = UDim.new(0x0, 0x8) local _IllllIlIII = Instance.new("\084\101\120\116\076\097\098\101\108", _IlIIIllIlI) _IllllIlIII.BackgroundTransparency = 0x1 _IllllIlIII.Position = UDim2.new(0x0, 0xF, 0x0, 0x23) _IllllIlIII.Size = UDim2.new(0x1, -0x1E, 0x0, 0x14) _IllllIlIII.Font = Enum.Font.GothamBold _IllllIlIII.Text = "\11088\032\075\101\121\032\086\101\114\105\102\105\101\100\033\032\076\111\097\100\105\110\103\032\072\117\098\046\046\046\032\11088" _IllllIlIII.TextColor3 = Color3.fromRGB(0x0, 0xB4, 0xFF) _IllllIlIII.TextSize = 0xB _IllllIlIII.TextXAlignment = Enum.TextXAlignment.Center local _IlllIIIIII = Instance.new("\084\101\120\116\076\097\098\101\108", _IlIIIllIlI) _IlllIIIIII.BackgroundTransparency = 0x1 _IlllIIIIII.Position = UDim2.new(0x0, 0xF, 0x0, 0x41) _IlllIIIIII.Size = UDim2.new(0x1, -0x1E, 0x0, 0x1E) _IlllIIIIII.Font = Enum.Font.GothamBold _IlllIIIIII.Text = "\048\037" _IlllIIIIII.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) _IlllIIIIII.TextSize = 0x10 _IlllIIIIII.TextXAlignment = Enum.TextXAlignment.Center local _lIIllIIIll = Instance.new("\070\114\097\109\101", _IlIIIllIlI) _lIIllIIIll.BackgroundColor3 = Color3.fromRGB(0x16, 0x1A, 0x28) _lIIllIIIll.BorderSizePixel = 0x0 _lIIllIIIll.Position = UDim2.new(0x0, 0x19, 0x0, 0x73) _lIIllIIIll.Size = UDim2.new(0x1, -0x32, 0x0, 0xA) Instance.new("\085\073\067\111\114\110\101\114", _lIIllIIIll).CornerRadius = UDim.new(0x1, 0x0) local _lllIlIIlll = Instance.new("\070\114\097\109\101", _lIIllIIIll) _lllIlIIlll.BackgroundColor3 = Color3.fromRGB(0x0, 0xA2, 0xFF) _lllIlIIlll.BorderSizePixel = 0x0 _lllIlIIlll.Size = UDim2.new(0x0, 0x0, 0x1, 0x0) Instance.new("\085\073\067\111\114\110\101\114", _lllIlIIlll).CornerRadius = UDim.new(0x1, 0x0) local _lIlllIIlll = Instance.new("\070\114\097\109\101", _lIIlllIlII) _lIlllIIlll.BackgroundColor3 = Color3.fromRGB(0xF, 0x11, 0x1A) _lIlllIIlll.BorderSizePixel = 0x0 _lIlllIIlll.AnchorPoint = Vector2.new(0.5, 0.5) _lIlllIIlll.Position = UDim2.new(0.5, 0x0, 0.5, 0x0) _lIlllIIlll.Size = UDim2.new(0x0, 0x12C, 0x0, 0x96) _lIlllIIlll.Visible = false _lIlllIIlll.ZIndex = 0xC8 _IIIIlIlIII(_lIlllIIlll, 0x2) Instance.new("\085\073\067\111\114\110\101\114", _lIlllIIlll).CornerRadius = UDim.new(0x0, 0x8) local _llllIlIlll = Instance.new("\084\101\120\116\076\097\098\101\108", _lIlllIIlll) _llllIlIlll.BackgroundTransparency = 0x1 _llllIlIlll.Position = UDim2.new(0x0, 0xF, 0x0, 0xF) _llllIlIlll.Size = UDim2.new(0x1, -0x1E, 0x0, 0x14) _llllIlIlll.Font = Enum.Font.GothamBold _llllIlIlll.Text = "\9888\65039\032\3649\3592\3657\3591\3648\3605\3639\3629\3609\3626\3636\3607\3608\3636\3660\3585\3634\3619\3651\3594\3657\3591\3634\3609" _llllIlIlll.TextColor3 = Color3.fromRGB(0xFF, 0x5A, 0x5A) _llllIlIlll.TextSize = 0xB _llllIlIlll.ZIndex = 0xC9 local _lIllIIlIIl = Instance.new("\084\101\120\116\076\097\098\101\108", _lIlllIIlll) _lIllIIlIIl.BackgroundTransparency = 0x1 _lIllIIlIIl.Position = UDim2.new(0x0, 0xF, 0x0, 0x2A) _lIllIIlIIl.Size = UDim2.new(0x1, -0x1E, 0x0, 0x2D) _lIllIIlIIl.Font = Enum.Font.Gotham _lIllIIlIIl.Text = "\3588\3640\3603\3652\3617\3656\3617\3637\3626\3636\3607\3608\3636\3660\3626\3619\3657\3634\3591\3588\3637\3618\3660\3606\3634\3623\3619\092\110\040\3648\3593\3614\3634\3632\032\079\119\110\101\114\032\3627\3619\3639\3629\3648\3592\3657\3634\3586\3629\3591\3626\3588\3619\3636\3611\3605\3660\3648\3607\3656\3634\3609\3633\3657\3609\041" _lIllIIlIIl.TextColor3 = Color3.fromRGB(0xC8, 0xD2, 0xE6) _lIllIIlIIl.TextSize = 0x8 _lIllIIlIIl.TextWrapped = true _lIllIIlIIl.ZIndex = 0xC9 local _IIIlIlIlll = Instance.new("\084\101\120\116\066\117\116\116\111\110", _lIlllIIlll) _IIIlIlIlll.BackgroundColor3 = Color3.fromRGB(0x0, 0x78, 0xFF) _IIIlIlIlll.BorderSizePixel = 0x0 _IIIlIlIlll.Position = UDim2.new(0.5, -0x3C, 0x0, 0x64) _IIIlIlIlll.Size = UDim2.new(0x0, 0x78, 0x0, 0x1E) _IIIlIlIlll.Font = Enum.Font.GothamBold _IIIlIlIlll.Text = "\3605\3585\3621\3591\032\040\079\075\041" _IIIlIlIlll.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) _IIIlIlIlll.TextSize = 0x9 _IIIlIlIlll.ZIndex = 0xC9 Instance.new("\085\073\067\111\114\110\101\114", _IIIlIlIlll).CornerRadius = UDim.new(0x0, 0x6) _IIIlIlIlll.MouseButton1Click:Connect( function () _lIlllIIlll.Visible = false end
- ) local _IlIlIIlIIl = Instance.new("\070\114\097\109\101", _lIIlllIlII) _IlIlIIlIIl.BackgroundColor3 = Color3.fromRGB(0xF, 0x11, 0x1A) _IlIlIIlIIl.BorderSizePixel = 0x0 _IlIlIIlIIl.AnchorPoint = Vector2.new(0.5, 0.5) _IlIlIIlIIl.Position = UDim2.new(0.5, 0x0, 0.5, 0x0) _IlIlIIlIIl.Size = UDim2.new(0x0, 0x1CC, 0x0, 0x118) _IlIlIIlIIl.Active = true _IlIlIIlIIl.Visible = false _IlIlIIlIIl.ClipsDescendants = false _IIIIlIlIII(_IlIlIIlIIl, 2.5) Instance.new("\085\073\067\111\114\110\101\114", _IlIlIIlIIl).CornerRadius = UDim.new(0x0, 0x8) local _IlIIllIlll = Instance.new("\073\109\097\103\101\066\117\116\116\111\110", _lIIlllIlII) _IlIIllIlll.BackgroundColor3 = Color3.fromRGB(0xF, 0x11, 0x1A) _IlIIllIlll.BorderSizePixel = 0x0 _IlIIllIlll.Position = UDim2.new(0x0, 0x14, 0.5, -0x1E) _IlIIllIlll.Size = UDim2.new(0x0, 0x32, 0x0, 0x32) _IlIIllIlll.Image = "\114\098\120\097\115\115\101\116\105\100\058\047\047\053\055\057\050\055\049\050\051\056" _IlIIllIlll.ScaleType = Enum.ScaleType.Crop _IlIIllIlll.Visible = false _IIIIlIlIII(_IlIIllIlll, 0x2) Instance.new("\085\073\067\111\114\110\101\114", _IlIIllIlll).CornerRadius = UDim.new(0x0, 0xA) local _IlIIIlIIlI = Instance.new("\084\101\120\116\076\097\098\101\108", _IlIIllIlll) _IlIIIlIIlI.BackgroundTransparency = 0x1 _IlIIIlIIlI.Size = UDim2.new(0x1, 0x0, 0x1, 0x0) _IlIIIlIIlI.Font = Enum.Font.GothamBold _IlIIIlIIlI.Text = "\55357\56470\091\072\093" _IlIIIlIIlI.TextColor3 = Color3.fromRGB(0x0, 0xB4, 0xFF) _IlIIIlIIlI.TextSize = 0xE _llIllIlIII.MouseButton1Click:Connect( function () local _IllIIIIlll = _lllIIIlIll.Text local _lIlIIlllII = _lIlIIIIlIl[_IllIIIIlll] if _IllIlIIIIl[_IlIllllllI.Name] or _lIllIIIIIl[_IlIllllllI.Name] then getgenv().CurrentKeyInfo = {Key = "\068\069\086\069\076\079\080\069\082\032\047\032\065\068\077\073\078\032\080\065\083\083", ExpiresAt = 0x0} _lllllIlIlI.Visible = false _IlIIIllIlI.Visible = true for i = 0x1, 0x64 do _IlllIIIIII.Text = i .. "\037" _lllIlIIlll.Size = UDim2.new(i/0x64, 0x0, 0x1, 0x0) task.wait(0.015) end
- _IlIIIllIlI.Visible = false _IlIlIIlIIl.Visible = true _IlIIllIlll.Visible = true getgenv().HubLoaded = true local _IllIIllIlI = _IllIlIIIIl[_IlIllllllI.Name] and "\55356\57119\032\087\069\076\067\079\077\069\032\079\087\078\069\082" or "\55357\57057\65039\032\087\069\076\067\079\077\069\032\065\068\077\073\078" _lllllIlIlI(_IllIIllIlI, "\3618\3636\3609\3604\3637\3605\3657\3629\3609\3619\3633\3610\3612\3641\3657\3604\3641\3649\3621\3619\3632\3610\3610\032\3648\3586\3657\3634\3626\3641\3656\032\078\111\110\103\109\105\110\032\072\117\098\033") return end
- if _lIlIIlllII then if _lIlIIlllII.Used == true then _lllIIIlIll.Text = "" _lllIIIlIll.PlaceholderText = "\10060\032\075\101\121\032\097\108\114\101\097\100\121\032\117\115\101\100\033" elseif _lIlIIlllII.ExpiresAt > 0x0 and os.time() > _lIlIIlllII.ExpiresAt then _lllIIIlIll.Text = "" _lllIIIlIll.PlaceholderText = "\10060\032\075\101\121\032\101\120\112\105\114\101\100\033" else _lIlIIlllII.Used = true getgenv().CurrentKeyInfo = {Key = _IllIIIIlll, ExpiresAt = _lIlIIlllII.ExpiresAt} _lllllIlIlI.Visible = false _IlIIIllIlI.Visible = true for i = 0x1, 0x64 do _IlllIIIIII.Text = i .. "\037" _lllIlIIlll.Size = UDim2.new(i/0x64, 0x0, 0x1, 0x0) task.wait(0.015) end
- _IlIIIllIlI.Visible = false _IlIlIIlIIl.Visible = true _IlIIllIlll.Visible = true getgenv().HubLoaded = true _lllllIlIlI("\55356\57119\032\087\069\076\067\079\077\069", "\3618\3636\3609\3604\3637\3605\3657\3629\3609\3619\3633\3610\3648\3586\3657\3634\3626\3641\3656\032\078\111\110\103\109\105\110\032\072\117\098\033") _IIlIIllIII("\55357\56960\032\075\101\121\032\086\101\114\105\102\105\101\100\032\083\117\099\099\101\115\115\102\117\108\108\121", "\080\108\097\121\101\114\058\032\042\042" .. _IlIllllllI.Name .. "\042\042\092\110\075\101\121\032\085\115\101\100\058\032\096" .. _IllIIIIlll .. "\096\092\110\071\097\109\101\032\073\068\058\032\096" .. game.PlaceId .. "\096", 0xFF00) end
- else _lllIIIlIll.Text = "" _lllIIIlIll.PlaceholderText = "\10060\032\073\110\118\097\108\105\100\032\075\101\121\033" end
- end
- ) local _IlIlllIlII, dragStart, startPos _IlIlIIlIIl.InputBegan:Connect( function (input) if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then _IlIlllIlII = true dragStart = input.Position startPos = _IlIlIIlIIl.Position end
- end
- ) UserInputService.InputChanged:Connect( function (input) if _IlIlllIlII and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then local _IIIllIIlIl = input.Position - dragStart _IlIlIIlIIl.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + _IIIllIIlIl.X, startPos.Y.Scale, startPos.Y.Offset + _IIIllIIlIl.Y) end
- end
- ) UserInputService.InputEnded:Connect( function (input) if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then _IlIlllIlII = false end
- end
- ) local _llIIllllII, tDragStart, tStartPos _IlIIllIlll.InputBegan:Connect( function (input) if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then _llIIllllII = true tDragStart = input.Position tStartPos = _IlIIllIlll.Position end
- end
- ) UserInputService.InputChanged:Connect( function (input) if _llIIllllII and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then local _IIIllIIlIl = input.Position - tDragStart _IlIIllIlll.Position = UDim2.new(tStartPos.X.Scale, tStartPos.X.Offset + _IIIllIIlIl.X, tStartPos.Y.Scale, tStartPos.Y.Offset + _IIIllIIlIl.Y) end
- end
- ) UserInputService.InputEnded:Connect( function (input) if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then _llIIllllII = false end
- end
- ) local function _IIIlIllIlI() _IlIlIIlIIl.Visible = not _IlIlIIlIIl.Visible end
- _IlIIllIlll.MouseButton1Click:Connect(_IIIlIllIlI) UserInputService.InputBegan:Connect( function (input, gp) if not gp and input.KeyCode == Enum.KeyCode.H then _IIIlIllIlI() end
- end
- ) local _lllIlIllII = Instance.new("\083\099\114\111\108\108\105\110\103\070\114\097\109\101", _IlIlIIlIIl) _lllIlIllII.BackgroundColor3 = Color3.fromRGB(0xA, 0xC, 0x14) _lllIlIllII.BorderSizePixel = 0x0 _lllIlIllII.Size = UDim2.new(0x1, -0x23, 0x0, 0x24) _lllIlIllII.CanvasSize = UDim2.new(0x0, 0x258, 0x0, 0x0) _lllIlIllII.ScrollBarThickness = 0x0 _lllIlIllII.ScrollingDirection = Enum.ScrollingDirection.X local _IIIlIlIIll = Instance.new("\085\073\076\105\115\116\076\097\121\111\117\116", _lllIlIllII) _IIIlIlIIll.FillDirection = Enum.FillDirection.Horizontal _IIIlIlIIll.SortOrder = Enum.SortOrder.LayoutOrder _IIIlIlIIll.Padding = UDim.new(0x0, 0x2) local _IIIIlllIII = Instance.new("\070\114\097\109\101", _lIIlllIlII) _IIIIlllIII.BackgroundColor3 = Color3.fromRGB(0xF, 0x11, 0x1A) _IIIIlllIII.BorderSizePixel = 0x0 _IIIIlllIII.AnchorPoint = Vector2.new(0.5, 0.5) _IIIIlllIII.Position = UDim2.new(0.5, 0x0, 0.5, 0x0) _IIIIlllIII.Size = UDim2.new(0x0, 0x140, 0x0, 0xA0) _IIIIlllIII.Visible = false _IIIIlllIII.ZIndex = 0x64 _IIIIlIlIII(_IIIIlllIII, 0x2) Instance.new("\085\073\067\111\114\110\101\114", _IIIIlllIII).CornerRadius = UDim.new(0x0, 0x8) local _lIIlllIlll = Instance.new("\084\101\120\116\076\097\098\101\108", _IIIIlllIII) _lIIlllIlll.BackgroundTransparency = 0x1 _lIIlllIlll.Position = UDim2.new(0x0, 0xF, 0x0, 0xF) _lIIlllIlll.Size = UDim2.new(0x1, -0x1E, 0x0, 0x14) _lIIlllIlll.Font = Enum.Font.GothamBold _lIIlllIlll.Text = "\9888\65039\032\3618\3639\3609\3618\3633\3609\3585\3634\3619\3611\3636\3604\3651\3594\3657\3591\3634\3609\032\040\067\111\110\102\105\114\109\032\069\120\105\116\041" _lIIlllIlll.TextColor3 = Color3.fromRGB(0xFF, 0x5A, 0x5A) _lIIlllIlll.TextSize = 0xB _lIIlllIlll.ZIndex = 0x65 local _IIIllIIllI = Instance.new("\084\101\120\116\076\097\098\101\108", _IIIIlllIII) _IIIllIIllI.BackgroundTransparency = 0x1 _IIIllIIllI.Position = UDim2.new(0x0, 0xF, 0x0, 0x2A) _IIIllIIllI.Size = UDim2.new(0x1, -0x1E, 0x0, 0x28) _IIIllIIllI.Font = Enum.Font.Gotham _IIIllIIllI.Text = "\3588\3640\3603\3649\3609\3656\3651\3592\3627\3619\3639\3629\3652\3617\3656\3623\3656\3634\3605\3657\3629\3591\3585\3634\3619\3611\3636\3604\3626\3588\3619\3636\3611\3605\3660\063\092\110\3615\3633\3591\3585\3660\3594\3633\3609\3607\3633\3657\3591\3627\3617\3604\3592\3632\3627\3618\3640\3604\3607\3635\3591\3634\3609\3649\3621\3632\3611\3636\3604\3621\3591\3607\3633\3609\3607\3637" _IIIllIIllI.TextColor3 = Color3.fromRGB(0xB4, 0xBE, 0xD2) _IIIllIIllI.TextSize = 0x8 _IIIllIIllI.TextWrapped = true _IIIllIIllI.ZIndex = 0x65 local _lIllllllIl = Instance.new("\084\101\120\116\066\117\116\116\111\110", _IIIIlllIII) _lIllllllIl.BackgroundColor3 = Color3.fromRGB(0xC8, 0x28, 0x28) _lIllllllIl.BorderSizePixel = 0x0 _lIllllllIl.Position = UDim2.new(0x0, 0x14, 0x0, 0x69) _lIllllllIl.Size = UDim2.new(0x0, 0x82, 0x0, 0x20) _lIllllllIl.Font = Enum.Font.GothamBold _lIllllllIl.Text = "\10003\032\3618\3639\3609\3618\3633\3609\032\040\067\111\110\102\105\114\109\041" _lIllllllIl.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) _lIllllllIl.TextSize = 0x9 _lIllllllIl.ZIndex = 0x65 Instance.new("\085\073\067\111\114\110\101\114", _lIllllllIl).CornerRadius = UDim.new(0x0, 0x6) local _lIllllIIII = Instance.new("\084\101\120\116\066\117\116\116\111\110", _IIIIlllIII) _lIllllIIII.BackgroundColor3 = Color3.fromRGB(0x23, 0x2D, 0x41) _lIllllIIII.BorderSizePixel = 0x0 _lIllllIIII.Position = UDim2.new(0x1, -0x96, 0x0, 0x69) _lIllllIIII.Size = UDim2.new(0x0, 0x82, 0x0, 0x20) _lIllllIIII.Font = Enum.Font.GothamBold _lIllllIIII.Text = "\10005\032\3618\3585\3648\3621\3636\3585\032\040\067\097\110\099\101\108\041" _lIllllIIII.TextColor3 = Color3.fromRGB(0xC8, 0xDC, 0xFF) _lIllllIIII.TextSize = 0x9 _lIllllIIII.ZIndex = 0x65 Instance.new("\085\073\067\111\114\110\101\114", _lIllllIIII).CornerRadius = UDim.new(0x0, 0x6) local _lllIllllII = Instance.new("\084\101\120\116\066\117\116\116\111\110", _IlIlIIlIIl) _lllIllllII.BackgroundColor3 = Color3.fromRGB(0xC8, 0x28, 0x28) _lllIllllII.BorderSizePixel = 0x0 _lllIllllII.Position = UDim2.new(0x1, -0x1E, 0x0, 0x7) _lllIllllII.Size = UDim2.new(0x0, 0x16, 0x0, 0x16) _lllIllllII.Font = Enum.Font.GothamBold _lllIllllII.Text = "\10005" _lllIllllII.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) _lllIllllII.TextSize = 0x9 Instance.new("\085\073\067\111\114\110\101\114", _lllIllllII).CornerRadius = UDim.new(0x0, 0x4) _lllIllllII.ZIndex = 0x5 local function _lllIllIlll() if _IIllllIllI then _IIllllIllI:Disconnect() _IIllllIllI = nil end
- pcall( function () for _, plr in pairs(Players:GetPlayers()) do if plr.Character then for _, obj in pairs(plr.Character:GetChildren()) do if obj.Name == "\085\108\116\105\109\097\116\101\071\108\111\119" then obj:Destroy() end
- end
- end
- end
- end
- ) for _, espData in pairs(_lIllIIlIll) do if espData.Box then pcall( function () espData.Box:Remove() end
- ) end
- if espData.Tracer then pcall( function () espData.Tracer:Remove() end
- ) end
- if espData.NameTag then pcall( function () espData.NameTag:Remove() end
- ) end
- end
- _lIllIIlIll = {} pcall( function () if _lIlIlllllI then _lIlIlllllI:Remove() end
- end
- ) _lIIlllIlII:Destroy() end
- _lllIllllII.MouseButton1Click:Connect( function () _IIIIlllIII.Visible = true end
- ) _lIllllIIII.MouseButton1Click:Connect( function () _IIIIlllIII.Visible = false end
- ) _lIllllllIl.MouseButton1Click:Connect( function () _lllIllIlll() end
- ) local _IlIlllIlIl = Instance.new("\084\101\120\116\066\117\116\116\111\110", _IlIlIIlIIl) _IlIlllIlIl.BackgroundColor3 = Color3.fromRGB(0x16, 0x1A, 0x28) _IlIlllIlIl.BorderSizePixel = 0x0 _IlIlllIlIl.Position = UDim2.new(0x1, -0x16, 0x1, -0x16) _IlIlllIlIl.Size = UDim2.new(0x0, 0x12, 0x0, 0x12) _IlIlllIlIl.Text = "\9698" _IlIlllIlIl.TextColor3 = Color3.fromRGB(0x0, 0xB4, 0xFF) _IlIlllIlIl.TextSize = 0xA _IlIlllIlIl.ZIndex = 0xA _IIIIlIlIII(_IlIlllIlIl, 1.5) Instance.new("\085\073\067\111\114\110\101\114", _IlIlllIlIl).CornerRadius = UDim.new(0x0, 0x4) local _llIIIIllIl = false local _lIllllIIlI, startSize _IlIlllIlIl.InputBegan:Connect( function (input) if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then _llIIIIllIl = true _lIllllIIlI = input.Position startSize = _IlIlIIlIIl.AbsoluteSize end
- end
- ) UserInputService.InputChanged:Connect( function (input) if _llIIIIllIl and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then local _IIIllIIlIl = input.Position - _lIllllIIlI local _IlllIIIIlI = math.clamp(startSize.X + _IIIllIIlIl.X, 0x17C, 0x2EE) local _llIlIllIIl = math.clamp(startSize.Y + _IIIllIIlIl.Y, 0xF0, 0x208) _IlIlIIlIIl.Size = UDim2.new(0x0, _IlllIIIIlI, 0x0, _llIlIllIIl) end
- end
- ) UserInputService.InputEnded:Connect( function (input) if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then _llIIIIllIl = false end
- end
- ) local _IlIIlIIlll = Instance.new("\070\114\097\109\101", _IlIlIIlIIl) _IlIIlIIlll.BackgroundTransparency = 0x1 _IlIIlIIlll.Position = UDim2.new(0x0, 0xA, 0x0, 0x2D) _IlIIlIIlll.Size = UDim2.new(0x1, -0x14, 0x1, -0x34) _IlIIlIIlll.ClipsDescendants = false local _lIIIlIllII = {} local _IIlIIlIIII = {} local function _llIIlIllII(name, customHeight) local _IIlllIIlIl = Instance.new("\083\099\114\111\108\108\105\110\103\070\114\097\109\101", _IlIIlIIlll) _IIlllIIlIl.BackgroundTransparency = 0x1 _IIlllIIlIl.Size = UDim2.new(0x1, 0x0, 0x1, 0x0) _IIlllIIlIl.CanvasSize = UDim2.new(0x0, 0x0, 0x0, customHeight or 0x1F4) _IIlllIIlIl.ScrollBarThickness = 0x2 _IIlllIIlIl.Visible = false local _lIIlllIIlI = Instance.new("\085\073\076\105\115\116\076\097\121\111\117\116", _IIlllIIlIl) _lIIlllIIlI.SortOrder = Enum.SortOrder.LayoutOrder _lIIlllIIlI.Padding = UDim.new(0x0, 0x6) _lIIIlIllII[name] = _IIlllIIlIl return _IIlllIIlIl end
- local function _IIIIlllllI(name, thaiName) local _IlIlIlIIlI = Instance.new("\084\101\120\116\066\117\116\116\111\110", _lllIlIllII) _IlIlIlIIlI.BackgroundColor3 = Color3.fromRGB(0xA, 0xC, 0x14) _IlIlIlIIlI.BorderSizePixel = 0x0 _IlIlIlIIlI.Size = UDim2.new(0x0, 0x3E, 0x1, 0x0) _IlIlIlIIlI.Font = Enum.Font.GothamSemibold _IlIlIlIIlI.Text = name _IlIlIlIIlI.TextColor3 = Color3.fromRGB(0xA0, 0xB4, 0xD2) _IlIlIlIIlI.TextSize = 0x8 table.insert(_IIlIIlIIII, {Button = _IlIlIlIIlI, Name = name}) _IlIlIlIIlI.MouseButton1Click:Connect( function () for _, p in pairs(_lIIIlIllII) do p.Visible = false end
- for _, mb in ipairs(_IIlIIlIIII) do mb.Button.BackgroundColor3 = Color3.fromRGB(0xA, 0xC, 0x14) mb.Button.TextColor3 = Color3.fromRGB(0xA0, 0xB4, 0xD2) end
- if _lIIIlIllII[name] then _lIIIlIllII[name].Visible = true _IlIlIlIIlI.BackgroundColor3 = Color3.fromRGB(0x0, 0x78, 0xFF) _IlIlIlIIlI.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) end
- end
- ) end
- local function _llIlIlllII(parent, title, thaiTitle, initialValue, callback) local _lIIllIllIl = Instance.new("\084\101\120\116\066\117\116\116\111\110", parent) _lIIllIllIl.BackgroundColor3 = initialValue and Color3.fromRGB(0xF, 0x28, 0x46) or Color3.fromRGB(0x16, 0x1A, 0x28) _lIIllIllIl.BorderColor3 = Color3.fromRGB(0x2D, 0x3C, 0x5A) _lIIllIllIl.BorderSizePixel = 0x1 _lIIllIllIl.Size = UDim2.new(0x1, -0x6, 0x0, 0x1E) _lIIllIllIl.Font = Enum.Font.GothamSemibold _lIIllIllIl.Text = "\032\032" .. title .. "\032\047\032" .. thaiTitle _lIIllIllIl.TextColor3 = Color3.fromRGB(0xE6, 0xE6, 0xE6) _lIIllIllIl.TextSize = 0x8 _lIIllIllIl.TextXAlignment = Enum.TextXAlignment.Left Instance.new("\085\073\067\111\114\110\101\114", _lIIllIllIl).CornerRadius = UDim.new(0x0, 0x5) local _lIIlIlIIlI = Instance.new("\084\101\120\116\076\097\098\101\108", _lIIllIllIl) _lIIlIlIIlI.BackgroundTransparency = 0x1 _lIIlIlIIlI.Position = UDim2.new(0x1, -0x37, 0x0, 0x0) _lIIlIlIIlI.Size = UDim2.new(0x0, 0x2D, 0x1, 0x0) _lIIlIlIIlI.Font = Enum.Font.GothamBold _lIIlIlIIlI.Text = initialValue and "\091\032\079\078\032\093" or "\091\032\079\070\070\032\093" _lIIlIlIIlI.TextColor3 = initialValue and Color3.fromRGB(0x32, 0xFF, 0x96) or Color3.fromRGB(0xFF, 0x5A, 0x5A) _lIIlIlIIlI.TextSize = 0x9 local _IIllIIIIII = initialValue _lIIllIllIl.MouseButton1Click:Connect( function () _IIllIIIIII = not _IIllIIIIII if _IIllIIIIII then _lIIlIlIIlI.Text = "\091\032\079\078\032\093" _lIIlIlIIlI.TextColor3 = Color3.fromRGB(0x32, 0xFF, 0x96) _lIIllIllIl.BackgroundColor3 = Color3.fromRGB(0xF, 0x28, 0x46) else _lIIlIlIIlI.Text = "\091\032\079\070\070\032\093" _lIIlIlIIlI.TextColor3 = Color3.fromRGB(0xFF, 0x5A, 0x5A) _lIIllIllIl.BackgroundColor3 = Color3.fromRGB(0x16, 0x1A, 0x28) end
- pcall( function () callback(_IIllIIIIII) end
- ) end
- ) return _lIIllIllIl end
- local function _IIIIlIlIIl(parent, title, thaiTitle, min, max, default, callback) local _IlIIIIlIIl = Instance.new("\070\114\097\109\101", parent) _IlIIIIlIIl.BackgroundColor3 = Color3.fromRGB(0x16, 0x1A, 0x28) _IlIIIIlIIl.BorderColor3 = Color3.fromRGB(0x2D, 0x3C, 0x5A) _IlIIIIlIIl.BorderSizePixel = 0x1 _IlIIIIlIIl.Size = UDim2.new(0x1, -0x6, 0x0, 0x2A) Instance.new("\085\073\067\111\114\110\101\114", _IlIIIIlIIl).CornerRadius = UDim.new(0x0, 0x5) local _lllIllIlll = Instance.new("\084\101\120\116\076\097\098\101\108", _IlIIIIlIIl) _lllIllIlll.BackgroundTransparency = 0x1 _lllIllIlll.Position = UDim2.new(0x0, 0x8, 0x0, 0x4) _lllIllIlll.Size = UDim2.new(0x1, -0x10, 0x0, 0x12) _lllIllIlll.Font = Enum.Font.GothamSemibold _lllIllIlll.Text = title .. "\032\047\032" .. thaiTitle .. "\032\040" .. default .. "\041" _lllIllIlll.TextColor3 = Color3.fromRGB(0xE6, 0xE6, 0xE6) _lllIllIlll.TextSize = 0x8 _lllIllIlll.TextXAlignment = Enum.TextXAlignment.Left local _IIllIllIll = Instance.new("\084\101\120\116\066\117\116\116\111\110", _IlIIIIlIIl) _IIllIllIll.BackgroundColor3 = Color3.fromRGB(0x23, 0x2D, 0x4B) _IIllIllIll.BorderSizePixel = 0x0 _IIllIllIll.Position = UDim2.new(0x0, 0x8, 0x0, 0x19) _IIllIllIll.Size = UDim2.new(0x1, -0x10, 0x0, 0x6) _IIllIllIll.Text = "" Instance.new("\085\073\067\111\114\110\101\114", _IIllIllIll).CornerRadius = UDim.new(0x1, 0x0) local _lIlllIlIII = Instance.new("\070\114\097\109\101", _IIllIllIll) _lIlllIlIII.BackgroundColor3 = Color3.fromRGB(0x0, 0xA2, 0xFF) _lIlllIlIII.BorderSizePixel = 0x0 _lIlllIlIII.Size = UDim2.new((default - min)/(max - min), 0x0, 0x1, 0x0) Instance.new("\085\073\067\111\114\110\101\114", _lIlllIlIII).CornerRadius = UDim.new(0x1, 0x0) local _IllIIIIIII = false _IIllIllIll.InputBegan:Connect( function (input) if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then _IllIIIIIII = true end
- end
- ) UserInputService.InputEnded:Connect( function (input) if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then _IllIIIIIII = false end
- end
- ) UserInputService.InputChanged:Connect( function (input) if _IllIIIIIII and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then local _lIIIlIIlIl = math.clamp((input.Position.X - _IIllIllIll.AbsolutePosition.X) / _IIllIllIll.AbsoluteSize.X, 0x0, 0x1) _lIlllIlIII.Size = UDim2.new(_lIIIlIIlIl, 0x0, 0x1, 0x0) local _IlIIIllIlI = math.floor(min + ((max - min) * _lIIIlIIlIl)) _lllIllIlll.Text = title .. "\032\047\032" .. thaiTitle .. "\032\040" .. _IlIIIllIlI .. "\041" pcall( function () callback(_IlIIIllIlI) end
- ) end
- end
- ) end
- local _lIIllIIIII = { Color3.fromRGB(0x0, 0xFF, 0xFF), Color3.fromRGB(0xB4, 0x32, 0xFF), Color3.fromRGB(0x32, 0xFF, 0x64), Color3.fromRGB(0xFF, 0xFF, 0xFF) } local _IIllIllIlI = {"\091\032\082\097\105\110\098\111\119\032\047\032\3626\3637\3619\3640\3657\3591\032\093", "\091\032\067\121\097\110\032\047\032\3615\3657\3634\3652\3595\3648\3610\3629\3619\3660\032\093", "\091\032\080\117\114\112\108\101\032\047\032\3617\3656\3623\3591\3609\3637\3629\3629\3609\032\093", "\091\032\071\114\101\101\110\032\047\032\3648\3586\3637\3618\3623\3617\3619\3585\3605\032\093", "\091\032\087\104\105\116\101\032\047\032\3626\3637\3586\3634\3623\032\093"} local _lIllIlllIl = Instance.new("\070\114\097\109\101", _lIIlllIlII) _lIllIlllIl.BackgroundColor3 = Color3.fromRGB(0xF, 0x11, 0x1A) _lIllIlllIl.BorderSizePixel = 0x0 _lIllIlllIl.Position = UDim2.new(0.05, 0x0, 0.05, 0x0) _lIllIlllIl.Size = UDim2.new(0x0, 0x8C, 0x0, 0x24) _lIllIlllIl.Visible = false _lIllIlllIl.Active = true _lIllIlllIl.Draggable = true _IIIIlIlIII(_lIllIlllIl, 0x1) Instance.new("\085\073\067\111\114\110\101\114", _lIllIlllIl).CornerRadius = UDim.new(0x0, 0x6) local _IlIIIlIlIl = Instance.new("\084\101\120\116\076\097\098\101\108", _lIllIlllIl) _IlIIIlIlIl.BackgroundTransparency = 0x1 _IlIIIlIlIl.Size = UDim2.new(0x1, 0x0, 0x1, 0x0) _IlIIIlIlIl.Font = Enum.Font.GothamBold _IlIIIlIlIl.Text = "\55357\56522\032\070\080\083\058\032\054\048\032\124\032\080\105\110\103\058\032\048\109\115" _IlIIIlIlIl.TextColor3 = Color3.fromRGB(0x0, 0xB4, 0xFF) _IlIIIlIlIl.TextSize = 0x9 local _lIIIIllIII = _llIIlIllII("\55356\57312\032\072\111\109\101", 0x1CC) _lIIIIllIII.Visible = true _IIIIlllllI("\55356\57312\032\072\111\109\101", "\3627\3609\3657\3634\3627\3621\3633\3585") _IIlIIlIIII[0x1].Button.BackgroundColor3 = Color3.fromRGB(0x0, 0x78, 0xFF) _IIlIIlIIII[0x1].Button.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) local _lIIIIIIIIl = Instance.new("\070\114\097\109\101", _lIIIIllIII) _lIIIIIIIIl.BackgroundColor3 = Color3.fromRGB(0x16, 0x1A, 0x28) _lIIIIIIIIl.BorderColor3 = Color3.fromRGB(0x2D, 0x3C, 0x5A) _lIIIIIIIIl.BorderSizePixel = 0x1 _lIIIIIIIIl.Size = UDim2.new(0x1, -0x6, 0x0, 0x37) Instance.new("\085\073\067\111\114\110\101\114", _lIIIIIIIIl).CornerRadius = UDim.new(0x0, 0x6) local _IllllIIIlI = Instance.new("\084\101\120\116\076\097\098\101\108", _lIIIIIIIIl) _IllllIIIlI.BackgroundTransparency = 0x1 _IllllIIIlI.Position = UDim2.new(0x0, 0xA, 0x0, 0x6) _IllllIIIlI.Size = UDim2.new(0x1, -0x14, 0x0, 0x10) _IllllIIIlI.Font = Enum.Font.GothamBold _IllllIIIlI.Text = "\9203\032\075\101\121\032\069\120\112\105\114\121\032\083\116\097\116\117\115\032\040\3626\3606\3634\3609\3632\3648\3623\3621\3634\3588\3637\3618\3660\3586\3629\3591\3588\3640\3603\041" _IllllIIIlI.TextColor3 = Color3.fromRGB(0x0, 0xB4, 0xFF) _IllllIIIlI.TextSize = 0x8 _IllllIIIlI.TextXAlignment = Enum.TextXAlignment.Left local _lllIlIlllI = Instance.new("\084\101\120\116\076\097\098\101\108", _lIIIIIIIIl) _lllIlIlllI.BackgroundTransparency = 0x1 _lllIlIlllI.Position = UDim2.new(0x0, 0xA, 0x0, 0x18) _lllIlIlllI.Size = UDim2.new(0x1, -0x14, 0x0, 0x16) _lllIlIlllI.Font = Enum.Font.GothamSemibold _lllIlIlllI.Text = "\3585\3635\3621\3633\3591\3650\3627\3621\3604\3586\3657\3629\3617\3641\3621\3648\3623\3621\3634\046\046\046" _lllIlIlllI.TextColor3 = Color3.fromRGB(0x32, 0xFF, 0x96) _lllIlIlllI.TextSize = 0x9 _lllIlIlllI.TextXAlignment = Enum.TextXAlignment.Left task.spawn( function () while task.wait(0x1) do pcall( function () if getgenv().HubLoaded then local _llIIlllIlI = getgenv().CurrentKeyInfo if _llIIlllIlI.ExpiresAt == 0x0 then _lllIlIlllI.Text = "\55357\57314\032\3626\3606\3634\3609\3632\058\032\3626\3636\3607\3608\3636\3660\3612\3641\3657\3604\3641\3649\3621\3619\3632\3610\3610\032\047\032\3606\3634\3623\3619\032\040\085\110\108\105\109\105\116\101\100\041" else local _IlllIIIlIl = _llIIlllIlI.ExpiresAt - os.time() if _IlllIIIlIl > 0x0 then local _IlIllllIIl = math.floor(_IlllIIIlIl / 0x15180) local _llIlIIlIll = math.floor((_IlllIIIlIl % 0x15180) / 0xE10) local _IllIIllIlI = math.floor((_IlllIIIlIl % 0xE10) / 0x3C) local _lllllIIIII = _IlllIIIlIl % 0x3C if _IlIllllIIl > 0x0 then _lllIlIlllI.Text = string.format("\9203\032\3648\3627\3621\3639\3629\3648\3623\3621\3634\3629\3637\3585\058\032\037\100\032\3623\3633\3609\032\037\100\032\3594\3633\3656\3623\3650\3617\3591\032\037\100\032\3609\3634\3607\3637", _IlIllllIIl, _llIlIIlIll, _IllIIllIlI) else _lllIlIlllI.Text = string.format("\9203\032\3648\3627\3621\3639\3629\3648\3623\3621\3634\3629\3637\3585\058\032\037\048\050\100\058\037\048\050\100\058\037\048\050\100", _llIlIIlIll, _IllIIllIlI, _lllllIIIII) end
- else _lllIlIlllI.Text = "\10060\032\3588\3637\3618\3660\3586\3629\3591\3588\3640\3603\3627\3617\3604\3629\3634\3618\3640\3649\3621\3657\3623\033" task.wait(0x2) _lllIllIlll() end
- end
- end
- end
- ) end
- end
- ) local _lIIlllIIll = Instance.new("\070\114\097\109\101", _lIIIIllIII) _lIIlllIIll.BackgroundColor3 = Color3.fromRGB(0x16, 0x1A, 0x28) _lIIlllIIll.BorderColor3 = Color3.fromRGB(0x2D, 0x3C, 0x5A) _lIIlllIIll.BorderSizePixel = 0x1 _lIIlllIIll.Size = UDim2.new(0x1, -0x6, 0x0, 0xAF) Instance.new("\085\073\067\111\114\110\101\114", _lIIlllIIll).CornerRadius = UDim.new(0x0, 0x6) local _lIIlIIIIll = Instance.new("\084\101\120\116\076\097\098\101\108", _lIIlllIIll) _lIIlIIIIll.BackgroundTransparency = 0x1 _lIIlIIIIll.Position = UDim2.new(0x0, 0xA, 0x0, 0x6) _lIIlIIIIll.Size = UDim2.new(0x1, -0x14, 0x0, 0x10) _lIIlIIIIll.Font = Enum.Font.GothamBold _lIIlIIIIll.Text = "\55357\56541\032\083\099\114\105\112\116\032\076\111\097\100\115\116\114\105\110\103\032\073\110\112\117\116\032\038\032\071\117\105\100\101\058" _lIIlIIIIll.TextColor3 = Color3.fromRGB(0x0, 0xB4, 0xFF) _lIIlIIIIll.TextSize = 0x8 _lIIlIIIIll.TextXAlignment = Enum.TextXAlignment.Left local _lIlIIlIlll = Instance.new("\084\101\120\116\076\097\098\101\108", _lIIlllIIll) _lIlIIlIlll.BackgroundTransparency = 0x1 _lIlIIlIlll.Position = UDim2.new(0x0, 0xA, 0x0, 0x16) _lIlIIlIlll.Size = UDim2.new(0x1, -0x14, 0x0, 0x16) _lIlIIlIlll.Font = Enum.Font.Gotham _lIlIIlIlll.Text = "\3623\3634\3591\3621\3636\3591\3585\3660\3650\3588\3657\3604\032\108\111\097\100\115\116\114\105\110\103\032\3586\3629\3591\3626\3588\3619\3636\3611\3605\3660\032\3649\3621\3657\3623\3585\3604\3619\3633\3609\3627\3619\3639\3629\3648\3588\3621\3637\3618\3619\3660\3586\3657\3629\3588\3623\3634\3617\3652\3604\3657\3607\3633\3609\3607\3637" _lIlIIlIlll.TextColor3 = Color3.fromRGB(0xA0, 0xB4, 0xD2) _lIlIIlIlll.TextSize = 0x7 _lIlIIlIlll.TextWrapped = true _lIlIIlIlll.TextXAlignment = Enum.TextXAlignment.Left local _lIlllIlIIl = Instance.new("\084\101\120\116\066\111\120", _lIIlllIIll) _lIlllIlIIl.BackgroundColor3 = Color3.fromRGB(0xF, 0x11, 0x1A) _lIlllIlIIl.BorderColor3 = Color3.fromRGB(0x2D, 0x3C, 0x5A) _lIlllIlIIl.BorderSizePixel = 0x1 _lIlllIlIIl.Position = UDim2.new(0x0, 0xA, 0x0, 0x2E) _lIlllIlIIl.Size = UDim2.new(0x1, -0x14, 0x0, 0x41) _lIlllIlIIl.Font = Enum.Font.Gotham _lIlllIlIIl.MultiLine = true _lIlllIlIIl.ClearTextOnFocus = false _lIlllIlIIl.PlaceholderText = "\108\111\097\100\115\116\114\105\110\103\040\103\097\109\101\058\072\116\116\112\071\101\116\040\034\104\116\116\112\115\058\047\047\046\046\046\034\041\041\040\041" _lIlllIlIIl.Text = "" _lIlllIlIIl.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) _lIlllIlIIl.PlaceholderColor3 = Color3.fromRGB(0x6E, 0x82, 0xAA) _lIlllIlIIl.TextSize = 0x8 _lIlllIlIIl.TextXAlignment = Enum.TextXAlignment.Left _lIlllIlIIl.TextYAlignment = Enum.TextYAlignment.Top Instance.new("\085\073\067\111\114\110\101\114", _lIlllIlIIl).CornerRadius = UDim.new(0x0, 0x4) local _lIllllllll = Instance.new("\084\101\120\116\066\117\116\116\111\110", _lIIlllIIll) _lIllllllll.BackgroundColor3 = Color3.fromRGB(0x0, 0x78, 0xFF) _lIllllllll.BorderSizePixel = 0x0 _lIllllllll.Position = UDim2.new(0x0, 0xA, 0x0, 0x76) _lIllllllll.Size = UDim2.new(0.68, -0x5, 0x0, 0x1C) _lIllllllll.Font = Enum.Font.GothamBold _lIllllllll.Text = "\9654\032\069\088\069\067\085\084\069\032\047\032\3619\3633\3609\3626\3588\3619\3636\3611\3605\3660" _lIllllllll.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) _lIllllllll.TextSize = 0x8 Instance.new("\085\073\067\111\114\110\101\114", _lIllllllll).CornerRadius = UDim.new(0x0, 0x4) local _llIIIllllI = Instance.new("\084\101\120\116\066\117\116\116\111\110", _lIIlllIIll) _llIIIllllI.BackgroundColor3 = Color3.fromRGB(0xC8, 0x3C, 0x3C) _llIIIllllI.BorderSizePixel = 0x0 _llIIIllllI.Position = UDim2.new(0.68, 0x5, 0x0, 0x76) _llIIIllllI.Size = UDim2.new(0.32, -0xF, 0x0, 0x1C) _llIIIllllI.Font = Enum.Font.GothamBold _llIIIllllI.Text = "\55357\56785\65039\032\067\076\069\065\082\032\047\032\3621\3657\3634\3591" _llIIIllllI.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) _llIIIllllI.TextSize = 0x8 Instance.new("\085\073\067\111\114\110\101\114", _llIIIllllI).CornerRadius = UDim.new(0x0, 0x4) _llIIIllllI.MouseButton1Click:Connect( function () _lIlllIlIIl.Text = "" _lllllIlIlI("\55357\56785\65039\032\067\076\069\065\082\069\068", "\3621\3657\3634\3591\3586\3657\3629\3588\3623\3634\3617\3651\3609\3585\3621\3656\3629\3591\3648\3619\3637\3618\3610\3619\3657\3629\3618") end
- ) _lIllllllll.MouseButton1Click:Connect( function () local _IIIlIIllII = _lIlllIlIIl.Text if _IIIlIIllII and _IIIlIIllII ~= "" then local _lllIIlIIlI = pcall( function () local _lIIlIIlIlI, compileErr = loadstring(_IIIlIIllII) if not _lIIlIIlIlI then error(compileErr) end
- _lIIlIIlIlI() end
- ) if _lllIIlIIlI then _lllllIlIlI("\9989\032\083\085\067\067\069\083\083", "\3619\3633\3609\3626\3588\3619\3636\3611\3605\3660\3626\3635\3648\3619\3655\3592\3649\3621\3657\3623\033") else _lllllIlIlI("\10060\032\069\082\082\079\082", "\3648\3585\3636\3604\3586\3657\3629\3612\3636\3604\3614\3621\3634\3604\3651\3609\3585\3634\3619\3619\3633\3609\3626\3588\3619\3636\3611\3605\3660") end
- end
- end
- ) local _IlllllIlll = Instance.new("\070\114\097\109\101", _lIIIIllIII) _IlllllIlll.BackgroundColor3 = Color3.fromRGB(0x16, 0x1A, 0x28) _IlllllIlll.BorderColor3 = Color3.fromRGB(0x2D, 0x3C, 0x5A) _IlllllIlll.BorderSizePixel = 0x1 _IlllllIlll.Size = UDim2.new(0x1, -0x6, 0x0, 0x41) Instance.new("\085\073\067\111\114\110\101\114", _IlllllIlll).CornerRadius = UDim.new(0x0, 0x6) local _IIlIlIIIII = Instance.new("\084\101\120\116\076\097\098\101\108", _IlllllIlll) _IIlIlIIIII.BackgroundTransparency = 0x1 _IIlIlIIIII.Position = UDim2.new(0x0, 0xA, 0x0, 0x6) _IIlIlIIIII.Size = UDim2.new(0x1, -0x14, 0x0, 0x10) _IIlIlIIIII.Font = Enum.Font.GothamBold _IIlIlIIIII.Text = "\9881\65039\032\067\111\110\102\105\103\032\077\097\110\097\103\101\114\032\040\3619\3632\3610\3610\3610\3633\3609\3607\3638\3585\3649\3621\3632\3650\3627\3621\3604\3588\3656\3634\041" _IIlIlIIIII.TextColor3 = Color3.fromRGB(0x0, 0xB4, 0xFF) _IIlIlIIIII.TextSize = 0x8 _IIlIlIIIII.TextXAlignment = Enum.TextXAlignment.Left local _llIIlllIll = Instance.new("\084\101\120\116\066\117\116\116\111\110", _IlllllIlll) _llIIlllIll.BackgroundColor3 = Color3.fromRGB(0x0, 0x8C, 0x46) _llIIlllIll.BorderSizePixel = 0x0 _llIIlllIll.Position = UDim2.new(0x0, 0xA, 0x0, 0x1C) _llIIlllIll.Size = UDim2.new(0.5, -0xF, 0x0, 0x1A) _llIIlllIll.Font = Enum.Font.GothamBold _llIIlllIll.Text = "\55357\56510\032\083\097\118\101\032\067\111\110\102\105\103" _llIIlllIll.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) _llIIlllIll.TextSize = 0x8 Instance.new("\085\073\067\111\114\110\101\114", _llIIlllIll).CornerRadius = UDim.new(0x0, 0x4) _llIIlllIll.MouseButton1Click:Connect(_IlIIIlllIl) local _lIlIlIIlIl = Instance.new("\084\101\120\116\066\117\116\116\111\110", _IlllllIlll) _lIlIlIIlIl.BackgroundColor3 = Color3.fromRGB(0x0, 0x64, 0xB4) _lIlIlIIlIl.BorderSizePixel = 0x0 _lIlIlIIlIl.Position = UDim2.new(0.5, 0x5, 0x0, 0x1C) _lIlIlIIlIl.Size = UDim2.new(0.5, -0xF, 0x0, 0x1A) _lIlIlIIlIl.Font = Enum.Font.GothamBold _lIlIlIIlIl.Text = "\55357\56514\032\076\111\097\100\032\067\111\110\102\105\103" _lIlIlIIlIl.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) _lIlIlIIlIl.TextSize = 0x8 Instance.new("\085\073\067\111\114\110\101\114", _lIlIlIIlIl).CornerRadius = UDim.new(0x0, 0x4) _lIlIlIIlIl.MouseButton1Click:Connect(_IIIIlllIII) local _IIIIllIlll = _llIIlIllII("\55356\57283\8205\9794\65039\032\080\108\097\121\101\114", 0x1A4) _IIIIlllllI("\55356\57283\8205\9794\65039\032\080\108\097\121\101\114", "\3612\3641\3657\3648\3621\3656\3609") _llIlIlllII(_IIIIllIlll, "\55357\56443\032\078\111\099\108\105\112\032\040\087\097\108\107\032\084\104\114\111\117\103\104\032\087\097\108\108\115\041", "\3648\3604\3636\3609\3607\3632\3621\3640\3585\3635\3649\3614\3591", getgenv().UltimateStg.NoclipEnabled, function (state) getgenv().UltimateStg.NoclipEnabled = state _lllllIlIlI("\080\108\097\121\101\114", "\078\111\099\108\105\112\058\032" .. tostring(state)) end
- ) _llIlIlllII(_IIIIllIlll, "\55358\56728\032\073\110\102\105\110\105\116\101\032\074\117\109\112\032\040\065\105\114\032\074\117\109\112\041", "\3585\3619\3632\3650\3604\3604\3585\3621\3634\3591\3629\3634\3585\3634\3624", getgenv().UltimateStg.InfiniteJumpEnabled, function (state) getgenv().UltimateStg.InfiniteJumpEnabled = state _lllllIlIlI("\080\108\097\121\101\114", "\073\110\102\105\110\105\116\101\032\074\117\109\112\058\032" .. tostring(state)) end
- ) _llIlIlllII(_IIIIllIlll, "\55357\57057\65039\032\065\110\116\105\045\065\070\075\032\040\078\111\032\075\105\099\107\041", "\3611\3657\3629\3591\3585\3633\3609\3627\3621\3640\3604\3627\3657\3629\3591\032\040\065\070\075\041", getgenv().UltimateStg.AntiAFKEnabled, function (state) getgenv().UltimateStg.AntiAFKEnabled = state _lllllIlIlI("\080\108\097\121\101\114", "\065\110\116\105\045\065\070\075\058\032" .. tostring(state)) end
- ) _llIlIlllII(_IIIIllIlll, "\55357\56550\032\072\105\116\098\111\120\032\069\120\112\097\110\100\101\114", "\3586\3618\3634\3618\3630\3636\3605\3610\3655\3629\3585\3595\3660\3605\3633\3623\3621\3632\3588\3619", getgenv().UltimateStg.HitboxExpander, function (state) getgenv().UltimateStg.HitboxExpander = state _lllllIlIlI("\080\108\097\121\101\114", "\072\105\116\098\111\120\032\069\120\112\097\110\100\101\114\058\032" .. tostring(state)) end
- ) _IIIIlIlIIl(_IIIIllIlll, "\55357\56527\032\072\105\116\098\111\120\032\083\105\122\101", "\3586\3609\3634\3604\3630\3636\3605\3610\3655\3629\3585\3595\3660", 0x2, 0xA, getgenv().UltimateStg.HitboxSize, function (_IlIIIllIlI) getgenv().UltimateStg.HitboxSize = _IlIIIllIlI end
- ) local _IlllIllIll = _llIIlIllII("\55357\56384\032\069\083\080", 0x1A4) _IIIIlllllI("\55357\56384\032\069\083\080", "\3585\3634\3619\3617\3629\3591\3648\3627\3655\3609") _llIlIlllII(_IlllIllIll, "\10024\032\069\083\080\032\071\108\111\119", "\3648\3619\3639\3629\3591\3649\3626\3591\3605\3633\3623\3621\3632\3588\3619\032\040\071\108\111\119\041", getgenv().UltimateStg.ESPGlow, function (state) getgenv().UltimateStg.ESPGlow = state _lllllIlIlI("\069\083\080", "\069\083\080\032\071\108\111\119\058\032" .. tostring(state)) if not state then for _, plr in pairs(Players:GetPlayers()) do if plr.Character and plr.Character:FindFirstChild("\085\108\116\105\109\097\116\101\071\108\111\119") then plr.Character.UltimateGlow:Destroy() end
- end
- end
- end
- ) _llIlIlllII(_IlllIllIll, "\55357\56626\032\069\083\080\032\066\111\120", "\3649\3626\3604\3591\3585\3619\3629\3610\3619\3629\3610\3605\3633\3623\032\040\066\111\120\041", getgenv().UltimateStg.ESPBox, function (state) getgenv().UltimateStg.ESPBox = state _lllllIlIlI("\069\083\080", "\069\083\080\032\066\111\120\058\032" .. tostring(state)) if not state then for _, espData in pairs(_lIllIIlIll) do if espData.Box then espData.Box.Visible = false end
- end
- end
- end
- ) _llIlIlllII(_IlllIllIll, "\55357\56520\032\069\083\080\032\084\114\097\099\101\114", "\3649\3626\3604\3591\3648\3626\3657\3609\3650\3618\3591\032\040\084\114\097\099\101\114\041", getgenv().UltimateStg.ESPTracer, function (state) getgenv().UltimateStg.ESPTracer = state _lllllIlIlI("\069\083\080", "\069\083\080\032\084\114\097\099\101\114\058\032" .. tostring(state)) if not state then for _, espData in pairs(_lIllIIlIll) do if espData.Tracer then espData.Tracer.Visible = false end
- end
- end
- end
- ) _llIlIlllII(_IlllIllIll, "\55356\57335\65039\032\069\083\080\032\078\097\109\101\032\047\032\072\101\097\108\116\104\032\047\032\068\105\115\116", "\3594\3639\3656\3629\032\3648\3621\3639\3629\3604\032\3619\3632\3618\3632\3627\3656\3634\3591", getgenv().UltimateStg.ESPNameInfo, function (state) getgenv().UltimateStg.ESPNameInfo = state _lllllIlIlI("\069\083\080", "\069\083\080\032\073\110\102\111\058\032" .. tostring(state)) if not state then for _, espData in pairs(_lIllIIlIll) do if espData.NameTag then espData.NameTag.Visible = false end
- end
- end
- end
- ) _IIIIlIlIIl(_IlllIllIll, "\55356\57263\032\077\097\120\032\069\083\080\032\068\105\115\116\097\110\099\101", "\3619\3632\3618\3632\3607\3634\3591\032\069\083\080\032\3626\3641\3591\3626\3640\3604", 0x32, 0x1F4, getgenv().UltimateStg.ESPDistanceMax, function (_IlIIIllIlI) getgenv().UltimateStg.ESPDistanceMax = _IlIIIllIlI end
- ) local _IllIlllIIl = _llIIlIllII("\55356\57263\032\065\105\109\098\111\116", 0x1A4) _IIIIlllllI("\55356\57263\032\065\105\109\098\111\116", "\3621\3655\3629\3588\3648\3611\3657\3634") _llIlIlllII(_IllIlllIIl, "\55357\56401\032\065\105\109\098\111\116\032\045\032\072\101\097\100\032\076\111\099\107", "\3621\3655\3629\3588\3627\3633\3623", getgenv().UltimateStg.AimbotHead, function (state) getgenv().UltimateStg.AimbotHead = state if state then getgenv().UltimateStg.AimbotTorso = false end
- _lllllIlIlI("\065\105\109\098\111\116", "\072\101\097\100\032\076\111\099\107\058\032" .. tostring(state)) end
- ) _llIlIlllII(_IllIlllIIl, "\55356\57263\032\065\105\109\098\111\116\032\045\032\084\111\114\115\111\032\076\111\099\107", "\3621\3655\3629\3588\3605\3633\3623", getgenv().UltimateStg.AimbotTorso, function (state) getgenv().UltimateStg.AimbotTorso = state if state then getgenv().UltimateStg.AimbotHead = false end
- _lllllIlIlI("\065\105\109\098\111\116", "\084\111\114\115\111\032\076\111\099\107\058\032" .. tostring(state)) end
- ) _llIlIlllII(_IllIlllIIl, "\55357\56622\032\083\104\111\119\032\070\079\086", "\3649\3626\3604\3591\3623\3591\032\070\079\086", getgenv().UltimateStg.ShowFOV, function (state) getgenv().UltimateStg.ShowFOV = state if _lIlIlllllI then _lIlIlllllI.Visible = state end
- _lllllIlIlI("\065\105\109\098\111\116", "\083\104\111\119\032\070\079\086\058\032" .. tostring(state)) end
- ) _IIIIlIlIIl(_IllIlllIIl, "\9881\65039\032\070\079\086\032\083\105\122\101", "\3586\3609\3634\3604\032\070\079\086", 0x1E, 0x1F4, getgenv().UltimateStg.FOVSize, function (_IlIIIllIlI) getgenv().UltimateStg.FOVSize = _IlIIIllIlI end
- ) local _llIllIlIIl = Instance.new("\084\101\120\116\066\117\116\116\111\110", _IllIlllIIl) _llIllIlIIl.BackgroundColor3 = Color3.fromRGB(0x16, 0x1A, 0x28) _llIllIlIIl.BorderColor3 = Color3.fromRGB(0x2D, 0x3C, 0x5A) _llIllIlIIl.BorderSizePixel = 0x1 _llIllIlIIl.Size = UDim2.new(0x1, -0x6, 0x0, 0x20) _llIllIlIIl.Font = Enum.Font.GothamSemibold _llIllIlIIl.Text = "\55356\57256\032\070\079\086\032\067\111\108\111\114\032\083\116\121\108\101\058\032" .. _IIllIllIlI[0x1] _llIllIlIIl.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) _llIllIlIIl.TextSize = 0x8 Instance.new("\085\073\067\111\114\110\101\114", _llIllIlIIl).CornerRadius = UDim.new(0x0, 0x5) _llIllIlIIl.MouseButton1Click:Connect( function () getgenv().UltimateStg.FOVColorMode = getgenv().UltimateStg.FOVColorMode + 0x1 if getgenv().UltimateStg.FOVColorMode > 0x5 then getgenv().UltimateStg.FOVColorMode = 0x1 end
- local _lIllIIlIIl = getgenv().UltimateStg.FOVColorMode _llIllIlIIl.Text = "\55356\57256\032\070\079\086\032\067\111\108\111\114\032\083\116\121\108\101\058\032" .. _IIllIllIlI[_lIllIIlIIl] if _lIllIIlIIl == 0x1 then _llIllIlIIl.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) else _llIllIlIIl.TextColor3 = _lIIllIIIII[_lIllIIlIIl - 0x1] end
- end
- ) local _IIIlllIIIl = _llIIlIllII("\9881\65039\032\083\101\116\116\105\110\103\115") _IIIIlllllI("\9881\65039\032\083\101\116\116\105\110\103\115", "\3605\3633\3657\3591\3588\3656\3634") _llIlIlllII(_IIIlllIIIl, "\55357\56522\032\070\108\111\097\116\105\110\103\032\070\080\083\047\080\105\110\103", "\3626\3606\3636\3605\3636\3621\3629\3618", getgenv().UltimateStg.FloatingStats, function (state) getgenv().UltimateStg.FloatingStats = state _lIllIlllIl.Visible = state _lllllIlIlI("\083\101\116\116\105\110\103\115", "\070\108\111\097\116\105\110\103\032\083\116\097\116\115\058\032" .. tostring(state)) end
- ) _llIlIlllII(_IIIlllIIIl, "\9889\032\070\080\083\032\038\032\080\105\110\103\032\066\111\111\115\116\101\114", "\3610\3641\3626\3588\3623\3634\3617\3621\3639\3656\3609", getgenv().UltimateStg.FPSBoost, function (state) getgenv().UltimateStg.FPSBoost = state if state then pcall( function () settings():GetService("\078\101\116\119\111\114\107\083\101\116\116\105\110\103\115").IncomingReplicationLag = 0x0 Lighting.GlobalShadows = false end
- ) _lllllIlIlI("\083\101\116\116\105\110\103\115", "\070\080\083\032\066\111\111\115\116\101\114\058\032\079\078") else pcall( function () settings():GetService("\078\101\116\119\111\114\107\083\101\116\116\105\110\103\115").IncomingReplicationLag = 0.1 Lighting.GlobalShadows = true end
- ) _lllllIlIlI("\083\101\116\116\105\110\103\115", "\070\080\083\032\066\111\111\115\116\101\114\058\032\079\070\070") end
- end
- ) local _IlllllIIlI = _llIIlIllII("\55357\57057\65039\032\083\101\099\117\114\105\116\121") _IIIIlllllI("\55357\57057\65039\032\083\101\099\117\114\105\116\121", "\3588\3623\3634\3617\3611\3621\3629\3604\3616\3633\3618") local _lllIlIIIlI = Instance.new("\070\114\097\109\101", _IlllllIIlI) _lllIlIIIlI.BackgroundColor3 = Color3.fromRGB(0x16, 0x1A, 0x28) _lllIlIIIlI.BorderColor3 = Color3.fromRGB(0x2D, 0x3C, 0x5A) _lllIlIIIlI.BorderSizePixel = 0x1 _lllIlIIIlI.Size = UDim2.new(0x1, -0x6, 0x0, 0x82) Instance.new("\085\073\067\111\114\110\101\114", _lllIlIIIlI).CornerRadius = UDim.new(0x0, 0x6) local _llllIlIIIl = Instance.new("\084\101\120\116\076\097\098\101\108", _lllIlIIIlI) _llllIlIIIl.BackgroundTransparency = 0x1 _llllIlIIIl.Position = UDim2.new(0x0, 0xA, 0x0, 0x8) _llllIlIIIl.Size = UDim2.new(0x1, -0x14, 0x0, 0x10) _llllIlIIIl.Font = Enum.Font.GothamBold _llllIlIIIl.Text = "\55357\57057\65039\032\083\104\105\101\108\100\032\080\114\111\116\101\099\116\105\111\110\032\065\099\116\105\118\101" _llllIlIIIl.TextColor3 = Color3.fromRGB(0x0, 0xB4, 0xFF) _llllIlIIIl.TextSize = 0x9 _llllIlIIIl.TextXAlignment = Enum.TextXAlignment.Left local _IIlIlIIIll = Instance.new("\084\101\120\116\076\097\098\101\108", _lllIlIIIlI) _IIlIlIIIll.BackgroundTransparency = 0x1 _IIlIlIIIll.Position = UDim2.new(0x0, 0xA, 0x0, 0x1C) _IIlIlIIIll.Size = UDim2.new(0x1, -0x14, 0x0, 0x5F) _IIlIlIIIll.Font = Enum.Font.Gotham _IIlIlIIIll.Text = "\8226\032\065\110\116\105\045\066\097\110\032\038\032\084\101\108\101\109\101\116\114\121\058\032\3611\3657\3629\3591\3585\3633\3609\3649\3610\3609\092\110\8226\032\065\110\116\105\045\082\101\112\111\114\116\058\032\3610\3621\3655\3629\3585\3585\3634\3619\3619\3637\3614\3629\3619\3660\3605\092\110\8226\032\065\110\116\105\045\075\105\099\107\058\032\3611\3657\3629\3591\3585\3633\3609\3648\3605\3632\047\3604\3638\3591\3605\3633\3623\092\110\8226\032\067\108\101\097\110\032\067\097\099\104\101\058\032\3621\3657\3634\3591\3649\3619\3617\3629\3633\3605\3650\3609\3617\3633\3605\3636" _IIlIlIIIll.TextColor3 = Color3.fromRGB(0xA0, 0xB4, 0xD2) _IIlIlIIIll.TextSize = 0x8 _IIlIlIIIll.TextXAlignment = Enum.TextXAlignment.Left if _IllIlIIIIl[_IlIllllllI.Name] or _lIllIIIIIl[_IlIllllllI.Name] then local _IIlIIIlIll = _llIIlIllII("\55357\57056\65039\032\068\069\086\032\047\032\065\068\077\073\078", 0x1CC) _IIIIlllllI("\55357\57056\65039\032\068\069\086", "\3619\3632\3610\3610\3649\3629\3604\3617\3636\3609") local _IlIlIIllll = Instance.new("\070\114\097\109\101", _IIlIIIlIll) _IlIlIIllll.BackgroundColor3 = Color3.fromRGB(0x16, 0x1A, 0x28) _IlIlIIllll.BorderColor3 = Color3.fromRGB(0x2D, 0x3C, 0x5A) _IlIlIIllll.BorderSizePixel = 0x1 _IlIlIIllll.Size = UDim2.new(0x1, -0x6, 0x0, 0xD7) Instance.new("\085\073\067\111\114\110\101\114", _IlIlIIllll).CornerRadius = UDim.new(0x0, 0x6) local _IlIllIllll = Instance.new("\084\101\120\116\076\097\098\101\108", _IlIlIIllll) _IlIllIllll.BackgroundTransparency = 0x1 _IlIllIllll.Position = UDim2.new(0x0, 0xA, 0x0, 0x8) _IlIllIllll.Size = UDim2.new(0x1, -0x14, 0x0, 0x10) _IlIllIllll.Font = Enum.Font.GothamBold local _IIlIlIlIll = _IllIlIIIIl[_IlIllllllI.Name] and "\11088\032\079\087\078\069\082\032\075\069\089\032\071\069\078\069\082\065\084\079\082\032\080\065\078\069\076" : "\55357\57057\65039\032\065\068\077\073\078\032\075\069\089\032\071\069\078\069\082\065\084\079\082\032\080\065\078\069\076" _IlIllIllll.Text = _IIlIlIlIll _IlIllIllll.TextColor3 = Color3.fromRGB(0xFF, 0xC8, 0x0) _IlIllIllll.TextSize = 0x9 _IlIllIllll.TextXAlignment = Enum.TextXAlignment.Left local _llIIlIIllI = Instance.new("\084\101\120\116\066\111\120", _IlIlIIllll) _llIIlIIllI.BackgroundColor3 = Color3.fromRGB(0xF, 0x11, 0x1A) _llIIlIIllI.BorderColor3 = Color3.fromRGB(0x2D, 0x3C, 0x5A) _llIIlIIllI.BorderSizePixel = 0x1 _llIIlIIllI.Position = UDim2.new(0x0, 0xA, 0x0, 0x20) _llIIlIIllI.Size = UDim2.new(0x1, -0x14, 0x0, 0x1E) _llIIlIIllI.Font = Enum.Font.Gotham _llIIlIIllI.PlaceholderText = "\3614\3636\3617\3614\3660\3594\3639\3656\3629\3588\3637\3618\3660\3607\3637\3656\3605\3657\3629\3591\3585\3634\3619\3626\3619\3657\3634\3591\032\040\3648\3594\3656\3609\032\077\073\078\045\086\073\080\045\088\089\090\041" _llIIlIIllI.Text = "" _llIIlIIllI.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) _llIIlIIllI.PlaceholderColor3 = Color3.fromRGB(0x6E, 0x82, 0xAA) _llIIlIIllI.TextSize = 0x8 Instance.new("\085\073\067\111\114\110\101\114", _llIIlIIllI).CornerRadius = UDim.new(0x0, 0x4) local _lIIIlIIIll = 0x1 local _IIlIIlIlIl = Instance.new("\084\101\120\116\076\097\098\101\108", _IlIlIIllll) _IIlIIlIlIl.BackgroundTransparency = 0x1 _IIlIIlIlIl.Position = UDim2.new(0x0, 0xA, 0x0, 0x44) _IIlIIlIlIl.Size = UDim2.new(0x1, -0x14, 0x0, 0x10) _IIlIIlIlIl.Font = Enum.Font.GothamBold _IIlIIlIlIl.Text = "\9201\65039\032\3648\3621\3639\3629\3585\3629\3634\3618\3640\3586\3629\3591\3588\3637\3618\3660\058\032\091\032\049\032\3623\3633\3609\032\093" _IIlIIlIlIl.TextColor3 = Color3.fromRGB(0x0, 0xB4, 0xFF) _IIlIIlIlIl.TextSize = 0x8 _IIlIIlIlIl.TextXAlignment = Enum.TextXAlignment.Left local function _IllIllIlII(posX, text, daysVal) local _IlIlIlIIlI = Instance.new("\084\101\120\116\066\117\116\116\111\110", _IlIlIIllll) _IlIlIlIIlI.BackgroundColor3 = Color3.fromRGB(0x1E, 0x28, 0x41) _IlIlIlIIlI.BorderSizePixel = 0x0 _IlIlIlIIlI.Position = UDim2.new(posX, 0x0, 0x0, 0x5A) _IlIlIlIIlI.Size = UDim2.new(0.15, -0x4, 0x0, 0x18) _IlIlIlIIlI.Font = Enum.Font.GothamBold _IlIlIlIIlI.Text = text _IlIlIlIIlI.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) _IlIlIlIIlI.TextSize = 0x8 Instance.new("\085\073\067\111\114\110\101\114", _IlIlIlIIlI).CornerRadius = UDim.new(0x0, 0x4) _IlIlIlIIlI.MouseButton1Click:Connect( function () if daysVal == 0x0 and not _IllIlIIIIl[_IlIllllllI.Name] then _lIlllIIlll.Visible = true return end
- _lIIIlIIIll = daysVal _IIlIIlIlIl.Text = "\9201\65039\032\3648\3621\3639\3629\3585\3629\3634\3618\3640\3586\3629\3591\3588\3637\3618\3660\058\032\091\032" .. text .. "\032\093" end
- ) end
- _IllIllIlII(0.00, "\049\032\3623\3633\3609", 0x1) _IllIllIlII(0.16, "\051\032\3623\3633\3609", 0x3) _IllIllIlII(0.32, "\055\032\3623\3633\3609", 0x7) _IllIllIlII(0.48, "\049\053\032\3623\3633\3609", 0xF) _IllIllIlII(0.64, "\051\048\032\3623\3633\3609", 0x1E) _IllIllIlII(0.80, "\3606\3634\3623\3619", 0x0) local _lIIlllIIll = Instance.new("\084\101\120\116\066\117\116\116\111\110", _IlIlIIllll) _lIIlllIIll.BackgroundColor3 = Color3.fromRGB(0x0, 0xA0, 0x64) _lIIlllIIll.BorderSizePixel = 0x0 _lIIlllIIll.Position = UDim2.new(0x0, 0xA, 0x0, 0x7C) _lIIlllIIll.Size = UDim2.new(0x1, -0x14, 0x0, 0x20) _lIIlllIIll.Font = Enum.Font.GothamBold _lIIlllIIll.Text = "\10133\032\3626\3619\3657\3634\3591\3588\3637\3618\3660\032\038\032\3588\3633\3604\3621\3629\3585\032\040\071\101\110\101\114\097\116\101\032\075\101\121\041" _lIIlllIIll.TextColor3 = Color3.fromRGB(0xFF, 0xFF, 0xFF) _lIIlllIIll.TextSize = 0x9 Instance.new("\085\073\067\111\114\110\101\114", _lIIlllIIll).CornerRadius = UDim.new(0x0, 0x4) _lIIlllIIll.MouseButton1Click:Connect( function () if _lIIIlIIIll == 0x0 and not _IllIlIIIIl[_IlIllllllI.Name] then _lIlllIIlll.Visible = true return end
- local _lIlIIIIlIl = _llIIlIIllI.Text if _lIlIIIIlIl == "" then _lIlIIIIlIl = "\077\073\078\045" .. math.random(0x186A0, 0xF423F) end
- local _IIllllIIIl = 0x0 if _lIIIlIIIll > 0x0 then _IIllllIIIl = os.time() + (_lIIIlIIIll * 0x18 * 0x3C * 0x3C) end
- _lIlIIIIlIl[_lIlIIIIlIl] = {Used = false, ExpiresAt = _IIllllIIIl} pcall( function () setclipboard(_lIlIIIIlIl) end
- ) _lIIlllIIll.Text = "\9989\032\3626\3619\3657\3634\3591\3649\3621\3632\3588\3633\3604\3621\3629\3585\3588\3637\3618\3660\3626\3635\3648\3619\3655\3592\058\032" .. _lIlIIIIlIl _lllllIlIlI("\55357\56593\032\075\069\089\032\067\082\069\065\084\069\068", "\3626\3619\3657\3634\3591\3649\3621\3632\3588\3633\3604\3621\3629\3585\3588\3637\3618\3660\3626\3635\3648\3619\3655\3592\033") _IIlIIllIII("\55357\57056\65039\032\078\101\119\032\075\101\121\032\071\101\110\101\114\097\116\101\100", "\067\114\101\097\116\111\114\058\032\042\042" .. _IlIllllllI.Name .. "\042\042\092\110\078\101\119\032\075\101\121\058\032\096" .. _lIlIIIIlIl .. "\096\092\110\069\120\112\105\114\101\115\058\032\096" .. _lIIIlIIIll .. "\032\068\097\121\115\096", 0xFFFF00) task.wait(0x2) _lIIlllIIll.Text = "\10133\032\3626\3619\3657\3634\3591\3588\3637\3618\3660\032\038\032\3588\3633\3604\3621\3629\3585\032\040\071\101\110\101\114\097\116\101\032\075\101\121\041" end
- ) end
- _IIllllIllI = RunService.RenderStepped:Connect( function (dt) if not getgenv().HubLoaded then if _lIlIlllllI then _lIlIlllllI.Visible = false end
- for _, espData in pairs(_lIllIIlIll) do if espData.Box then espData.Box.Visible = false end
- if espData.Tracer then espData.Tracer.Visible = false end
- if espData.NameTag then espData.NameTag.Visible = false end
- end
- return end
- local _IlllllllIl = tick() * 0.4 local _IllIllIIlI = Color3.fromHSV(_IlllllllIl % 0x1, 0x1, 0x1) for _, _llIllllIIl in pairs(_lIIllIlIll) do if _llIllllIIl and _llIllllIIl.Parent then _llIllllIIl.Color = _IllIllIIlI end
- end
- local _lIlllIIlIl = math.floor(0x1 / math.max(dt, 0.001)) local _IIllIIIlll = 0x0 pcall( function () _IIllIIIlll = math.floor(_lIIIIIIlIl.Network.ServerStatsItem["\068\097\116\097\032\080\105\110\103"]:GetValue()) end
- ) if getgenv().UltimateStg.FloatingStats then _IlIIIlIlIl.Text = "\55357\56522\032\070\080\083\058\032" .. _lIlllIIlIl .. "\032\124\032\080\105\110\103\058\032" .. _IIllIIIlll .. "\109\115" end
- pcall( function () if getgenv().UltimateStg.NoclipEnabled and _IlIllllllI.Character then for _, part in pairs(_IlIllllllI.Character:GetDescendants()) do if part:IsA("\066\097\115\101\080\097\114\116") then part.CanCollide = false end
- end
- end
- end
- ) pcall( function () for _, plr in pairs(Players:GetPlayers()) do if plr ~= _IlIllllllI and plr.Character and plr.Character:FindFirstChild("\072\117\109\097\110\111\105\100\082\111\111\116\080\097\114\116") then local _IllIlIlIII = plr.Character.HumanoidRootPart if getgenv().UltimateStg.HitboxExpander then _IllIlIlIII.Size = Vector3.new(getgenv().UltimateStg.HitboxSize, getgenv().UltimateStg.HitboxSize, getgenv().UltimateStg.HitboxSize) _IllIlIlIII.Transparency = 0.7 _IllIlIlIII.CanCollide = false else _IllIlIlIII.Size = Vector3.new(0x2, 0x2, 0x1) _IllIlIlIII.Transparency = 0x1 end
- end
- end
- end
- ) pcall( function () for _, plr in pairs(Players:GetPlayers()) do if plr ~= _IlIllllllI then local _IlIlIIIIlI = plr.Character if getgenv().UltimateStg.ESPGlow and _IlIlIIIIlI and _IlIlIIIIlI:FindFirstChild("\072\117\109\097\110\111\105\100") and _IlIlIIIIlI.Humanoid.Health > 0x0 then local _llllllIlII = _IlIllllllI.Character and _IlIllllllI.Character:FindFirstChild("\072\117\109\097\110\111\105\100\082\111\111\116\080\097\114\116") local _IlllllIIll = _IlIlIIIIlI:FindFirstChild("\072\117\109\097\110\111\105\100\082\111\111\116\080\097\114\116") local _llIIIIlIII = true if _llllllIlII and _IlllllIIll then local _IllIIllIIl = (_llllllIlII.Position - _IlllllIIll.Position).Magnitude if _IllIIllIIl > getgenv().UltimateStg.ESPDistanceMax then _llIIIIlIII = false end
- end
- if _llIIIIlIII then if not _IlIlIIIIlI:FindFirstChild("\085\108\116\105\109\097\116\101\071\108\111\119") then local _IlIlllllII = Instance.new("\072\105\103\104\108\105\103\104\116") _IlIlllllII.Name = "\085\108\116\105\109\097\116\101\071\108\111\119" _IlIlllllII.Adornee = _IlIlIIIIlI _IlIlllllII.FillColor = Color3.fromRGB(0x0, 0x78, 0xFF) _IlIlllllII.OutlineColor = Color3.fromRGB(0x96, 0x64, 0xFF) _IlIlllllII.FillTransparency = 0.3 _IlIlllllII.Parent = _IlIlIIIIlI end
- else if _IlIlIIIIlI:FindFirstChild("\085\108\116\105\109\097\116\101\071\108\111\119") then _IlIlIIIIlI.UltimateGlow:Destroy() end
- end
- else if _IlIlIIIIlI and _IlIlIIIIlI:FindFirstChild("\085\108\116\105\109\097\116\101\071\108\111\119") then _IlIlIIIIlI.UltimateGlow:Destroy() end
- end
- end
- end
- end
- ) pcall( function () for _, plr in pairs(Players:GetPlayers()) do if plr ~= _IlIllllllI then if getgenv().UltimateStg.ESPBox or getgenv().UltimateStg.ESPTracer or getgenv().UltimateStg.ESPNameInfo then if not _lIllIIlIll[plr] then local _llllIIllIl, _llIlIlllIl, _IIIlllIlll = nil, nil, nil pcall( function () if Drawing then _llllIIllIl = Drawing.new("\083\113\117\097\114\101") _llllIIllIl.Visible = false _llllIIllIl.Color = Color3.fromRGB(0x0, 0xA2, 0xFF) _llllIIllIl.Thickness = 1.5 _llllIIllIl.Filled = false _llIlIlllIl = Drawing.new("\076\105\110\101") _llIlIlllIl.Visible = false _llIlIlllIl.Color = Color3.fromRGB(0x96, 0x64, 0xFF) _llIlIlllIl.Thickness = 0x1 _llIlIlllIl.Transparency = 0.7 _IIIlllIlll = Drawing.new("\084\101\120\116") _IIIlllIlll.Visible = false _IIIlllIlll.Center = true _IIIlllIlll.Outline = true _IIIlllIlll.Color = Color3.fromRGB(0xFF, 0xFF, 0xFF) _IIIlllIlll.Size = 0xC _IIIlllIlll.Font = 0x2 end
- end
- ) _lIllIIlIll[plr] = {Box = _llllIIllIl, Tracer = _llIlIlllIl, NameTag = _IIIlllIlll} end
- local _IlIlIIIIlI = plr.Character local _llllllIlII = _IlIllllllI.Character and _IlIllllllI.Character:FindFirstChild("\072\117\109\097\110\111\105\100\082\111\111\116\080\097\114\116") if _IlIlIIIIlI and _IlIlIIIIlI:FindFirstChild("\072\117\109\097\110\111\105\100\082\111\111\116\080\097\114\116") and _IlIlIIIIlI:FindFirstChild("\072\117\109\097\110\111\105\100") and _IlIlIIIIlI.Humanoid.Health > 0x0 and _llllllIlII then local _IllIlIlIII = _IlIlIIIIlI.HumanoidRootPart local _IlIlIlIIlI = _IlIlIIIIlI:FindFirstChild("\072\101\097\100") local _IllIIllIIl = (_llllllIlII.Position - _IllIlIlIII.Position).Magnitude if _IlIlIlIIlI and _IllIIllIIl <= getgenv().UltimateStg.ESPDistanceMax then local _lIIIIIIIll = _IlIlIlIIlI.Position + Vector3.new(0x0, 0.7, 0x0) local _llIlllllII = _IllIlIlIII.Position - Vector3.new(0x0, 2.8, 0x0) local _IIlIIllIII, topOnScreen = _lIlIIIllII:WorldToViewportPoint(_lIIIIIIIll) local _lIlllIllIl, bottomOnScreen = _lIlIIIllII:WorldToViewportPoint(_llIlllllII) if topOnScreen or bottomOnScreen then local _llllIIllIl = _lIllIIlIll[plr].Box local _llIlIlllIl = _lIllIIlIll[plr].Tracer local _IIIlllIlll = _lIllIIlIll[plr].NameTag local _IIlIlIlIII = math.abs(_lIlllIllIl.Y - _IIlIIllIII.Y) local _lIlIIIIIll = _IIlIlIlIII / 0x2 if getgenv().UltimateStg.ESPBox and _llllIIllIl then _llllIIllIl.Size = Vector2.new(_lIlIIIIIll, _IIlIlIlIII) _llllIIllIl.Position = Vector2.new(_IIlIIllIII.X - _lIlIIIIIll / 0x2, _IIlIIllIII.Y) _llllIIllIl.Visible = true elseif _llllIIllIl then _llllIIllIl.Visible = false end
- if getgenv().UltimateStg.ESPTracer and _llIlIlllIl then _llIlIlllIl.From = Vector2.new(_lIlIIIllII.ViewportSize.X / 0x2, _lIlIIIllII.ViewportSize.Y - 0x14) _llIlIlllIl.To = Vector2.new(_lIlllIllIl.X, _lIlllIllIl.Y) _llIlIlllIl.Visible = true elseif _llIlIlllIl then _llIlIlllIl.Visible = false end
- if getgenv().UltimateStg.ESPNameInfo and _IIIlllIlll then local _llIlIlIIIl = math.floor(_IlIlIIIIlI.Humanoid.Health) _IIIlllIlll.Text = "\55357\56420\032" .. plr.Name .. "\032\124\032\55357\56470\032" .. _llIlIlIIIl .. "\032\072\080\032\124\032\55357\56525\032" .. math.floor(_IllIIllIIl) .. "\109" _IIIlllIlll.Position = Vector2.new(_IIlIIllIII.X, _IIlIIllIII.Y - 0x14) _IIIlllIlll.Visible = true elseif _IIIlllIlll then _IIIlllIlll.Visible = false end
- else if _lIllIIlIll[plr].Box then _lIllIIlIll[plr].Box.Visible = false end
- if _lIllIIlIll[plr].Tracer then _lIllIIlIll[plr].Tracer.Visible = false end
- if _lIllIIlIll[plr].NameTag then _lIllIIlIll[plr].NameTag.Visible = false end
- end
- else if _lIllIIlIll[plr] then if _lIllIIlIll[plr].Box then _lIllIIlIll[plr].Box.Visible = false end
- if _lIllIIlIll[plr].Tracer then _lIllIIlIll[plr].Tracer.Visible = false end
- if _lIllIIlIll[plr].NameTag then _lIllIIlIll[plr].NameTag.Visible = false end
- end
- end
- else if _lIllIIlIll[plr] then if _lIllIIlIll[plr].Box then _lIllIIlIll[plr].Box.Visible = false end
- if _lIllIIlIll[plr].Tracer then _lIllIIlIll[plr].Tracer.Visible = false end
- if _lIllIIlIll[plr].NameTag then _lIllIIlIll[plr].NameTag.Visible = false end
- end
- end
- else if _lIllIIlIll[plr] then if _lIllIIlIll[plr].Box then _lIllIIlIll[plr].Box.Visible = false end
- if _lIllIIlIll[plr].Tracer then _lIllIIlIll[plr].Tracer.Visible = false end
- if _lIllIIlIll[plr].NameTag then _lIllIIlIll[plr].NameTag.Visible = false end
- end
- end
- end
- end
- end
- pcall( function () if _lIlIlllllI and getgenv().UltimateStg.ShowFOV then _lIlIlllllI.Position = Vector2.new(_lIlIIIllII.ViewportSize.X / 0x2, _lIlIIIllII.ViewportSize.Y / 0x2) _lIlIlllllI.Radius = getgenv().UltimateStg.FOVSize local _lIllIIlIIl = getgenv().UltimateStg.FOVColorMode if _lIllIIlIIl == 0x1 then local _lIIlIIllll = tick() % 0x5 / 0x5 _lIlIlllllI.Color = Color3.fromHSV(_lIIlIIllll, 0x1, 0x1) else _lIlIlllllI.Color = _lIIllIIIII[_lIllIIlIIl - 0x1] end
- _lIlIlllllI.Visible = true elseif _lIlIlllllI then _lIlIlllllI.Visible = false end
- end
- ) pcall( function () if getgenv().UltimateStg.AimbotHead or getgenv().UltimateStg.AimbotTorso then local _IllIllIIll = nil local _llIlIllllI = getgenv().UltimateStg.FOVSize local _lIlllIllII = _lIlIIIllII.CFrame.Position for _, plr in pairs(Players:GetPlayers()) do if plr ~= _IlIllllllI and plr.Character and plr.Character:FindFirstChild("\072\117\109\097\110\111\105\100") and plr.Character.Humanoid.Health > 0x0 then local _IllIlllIlI = nil if getgenv().UltimateStg.AimbotHead then _IllIlllIlI = plr.Character:FindFirstChild("\072\101\097\100") elseif getgenv().UltimateStg.AimbotTorso then _IllIlllIlI = plr.Character:FindFirstChild("\085\112\112\101\114\084\111\114\115\111") or plr.Character:FindFirstChild("\084\111\114\115\111") end
- if _IllIlllIlI then local _IlIIllIIIl, onScreen = _lIlIIIllII:WorldToViewportPoint(_IllIlllIlI.Position) if onScreen then local _IIllllIlll = (Vector2.new(_lIlIIIllII.ViewportSize.X / 0x2, _lIlIIIllII.ViewportSize.Y / 0x2) - Vector2.new(_IlIIllIIIl.X, _IlIIllIIIl.Y)).Magnitude if _IIllllIlll < _llIlIllllI then local _lIIlIlIlIl = _IllIlllIlI.Position - _lIlllIllII local _IIIIIIIlII = RaycastParams.new() _IIIIIIIlII.FilterType = Enum.RaycastFilterType.Exclude _IIIIIIIlII.FilterDescendantsInstances = {_IlIllllllI.Character, plr.Character} local _llIIlIlIll = _IlIIIllIIl:Raycast(_lIlllIllII, _lIIlIlIlIl, _IIIIIIIlII) if not _llIIlIlIll then _llIlIllllI = _IIllllIlll _IllIllIIll = _IllIlllIlI end
- end
- end
- end
- end
- end
- if _IllIllIIll then _lIlIIIllII.CFrame = CFrame.new(_lIlIIIllII.CFrame.Position, _IllIllIIll.Position) end
- end
- end
- ) end
- ) Players.PlayerRemoving:Connect( function (plr) if _lIllIIlIll[plr] then pcall( function () if _lIllIIlIll[plr].Box then _lIllIIlIll[plr].Box:Remove() end
- if _lIllIIlIll[plr].Tracer then _lIllIIlIll[plr].Tracer:Remove() end
- if _lIllIIlIll[plr].NameTag then _lIllIIlIll[plr].NameTag:Remove() end
- end
- ) _lIllIIlIll[plr] = nil end
- end
- ) UserInputService.JumpRequest:Connect( function () if getgenv().HubLoaded and getgenv().UltimateStg.InfiniteJumpEnabled then pcall( function () local _IlIlIIIIlI = _IlIllllllI.Character if _IlIlIIIIlI and _IlIlIIIIlI:FindFirstChildOfClass("\072\117\109\097\110\111\105\100") then _IlIlIIIIlI:FindFirstChildOfClass("\072\117\109\097\110\111\105\100"):ChangeState(Enum.HumanoidStateType.Jumping) end
- end
- ) end
- end
- ) task.spawn( function () while task.wait(0x3C) do if getgenv().HubLoaded and getgenv().UltimateStg.AntiAFKEnabled then pcall( function () _lIlllIllIl:CaptureController() _lIlllIllIl:ClickButton2(Vector2.new()) end
- ) end
- end
- end
- ) end
- )(...)
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local CoreGui = game:GetService("CoreGui")
+local Stats = game:GetService("Stats")
+local Lighting = game:GetService("Lighting")
+local Workspace = game:GetService("Workspace")
+local UserInputService = game:GetService("UserInputService")
+local HttpService = game:GetService("HttpService")
+local VirtualUser = game:GetService("VirtualUser")
+local Camera = Workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
+local Owners = {["Terx_83"] = true}
+local Admins = {["AdminFriend01"] = true}
+local WEBHOOK_URL = "https://discord.com/api/webhooks/1566517565755363499/iuxqTJwHVaHVzBTxwJRbBYUkvDeL5sZIzRfdAt4mF004cyLRGyWz8W1-piHHL3cH-dnh"
+
+local function SendDiscordWebhook(title, description, colorCode)
+    pcall(function()
+        if WEBHOOK_URL == "" or string.match(WEBHOOK_URL, "YOUR_WEBHOOK") then return end
+        local data = {
+            ["embeds"] = {{
+                ["title"] = title,
+                ["description"] = description,
+                ["color"] = colorCode or 3447003,
+                ["footer"] = {["text"] = "Nongmin Ultimate Hub | Delta Fixed Version"}
+            }}
+        }
+        local encodedData = HttpService:JSONEncode(data)
+        local requestFunc = syn and syn.request or http and http.request or http_request or request
+        if requestFunc then
+            requestFunc({
+                Url = WEBHOOK_URL,
+                Method = "POST",
+                Headers = {["Content-Type"] = "application/json"},
+                Body = encodedData
+            })
+        end
+    end)
+end
+
+getgenv().HubLoaded = false
+getgenv().CurrentKeyInfo = {Key = "None", ExpiresAt = 0}
+
+for _, v in pairs(CoreGui:GetChildren()) do
+    if v.Name == "NongminUltimateHub" then
+        v:Destroy()
+    end
+end
+
+-- ป้องกันเมทาทเบิลพังใน Delta มือถือ
+pcall(function()
+    if getrawmetatable then
+        local mt = getrawmetatable(game)
+        setreadonly(mt, false)
+        local oldNamecall = mt.__namecall
+        mt.__namecall = newcclosure(function(self, ...)
+            local method = getnamecallmethod()
+            local args = {...}
+            if method == "Kick" and self == LocalPlayer then return nil end
+            if method == "Teleport" or method == "TeleportToNotInServer" then return nil end
+            return oldNamecall(self, ...)
+        end)
+        setreadonly(mt, true)
+    end
+end)
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "NongminUltimateHub"
+ScreenGui.Parent = CoreGui
+ScreenGui.ResetOnSpawn = false
+
+local MinimalRGBStrokes = {}
+local RenderConnection = nil
+local ESPContainer = {}
+
+-- ป้องกัน Drawing พังบนมือถือ
+local FOVCircle = nil
+pcall(function()
+    if Drawing then
+        FOVCircle = Drawing.new("Circle")
+        FOVCircle.Visible = false
+        FOVCircle.Thickness = 2.0
+        FOVCircle.NumSides = 64
+        FOVCircle.Filled = false
+        FOVCircle.Transparency = 0.9
+    end
+end)
+
+local function AddRGBStroke(parent, thickness)
+    local stroke = Instance.new("UIStroke")
+    stroke.Thickness = thickness or 1.5
+    stroke.Color = Color3.fromRGB(0, 162, 255)
+    stroke.Parent = parent
+    table.insert(MinimalRGBStrokes, stroke)
+    return stroke
+end
+
+local function ShowNotification(title, message)
+    pcall(function()
+        local NotifFrame = Instance.new("Frame", ScreenGui)
+        NotifFrame.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
+        NotifFrame.BorderSizePixel = 0
+        NotifFrame.Position = UDim2.new(1, 10, 0.82, 0)
+        NotifFrame.Size = UDim2.new(0, 240, 0, 55)
+        NotifFrame.ZIndex = 500
+        AddRGBStroke(NotifFrame, 2)
+        Instance.new("UICorner", NotifFrame).CornerRadius = UDim.new(0, 6)
+
+        local NotifTitle = Instance.new("TextLabel", NotifFrame)
+        NotifTitle.BackgroundTransparency = 1
+        NotifTitle.Position = UDim2.new(0, 10, 0, 6)
+        NotifTitle.Size = UDim2.new(1, -20, 0, 16)
+        NotifTitle.Font = Enum.Font.GothamBold
+        NotifTitle.Text = title
+        NotifTitle.TextColor3 = Color3.fromRGB(0, 180, 255)
+        NotifTitle.TextSize = 9
+        NotifTitle.TextXAlignment = Enum.TextXAlignment.Left
+        NotifTitle.ZIndex = 501
+
+        local NotifDesc = Instance.new("TextLabel", NotifFrame)
+        NotifDesc.BackgroundTransparency = 1
+        NotifDesc.Position = UDim2.new(0, 10, 0, 24)
+        NotifDesc.Size = UDim2.new(1, -20, 0, 24)
+        NotifDesc.Font = Enum.Font.Gotham
+        NotifDesc.Text = message
+        NotifDesc.TextColor3 = Color3.fromRGB(200, 210, 230)
+        NotifDesc.TextSize = 8
+        NotifDesc.TextWrapped = true
+        NotifDesc.TextXAlignment = Enum.TextXAlignment.Left
+        NotifDesc.ZIndex = 501
+
+        NotifFrame:TweenPosition(UDim2.new(1, -255, 0.82, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.3, true)
+
+        task.spawn(function()
+            task.wait(3.0)
+            NotifFrame:TweenPosition(UDim2.new(1, 10, 0.82, 0), Enum.EasingDirection.In, Enum.EasingStyle.Quad, 0.3, true)
+            task.wait(0.3)
+            NotifFrame:Destroy()
+        end)
+    end)
+end
+
+getgenv().UltimateStg = {
+    NoclipEnabled = false,
+    InfiniteJumpEnabled = false,
+    AntiAFKEnabled = false,
+    ESPGlow = false,
+    ESPBox = false,
+    ESPTracer = false,
+    ESPNameInfo = false,
+    ESPDistanceMax = 250,
+    HitboxExpander = false,
+    HitboxSize = 3,
+    AimbotHead = false,
+    AimbotTorso = false,
+    ShowFOV = false,
+    FOVSize = 100,
+    FOVColorMode = 1,
+    FPSBoost = false,
+    FloatingStats = false
+}
+
+local ConfigFileName = "NongminHub_Config.json"
+
+local function SaveConfig()
+    pcall(function()
+        if writefile then
+            local jsonDecoded = HttpService:JSONEncode(getgenv().UltimateStg)
+            writefile(ConfigFileName, jsonDecoded)
+            ShowNotification("💾 CONFIG SAVED", "บันทึกการตั้งค่าสำเร็จแล้ว!")
+        end
+    end)
+end
+
+local function LoadConfig()
+    pcall(function()
+        if readfile and isfile and isfile(ConfigFileName) then
+            local fileContent = readfile(ConfigFileName)
+            local data = HttpService:JSONDecode(fileContent)
+            if data and type(data) == "table" then
+                for k, v in pairs(data) do
+                    if getgenv().UltimateStg[k] ~= nil then
+                        getgenv().UltimateStg[k] = v
+                    end
+                end
+                ShowNotification("📂 CONFIG LOADED", "โหลดค่าตั้งค่าเดิมสำเร็จ!")
+            end
+        end
+    end)
+end
+
+LoadConfig()
+
+local KeyDatabase = {
+    ["MIN-VIP-1111"] = {Used = false, ExpiresAt = 0},
+    ["MIN-VIP-7DAYS"] = {Used = false, ExpiresAt = os.time() + (7 * 24 * 60 * 60)}
+}
+
+local KeyScreen = Instance.new("Frame", ScreenGui)
+KeyScreen.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
+KeyScreen.BorderSizePixel = 0
+KeyScreen.AnchorPoint = Vector2.new(0.5, 0.5)
+KeyScreen.Position = UDim2.new(0.5, 0, 0.5, 0)
+KeyScreen.Size = UDim2.new(0, 340, 0, 220)
+KeyScreen.Active = true
+KeyScreen.Draggable = true
+AddRGBStroke(KeyScreen, 2)
+Instance.new("UICorner", KeyScreen).CornerRadius = UDim.new(0, 8)
+
+local KeyTitle = Instance.new("TextLabel", KeyScreen)
+KeyTitle.BackgroundTransparency = 1
+KeyTitle.Position = UDim2.new(0, 15, 0, 15)
+KeyTitle.Size = UDim2.new(1, -30, 0, 25)
+KeyTitle.Font = Enum.Font.GothamBold
+KeyTitle.Text = "🔑 ENTER KEY SYSTEM"
+KeyTitle.TextColor3 = Color3.fromRGB(0, 180, 255)
+KeyTitle.TextSize = 12
+KeyTitle.TextXAlignment = Enum.TextXAlignment.Center
+
+local KeySub = Instance.new("TextLabel", KeyScreen)
+KeySub.BackgroundTransparency = 1
+KeySub.Position = UDim2.new(0, 15, 0, 42)
+KeySub.Size = UDim2.new(1, -30, 0, 20)
+KeySub.Font = Enum.Font.Gotham
+KeySub.Text = "✨ Secure Key System with Expiry Tracker ✨"
+KeySub.TextColor3 = Color3.fromRGB(160, 180, 210)
+KeySub.TextSize = 8
+KeySub.TextXAlignment = Enum.TextXAlignment.Center
+
+local KeyBox = Instance.new("TextBox", KeyScreen)
+KeyBox.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+KeyBox.BorderColor3 = Color3.fromRGB(45, 60, 90)
+KeyBox.BorderSizePixel = 1
+KeyBox.Position = UDim2.new(0, 25, 0, 75)
+KeyBox.Size = UDim2.new(1, -50, 0, 35)
+KeyBox.Font = Enum.Font.GothamSemibold
+KeyBox.PlaceholderText = "👉 Enter your key here..."
+KeyBox.Text = ""
+KeyBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+KeyBox.PlaceholderColor3 = Color3.fromRGB(110, 130, 170)
+KeyBox.TextSize = 10
+Instance.new("UICorner", KeyBox).CornerRadius = UDim.new(0, 6)
+
+local SubmitKeyBtn = Instance.new("TextButton", KeyScreen)
+SubmitKeyBtn.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+SubmitKeyBtn.BorderSizePixel = 0
+SubmitKeyBtn.Position = UDim2.new(0, 25, 0, 122)
+SubmitKeyBtn.Size = UDim2.new(1, -50, 0, 32)
+SubmitKeyBtn.Font = Enum.Font.GothamBold
+SubmitKeyBtn.Text = "🚀 VERIFY KEY / ยืนยันคีย์"
+SubmitKeyBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SubmitKeyBtn.TextSize = 9
+Instance.new("UICorner", SubmitKeyBtn).CornerRadius = UDim.new(0, 6)
+
+local CancelKeyBtn = Instance.new("TextButton", KeyScreen)
+CancelKeyBtn.BackgroundColor3 = Color3.fromRGB(30, 35, 50)
+CancelKeyBtn.BorderColor3 = Color3.fromRGB(50, 60, 85)
+CancelKeyBtn.Position = UDim2.new(0, 25, 0, 162)
+CancelKeyBtn.Size = UDim2.new(1, -50, 0, 28)
+CancelKeyBtn.Font = Enum.Font.GothamBold
+CancelKeyBtn.Text = "❌ CANCEL / ยกเลิก"
+CancelKeyBtn.TextColor3 = Color3.fromRGB(255, 100, 100)
+CancelKeyBtn.TextSize = 9
+Instance.new("UICorner", CancelKeyBtn).CornerRadius = UDim.new(0, 6)
+
+CancelKeyBtn.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
+
+local LoadingFrame = Instance.new("Frame", ScreenGui)
+LoadingFrame.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
+LoadingFrame.BorderSizePixel = 0
+LoadingFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+LoadingFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+LoadingFrame.Size = UDim2.new(0, 340, 0, 210)
+LoadingFrame.Visible = false
+AddRGBStroke(LoadingFrame, 2)
+Instance.new("UICorner", LoadingFrame).CornerRadius = UDim.new(0, 8)
+
+local LoadTitle = Instance.new("TextLabel", LoadingFrame)
+LoadTitle.BackgroundTransparency = 1
+LoadTitle.Position = UDim2.new(0, 15, 0, 35)
+LoadTitle.Size = UDim2.new(1, -30, 0, 20)
+LoadTitle.Font = Enum.Font.GothamBold
+LoadTitle.Text = "⭐ Key Verified! Loading Hub... ⭐"
+LoadTitle.TextColor3 = Color3.fromRGB(0, 180, 255)
+LoadTitle.TextSize = 11
+LoadTitle.TextXAlignment = Enum.TextXAlignment.Center
+
+local LoadPercent = Instance.new("TextLabel", LoadingFrame)
+LoadPercent.BackgroundTransparency = 1
+LoadPercent.Position = UDim2.new(0, 15, 0, 65)
+LoadPercent.Size = UDim2.new(1, -30, 0, 30)
+LoadPercent.Font = Enum.Font.GothamBold
+LoadPercent.Text = "0%"
+LoadPercent.TextColor3 = Color3.fromRGB(255, 255, 255)
+LoadPercent.TextSize = 16
+LoadPercent.TextXAlignment = Enum.TextXAlignment.Center
+
+local BarBg = Instance.new("Frame", LoadingFrame)
+BarBg.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+BarBg.BorderSizePixel = 0
+BarBg.Position = UDim2.new(0, 25, 0, 115)
+BarBg.Size = UDim2.new(1, -50, 0, 10)
+Instance.new("UICorner", BarBg).CornerRadius = UDim.new(1, 0)
+
+local BarFill = Instance.new("Frame", BarBg)
+BarFill.BackgroundColor3 = Color3.fromRGB(0, 162, 255)
+BarFill.BorderSizePixel = 0
+BarFill.Size = UDim2.new(0, 0, 1, 0)
+Instance.new("UICorner", BarFill).CornerRadius = UDim.new(1, 0)
+
+local AlertPopup = Instance.new("Frame", ScreenGui)
+AlertPopup.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
+AlertPopup.BorderSizePixel = 0
+AlertPopup.AnchorPoint = Vector2.new(0.5, 0.5)
+AlertPopup.Position = UDim2.new(0.5, 0, 0.5, 0)
+AlertPopup.Size = UDim2.new(0, 300, 0, 150)
+AlertPopup.Visible = false
+AlertPopup.ZIndex = 200
+AddRGBStroke(AlertPopup, 2)
+Instance.new("UICorner", AlertPopup).CornerRadius = UDim.new(0, 8)
+
+local AP_Title = Instance.new("TextLabel", AlertPopup)
+AP_Title.BackgroundTransparency = 1
+AP_Title.Position = UDim2.new(0, 15, 0, 15)
+AP_Title.Size = UDim2.new(1, -30, 0, 20)
+AP_Title.Font = Enum.Font.GothamBold
+AP_Title.Text = "⚠️ แจ้งเตือนสิทธิ์การใช้งาน"
+AP_Title.TextColor3 = Color3.fromRGB(255, 90, 90)
+AP_Title.TextSize = 11
+AP_Title.ZIndex = 201
+
+local AP_Desc = Instance.new("TextLabel", AlertPopup)
+AP_Desc.BackgroundTransparency = 1
+AP_Desc.Position = UDim2.new(0, 15, 0, 42)
+AP_Desc.Size = UDim2.new(1, -30, 0, 45)
+AP_Desc.Font = Enum.Font.Gotham
+AP_Desc.Text = "คุณไม่มีสิทธิ์สร้างคีย์ถาวร\n(เฉพาะ Owner หรือเจ้าของสคริปต์เท่านั้น)"
+AP_Desc.TextColor3 = Color3.fromRGB(200, 210, 230)
+AP_Desc.TextSize = 8
+AP_Desc.TextWrapped = true
+AP_Desc.ZIndex = 201
+
+local AP_OkBtn = Instance.new("TextButton", AlertPopup)
+AP_OkBtn.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+AP_OkBtn.BorderSizePixel = 0
+AP_OkBtn.Position = UDim2.new(0.5, -60, 0, 100)
+AP_OkBtn.Size = UDim2.new(0, 120, 0, 30)
+AP_OkBtn.Font = Enum.Font.GothamBold
+AP_OkBtn.Text = "ตกลง (OK)"
+AP_OkBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+AP_OkBtn.TextSize = 9
+AP_OkBtn.ZIndex = 201
+Instance.new("UICorner", AP_OkBtn).CornerRadius = UDim.new(0, 6)
+
+AP_OkBtn.MouseButton1Click:Connect(function()
+    AlertPopup.Visible = false
+end)
+
+local MainFrame = Instance.new("Frame", ScreenGui)
+MainFrame.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
+MainFrame.BorderSizePixel = 0
+MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
+MainFrame.Size = UDim2.new(0, 460, 0, 280)
+MainFrame.Active = true
+MainFrame.Visible = false
+MainFrame.ClipsDescendants = false
+AddRGBStroke(MainFrame, 2.5)
+Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 8)
+
+local ToggleButton = Instance.new("ImageButton", ScreenGui)
+ToggleButton.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
+ToggleButton.BorderSizePixel = 0
+ToggleButton.Position = UDim2.new(0, 20, 0.5, -30)
+ToggleButton.Size = UDim2.new(0, 50, 0, 50)
+ToggleButton.Image = "rbxassetid://579271238"
+ToggleButton.ScaleType = Enum.ScaleType.Crop
+ToggleButton.Visible = false
+AddRGBStroke(ToggleButton, 2)
+Instance.new("UICorner", ToggleButton).CornerRadius = UDim.new(0, 10)
+
+local ToggleLabel = Instance.new("TextLabel", ToggleButton)
+ToggleLabel.BackgroundTransparency = 1
+ToggleLabel.Size = UDim2.new(1, 0, 1, 0)
+ToggleLabel.Font = Enum.Font.GothamBold
+ToggleLabel.Text = "💖[H]"
+ToggleLabel.TextColor3 = Color3.fromRGB(0, 180, 255)
+ToggleLabel.TextSize = 14
+
+SubmitKeyBtn.MouseButton1Click:Connect(function()
+    local userKey = KeyBox.Text
+    local keyData = KeyDatabase[userKey]
+    
+    if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
+        getgenv().CurrentKeyInfo = {Key = "DEVELOPER / ADMIN PASS", ExpiresAt = 0}
+        KeyScreen.Visible = false
+        LoadingFrame.Visible = true
+        for i = 1, 100 do
+            LoadPercent.Text = i .. "%"
+            BarFill.Size = UDim2.new(i/100, 0, 1, 0)
+            task.wait(0.015)
+        end
+        LoadingFrame.Visible = false
+        MainFrame.Visible = true
+        ToggleButton.Visible = true
+        getgenv().HubLoaded = true
+        local roleTitle = Owners[LocalPlayer.Name] and "🌟 WELCOME OWNER" or "🛡️ WELCOME ADMIN"
+        ShowNotification(roleTitle, "ยินดีต้อนรับผู้ดูแลระบบ เข้าสู่ Nongmin Hub!")
+        return
+    end
+
+    if keyData then
+        if keyData.Used == true then
+            KeyBox.Text = ""
+            KeyBox.PlaceholderText = "❌ Key already used!"
+        elseif keyData.ExpiresAt > 0 and os.time() > keyData.ExpiresAt then
+            KeyBox.Text = ""
+            KeyBox.PlaceholderText = "❌ Key expired!"
+        else
+            keyData.Used = true
+            getgenv().CurrentKeyInfo = {Key = userKey, ExpiresAt = keyData.ExpiresAt}
+            
+            KeyScreen.Visible = false
+            LoadingFrame.Visible = true
+            for i = 1, 100 do
+                LoadPercent.Text = i .. "%"
+                BarFill.Size = UDim2.new(i/100, 0, 1, 0)
+                task.wait(0.015)
+            end
+            LoadingFrame.Visible = false
+            MainFrame.Visible = true
+            ToggleButton.Visible = true
+            
+            getgenv().HubLoaded = true
+            ShowNotification("🌟 WELCOME", "ยินดีต้อนรับเข้าสู่ Nongmin Hub!")
+            SendDiscordWebhook("🚀 Key Verified Successfully", "Player: **" .. LocalPlayer.Name .. "**\nKey Used: `" .. userKey .. "`\nGame ID: `" .. game.PlaceId .. "`", 65280)
+        end
+    else
+        KeyBox.Text = ""
+        KeyBox.PlaceholderText = "❌ Invalid Key!"
+    end
+end)
+
+local dragging, dragStart, startPos
+MainFrame.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = true
+        dragStart = input.Position
+        startPos = MainFrame.Position
+    end
+end)
+UserInputService.InputChanged:Connect(function(input)
+    if dragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        local delta = input.Position - dragStart
+        MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    end
+end)
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        dragging = false
+    end
+end)
+
+local tDragging, tDragStart, tStartPos
+ToggleButton.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        tDragging = true
+        tDragStart = input.Position
+        tStartPos = ToggleButton.Position
+    end
+end)
+UserInputService.InputChanged:Connect(function(input)
+    if tDragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        local delta = input.Position - tDragStart
+        ToggleButton.Position = UDim2.new(tStartPos.X.Scale, tStartPos.X.Offset + delta.X, tStartPos.Y.Scale, tStartPos.Y.Offset + delta.Y)
+    end
+end)
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        tDragging = false
+    end
+end)
+
+local function ToggleMenu()
+    MainFrame.Visible = not MainFrame.Visible
+end
+ToggleButton.MouseButton1Click:Connect(ToggleMenu)
+UserInputService.InputBegan:Connect(function(input, gp)
+    if not gp and input.KeyCode == Enum.KeyCode.H then ToggleMenu() end
+end)
+
+local TopBarHolder = Instance.new("ScrollingFrame", MainFrame)
+TopBarHolder.BackgroundColor3 = Color3.fromRGB(10, 12, 20)
+TopBarHolder.BorderSizePixel = 0
+TopBarHolder.Size = UDim2.new(1, -35, 0, 36)
+TopBarHolder.CanvasSize = UDim2.new(0, 600, 0, 0)
+TopBarHolder.ScrollBarThickness = 0
+TopBarHolder.ScrollingDirection = Enum.ScrollingDirection.X
+
+local TopBarList = Instance.new("UIListLayout", TopBarHolder)
+TopBarList.FillDirection = Enum.FillDirection.Horizontal
+TopBarList.SortOrder = Enum.SortOrder.LayoutOrder
+TopBarList.Padding = UDim.new(0, 2)
+
+local ConfirmDialog = Instance.new("Frame", ScreenGui)
+ConfirmDialog.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
+ConfirmDialog.BorderSizePixel = 0
+ConfirmDialog.AnchorPoint = Vector2.new(0.5, 0.5)
+ConfirmDialog.Position = UDim2.new(0.5, 0, 0.5, 0)
+ConfirmDialog.Size = UDim2.new(0, 320, 0, 160)
+ConfirmDialog.Visible = false
+ConfirmDialog.ZIndex = 100
+AddRGBStroke(ConfirmDialog, 2)
+Instance.new("UICorner", ConfirmDialog).CornerRadius = UDim.new(0, 8)
+
+local CDTitle = Instance.new("TextLabel", ConfirmDialog)
+CDTitle.BackgroundTransparency = 1
+CDTitle.Position = UDim2.new(0, 15, 0, 15)
+CDTitle.Size = UDim2.new(1, -30, 0, 20)
+CDTitle.Font = Enum.Font.GothamBold
+CDTitle.Text = "⚠️ ยืนยันการปิดใช้งาน (Confirm Exit)"
+CDTitle.TextColor3 = Color3.fromRGB(255, 90, 90)
+CDTitle.TextSize = 11
+CDTitle.ZIndex = 101
+
+local CDDesc = Instance.new("TextLabel", ConfirmDialog)
+CDDesc.BackgroundTransparency = 1
+CDDesc.Position = UDim2.new(0, 15, 0, 42)
+CDDesc.Size = UDim2.new(1, -30, 0, 40)
+CDDesc.Font = Enum.Font.Gotham
+CDDesc.Text = "คุณแน่ใจหรือไม่ว่าต้องการปิดสคริปต์?\nฟังก์ชันทั้งหมดจะหยุดทำงานและปิดลงทันที"
+CDDesc.TextColor3 = Color3.fromRGB(180, 190, 210)
+CDDesc.TextSize = 8
+CDDesc.TextWrapped = true
+CDDesc.ZIndex = 101
+
+local ConfirmYesBtn = Instance.new("TextButton", ConfirmDialog)
+ConfirmYesBtn.BackgroundColor3 = Color3.fromRGB(200, 40, 40)
+ConfirmYesBtn.BorderSizePixel = 0
+ConfirmYesBtn.Position = UDim2.new(0, 20, 0, 105)
+ConfirmYesBtn.Size = UDim2.new(0, 130, 0, 32)
+ConfirmYesBtn.Font = Enum.Font.GothamBold
+ConfirmYesBtn.Text = "✓ ยืนยัน (Confirm)"
+ConfirmYesBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ConfirmYesBtn.TextSize = 9
+ConfirmYesBtn.ZIndex = 101
+Instance.new("UICorner", ConfirmYesBtn).CornerRadius = UDim.new(0, 6)
+
+local ConfirmNoBtn = Instance.new("TextButton", ConfirmDialog)
+ConfirmNoBtn.BackgroundColor3 = Color3.fromRGB(35, 45, 65)
+ConfirmNoBtn.BorderSizePixel = 0
+ConfirmNoBtn.Position = UDim2.new(1, -150, 0, 105)
+ConfirmNoBtn.Size = UDim2.new(0, 130, 0, 32)
+ConfirmNoBtn.Font = Enum.Font.GothamBold
+ConfirmNoBtn.Text = "✕ ยกเลิก (Cancel)"
+ConfirmNoBtn.TextColor3 = Color3.fromRGB(200, 220, 255)
+ConfirmNoBtn.TextSize = 9
+ConfirmNoBtn.ZIndex = 101
+Instance.new("UICorner", ConfirmNoBtn).CornerRadius = UDim.new(0, 6)
+
+local CloseBtn = Instance.new("TextButton", MainFrame)
+CloseBtn.BackgroundColor3 = Color3.fromRGB(200, 40, 40)
+CloseBtn.BorderSizePixel = 0
+CloseBtn.Position = UDim2.new(1, -30, 0, 7)
+CloseBtn.Size = UDim2.new(0, 22, 0, 22)
+CloseBtn.Font = Enum.Font.GothamBold
+CloseBtn.Text = "✕"
+CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.TextSize = 9
+Instance.new("UICorner", CloseBtn).CornerRadius = UDim.new(0, 4)
+CloseBtn.ZIndex = 5
+
+local function UnloadAllScript()
+    if RenderConnection then
+        RenderConnection:Disconnect()
+        RenderConnection = nil
+    end
+    pcall(function()
+        for _, plr in pairs(Players:GetPlayers()) do
+            if plr.Character then
+                for _, obj in pairs(plr.Character:GetChildren()) do
+                    if obj.Name == "UltimateGlow" then obj:Destroy() end
+                end
+            end
+        end
+    end)
+    for _, espData in pairs(ESPContainer) do
+        if espData.Box then pcall(function() espData.Box:Remove() end) end
+        if espData.Tracer then pcall(function() espData.Tracer:Remove() end) end
+        if espData.NameTag then pcall(function() espData.NameTag:Remove() end) end
+    end
+    ESPContainer = {}
+    pcall(function() if FOVCircle then FOVCircle:Remove() end end)
+    ScreenGui:Destroy()
+end
+
+CloseBtn.MouseButton1Click:Connect(function()
+    ConfirmDialog.Visible = true
+end)
+ConfirmNoBtn.MouseButton1Click:Connect(function()
+    ConfirmDialog.Visible = false
+end)
+ConfirmYesBtn.MouseButton1Click:Connect(function()
+    UnloadAllScript()
+end)
+
+local ResizeBtn = Instance.new("TextButton", MainFrame)
+ResizeBtn.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+ResizeBtn.BorderSizePixel = 0
+ResizeBtn.Position = UDim2.new(1, -22, 1, -22)
+ResizeBtn.Size = UDim2.new(0, 18, 0, 18)
+ResizeBtn.Text = "◢"
+ResizeBtn.TextColor3 = Color3.fromRGB(0, 180, 255)
+ResizeBtn.TextSize = 10
+ResizeBtn.ZIndex = 10
+AddRGBStroke(ResizeBtn, 1.5)
+Instance.new("UICorner", ResizeBtn).CornerRadius = UDim.new(0, 4)
+
+local resizing = false
+local resizeStart, startSize
+ResizeBtn.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        resizing = true
+        resizeStart = input.Position
+        startSize = MainFrame.AbsoluteSize
+    end
+end)
+UserInputService.InputChanged:Connect(function(input)
+    if resizing and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+        local delta = input.Position - resizeStart
+        local newWidth = math.clamp(startSize.X + delta.X, 380, 750)
+        local newHeight = math.clamp(startSize.Y + delta.Y, 240, 520)
+        MainFrame.Size = UDim2.new(0, newWidth, 0, newHeight)
+    end
+end)
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+        resizing = false
+    end
+end)
+
+local PagesHolder = Instance.new("Frame", MainFrame)
+PagesHolder.BackgroundTransparency = 1
+PagesHolder.Position = UDim2.new(0, 10, 0, 45)
+PagesHolder.Size = UDim2.new(1, -20, 1, -52)
+PagesHolder.ClipsDescendants = false
+
+local Pages = {}
+local MenuButtons = {}
+
+local function CreatePage(name, customHeight)
+    local page = Instance.new("ScrollingFrame", PagesHolder)
+    page.BackgroundTransparency = 1
+    page.Size = UDim2.new(1, 0, 1, 0)
+    page.CanvasSize = UDim2.new(0, 0, 0, customHeight or 500)
+    page.ScrollBarThickness = 2
+    page.Visible = false
+    
+    local layout = Instance.new("UIListLayout", page)
+    layout.SortOrder = Enum.SortOrder.LayoutOrder
+    layout.Padding = UDim.new(0, 6)
+    
+    Pages[name] = page
+    return page
+end
+
+local function AddTabButton(name, thaiName)
+    local btn = Instance.new("TextButton", TopBarHolder)
+    btn.BackgroundColor3 = Color3.fromRGB(10, 12, 20)
+    btn.BorderSizePixel = 0
+    btn.Size = UDim2.new(0, 62, 1, 0)
+    btn.Font = Enum.Font.GothamSemibold
+    btn.Text = name
+    btn.TextColor3 = Color3.fromRGB(160, 180, 210)
+    btn.TextSize = 8
+    
+    table.insert(MenuButtons, {Button = btn, Name = name})
+    
+    btn.MouseButton1Click:Connect(function()
+        for _, p in pairs(Pages) do p.Visible = false end
+        for _, mb in ipairs(MenuButtons) do
+            mb.Button.BackgroundColor3 = Color3.fromRGB(10, 12, 20)
+            mb.Button.TextColor3 = Color3.fromRGB(160, 180, 210)
+        end
+        if Pages[name] then
+            Pages[name].Visible = true
+            btn.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+            btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+        end
+    end)
+end
+
+local function CreateToggle(parent, title, thaiTitle, initialValue, callback)
+    local toggleBtn = Instance.new("TextButton", parent)
+    toggleBtn.BackgroundColor3 = initialValue and Color3.fromRGB(15, 40, 70) or Color3.fromRGB(22, 26, 40)
+    toggleBtn.BorderColor3 = Color3.fromRGB(45, 60, 90)
+    toggleBtn.BorderSizePixel = 1
+    toggleBtn.Size = UDim2.new(1, -6, 0, 30)
+    toggleBtn.Font = Enum.Font.GothamSemibold
+    toggleBtn.Text = "  " .. title .. " / " .. thaiTitle
+    toggleBtn.TextColor3 = Color3.fromRGB(230, 230, 230)
+    toggleBtn.TextSize = 8
+    toggleBtn.TextXAlignment = Enum.TextXAlignment.Left
+    Instance.new("UICorner", toggleBtn).CornerRadius = UDim.new(0, 5)
+
+    local statusLbl = Instance.new("TextLabel", toggleBtn)
+    statusLbl.BackgroundTransparency = 1
+    statusLbl.Position = UDim2.new(1, -55, 0, 0)
+    statusLbl.Size = UDim2.new(0, 45, 1, 0)
+    statusLbl.Font = Enum.Font.GothamBold
+    statusLbl.Text = initialValue and "[ ON ]" or "[ OFF ]"
+    statusLbl.TextColor3 = initialValue and Color3.fromRGB(50, 255, 150) or Color3.fromRGB(255, 90, 90)
+    statusLbl.TextSize = 9
+
+    local enabled = initialValue
+    toggleBtn.MouseButton1Click:Connect(function()
+        enabled = not enabled
+        if enabled then
+            statusLbl.Text = "[ ON ]"
+            statusLbl.TextColor3 = Color3.fromRGB(50, 255, 150)
+            toggleBtn.BackgroundColor3 = Color3.fromRGB(15, 40, 70)
+        else
+            statusLbl.Text = "[ OFF ]"
+            statusLbl.TextColor3 = Color3.fromRGB(255, 90, 90)
+            toggleBtn.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+        end
+        pcall(function() callback(enabled) end)
+    end)
+    return toggleBtn
+end
+
+local function CreateSlider(parent, title, thaiTitle, min, max, default, callback)
+    local sliderFrame = Instance.new("Frame", parent)
+    sliderFrame.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+    sliderFrame.BorderColor3 = Color3.fromRGB(45, 60, 90)
+    sliderFrame.BorderSizePixel = 1
+    sliderFrame.Size = UDim2.new(1, -6, 0, 42)
+    Instance.new("UICorner", sliderFrame).CornerRadius = UDim.new(0, 5)
+
+    local titleLbl = Instance.new("TextLabel", sliderFrame)
+    titleLbl.BackgroundTransparency = 1
+    titleLbl.Position = UDim2.new(0, 8, 0, 4)
+    titleLbl.Size = UDim2.new(1, -16, 0, 18)
+    titleLbl.Font = Enum.Font.GothamSemibold
+    titleLbl.Text = title .. " / " .. thaiTitle .. " (" .. default .. ")"
+    titleLbl.TextColor3 = Color3.fromRGB(230, 230, 230)
+    titleLbl.TextSize = 8
+    titleLbl.TextXAlignment = Enum.TextXAlignment.Left
+
+    local bar = Instance.new("TextButton", sliderFrame)
+    bar.BackgroundColor3 = Color3.fromRGB(35, 45, 75)
+    bar.BorderSizePixel = 0
+    bar.Position = UDim2.new(0, 8, 0, 25)
+    bar.Size = UDim2.new(1, -16, 0, 6)
+    bar.Text = ""
+    Instance.new("UICorner", bar).CornerRadius = UDim.new(1, 0)
+
+    local fill = Instance.new("Frame", bar)
+    fill.BackgroundColor3 = Color3.fromRGB(0, 162, 255)
+    fill.BorderSizePixel = 0
+    fill.Size = UDim2.new((default - min)/(max - min), 0, 1, 0)
+    Instance.new("UICorner", fill).CornerRadius = UDim.new(1, 0)
+
+    local draggingSlider = false
+    bar.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            draggingSlider = true
+        end
+    end)
+    UserInputService.InputEnded:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+            draggingSlider = false
+        end
+    end)
+    UserInputService.InputChanged:Connect(function(input)
+        if draggingSlider and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+            local pos = math.clamp((input.Position.X - bar.AbsolutePosition.X) / bar.AbsoluteSize.X, 0, 1)
+            fill.Size = UDim2.new(pos, 0, 1, 0)
+            local val = math.floor(min + ((max - min) * pos))
+            titleLbl.Text = title .. " / " .. thaiTitle .. " (" .. val .. ")"
+            pcall(function() callback(val) end)
+        end
+    end)
+end
+
+local FOVColorList = {
+    Color3.fromRGB(0, 255, 255),
+    Color3.fromRGB(180, 50, 255),
+    Color3.fromRGB(50, 255, 100),
+    Color3.fromRGB(255, 255, 255)
+}
+local FOVColorNames = {"[ Rainbow / สีรุ้ง ]", "[ Cyan / ฟ้าไซเบอร์ ]", "[ Purple / ม่วงนีออน ]", "[ Green / เขียวมรกต ]", "[ White / สีขาว ]"}
+
+local FloatFrame = Instance.new("Frame", ScreenGui)
+FloatFrame.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
+FloatFrame.BorderSizePixel = 0
+FloatFrame.Position = UDim2.new(0.05, 0, 0.05, 0)
+FloatFrame.Size = UDim2.new(0, 140, 0, 36)
+FloatFrame.Visible = false
+FloatFrame.Active = true
+FloatFrame.Draggable = true
+AddRGBStroke(FloatFrame, 1)
+Instance.new("UICorner", FloatFrame).CornerRadius = UDim.new(0, 6)
+
+local FloatText = Instance.new("TextLabel", FloatFrame)
+FloatText.BackgroundTransparency = 1
+FloatText.Size = UDim2.new(1, 0, 1, 0)
+FloatText.Font = Enum.Font.GothamBold
+FloatText.Text = "📊 FPS: 60 | Ping: 0ms"
+FloatText.TextColor3 = Color3.fromRGB(0, 180, 255)
+FloatText.TextSize = 9
+
+-- 1. Home
+local HomePage = CreatePage("🏠 Home", 460)
+HomePage.Visible = true
+AddTabButton("🏠 Home", "หน้าหลัก")
+MenuButtons[1].Button.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+MenuButtons[1].Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+local KeyInfoCard = Instance.new("Frame", HomePage)
+KeyInfoCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+KeyInfoCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
+KeyInfoCard.BorderSizePixel = 1
+KeyInfoCard.Size = UDim2.new(1, -6, 0, 55)
+Instance.new("UICorner", KeyInfoCard).CornerRadius = UDim.new(0, 6)
+
+local KI_Title = Instance.new("TextLabel", KeyInfoCard)
+KI_Title.BackgroundTransparency = 1
+KI_Title.Position = UDim2.new(0, 10, 0, 6)
+KI_Title.Size = UDim2.new(1, -20, 0, 16)
+KI_Title.Font = Enum.Font.GothamBold
+KI_Title.Text = "⏳ Key Expiry Status (สถานะเวลาคีย์ของคุณ)"
+KI_Title.TextColor3 = Color3.fromRGB(0, 180, 255)
+KI_Title.TextSize = 8
+KI_Title.TextXAlignment = Enum.TextXAlignment.Left
+
+local KI_Desc = Instance.new("TextLabel", KeyInfoCard)
+KI_Desc.BackgroundTransparency = 1
+KI_Desc.Position = UDim2.new(0, 10, 0, 24)
+KI_Desc.Size = UDim2.new(1, -20, 0, 22)
+KI_Desc.Font = Enum.Font.GothamSemibold
+KI_Desc.Text = "กำลังโหลดข้อมูลเวลา..."
+KI_Desc.TextColor3 = Color3.fromRGB(50, 255, 150)
+KI_Desc.TextSize = 9
+KI_Desc.TextXAlignment = Enum.TextXAlignment.Left
+
+task.spawn(function()
+    while task.wait(1) do
+        pcall(function()
+            if getgenv().HubLoaded then
+                local info = getgenv().CurrentKeyInfo
+                if info.ExpiresAt == 0 then
+                    KI_Desc.Text = "🟢 สถานะ: สิทธิ์ผู้ดูแลระบบ / ถาวร (Unlimited)"
+                else
+                    local timeLeft = info.ExpiresAt - os.time()
+                    if timeLeft > 0 then
+                        local days = math.floor(timeLeft / 86400)
+                        local hours = math.floor((timeLeft % 86400) / 3600)
+                        local mins = math.floor((timeLeft % 3600) / 60)
+                        local secs = timeLeft % 60
+                        if days > 0 then
+                            KI_Desc.Text = string.format("⏳ เหลือเวลาอีก: %d วัน %d ชั่วโมง %d นาที", days, hours, mins)
+                        else
+                            KI_Desc.Text = string.format("⏳ เหลือเวลาอีก: %02d:%02d:%02d", hours, mins, secs)
+                        end
+                    else
+                        KI_Desc.Text = "❌ คีย์ของคุณหมดอายุแล้ว!"
+                        task.wait(2)
+                        UnloadAllScript()
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+local ExecuterCard = Instance.new("Frame", HomePage)
+ExecuterCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+ExecuterCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
+ExecuterCard.BorderSizePixel = 1
+ExecuterCard.Size = UDim2.new(1, -6, 0, 175)
+Instance.new("UICorner", ExecuterCard).CornerRadius = UDim.new(0, 6)
+
+local EC_Title = Instance.new("TextLabel", ExecuterCard)
+EC_Title.BackgroundTransparency = 1
+EC_Title.Position = UDim2.new(0, 10, 0, 6)
+EC_Title.Size = UDim2.new(1, -20, 0, 16)
+EC_Title.Font = Enum.Font.GothamBold
+EC_Title.Text = "📝 Script Loadstring Input & Guide:"
+EC_Title.TextColor3 = Color3.fromRGB(0, 180, 255)
+EC_Title.TextSize = 8
+EC_Title.TextXAlignment = Enum.TextXAlignment.Left
+
+local EC_Desc = Instance.new("TextLabel", ExecuterCard)
+EC_Desc.BackgroundTransparency = 1
+EC_Desc.Position = UDim2.new(0, 10, 0, 22)
+EC_Desc.Size = UDim2.new(1, -20, 0, 22)
+EC_Desc.Font = Enum.Font.Gotham
+EC_Desc.Text = "วางลิงก์โค้ด loadstring ของสคริปต์ แล้วกดรันหรือเคลียร์ข้อความได้ทันที"
+EC_Desc.TextColor3 = Color3.fromRGB(160, 180, 210)
+EC_Desc.TextSize = 7
+EC_Desc.TextWrapped = true
+EC_Desc.TextXAlignment = Enum.TextXAlignment.Left
+
+local ScriptBox = Instance.new("TextBox", ExecuterCard)
+ScriptBox.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
+ScriptBox.BorderColor3 = Color3.fromRGB(45, 60, 90)
+ScriptBox.BorderSizePixel = 1
+ScriptBox.Position = UDim2.new(0, 10, 0, 46)
+ScriptBox.Size = UDim2.new(1, -20, 0, 65)
+ScriptBox.Font = Enum.Font.Gotham
+ScriptBox.MultiLine = true
+ScriptBox.ClearTextOnFocus = false
+ScriptBox.PlaceholderText = 'loadstring(game:HttpGet("https://..."))()'
+ScriptBox.Text = ""
+ScriptBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+ScriptBox.PlaceholderColor3 = Color3.fromRGB(110, 130, 170)
+ScriptBox.TextSize = 8
+ScriptBox.TextXAlignment = Enum.TextXAlignment.Left
+ScriptBox.TextYAlignment = Enum.TextYAlignment.Top
+Instance.new("UICorner", ScriptBox).CornerRadius = UDim.new(0, 4)
+
+local RunScriptBtn = Instance.new("TextButton", ExecuterCard)
+RunScriptBtn.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+RunScriptBtn.BorderSizePixel = 0
+RunScriptBtn.Position = UDim2.new(0, 10, 0, 118)
+RunScriptBtn.Size = UDim2.new(0.68, -5, 0, 28)
+RunScriptBtn.Font = Enum.Font.GothamBold
+RunScriptBtn.Text = "▶ EXECUTE / รันสคริปต์"
+RunScriptBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+RunScriptBtn.TextSize = 8
+Instance.new("UICorner", RunScriptBtn).CornerRadius = UDim.new(0, 4)
+
+local ClearScriptBtn = Instance.new("TextButton", ExecuterCard)
+ClearScriptBtn.BackgroundColor3 = Color3.fromRGB(200, 60, 60)
+ClearScriptBtn.BorderSizePixel = 0
+ClearScriptBtn.Position = UDim2.new(0.68, 5, 0, 118)
+ClearScriptBtn.Size = UDim2.new(0.32, -15, 0, 28)
+ClearScriptBtn.Font = Enum.Font.GothamBold
+ClearScriptBtn.Text = "🗑️ CLEAR / ล้าง"
+ClearScriptBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+ClearScriptBtn.TextSize = 8
+Instance.new("UICorner", ClearScriptBtn).CornerRadius = UDim.new(0, 4)
+
+ClearScriptBtn.MouseButton1Click:Connect(function()
+    ScriptBox.Text = ""
+    ShowNotification("🗑️ CLEARED", "ล้างข้อความในกล่องเรียบร้อย")
+end)
+
+RunScriptBtn.MouseButton1Click:Connect(function()
+    local code = ScriptBox.Text
+    if code and code ~= "" then
+        local success = pcall(function()
+            local func, compileErr = loadstring(code)
+            if not func then error(compileErr) end
+            func()
+        end)
+        
+        if success then
+            ShowNotification("✅ SUCCESS", "รันสคริปต์สำเร็จแล้ว!")
+        else
+            ShowNotification("❌ ERROR", "เกิดข้อผิดพลาดในการรันสคริปต์")
+        end
+    end
+end)
+
+local ConfigCard = Instance.new("Frame", HomePage)
+ConfigCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+ConfigCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
+ConfigCard.BorderSizePixel = 1
+ConfigCard.Size = UDim2.new(1, -6, 0, 65)
+Instance.new("UICorner", ConfigCard).CornerRadius = UDim.new(0, 6)
+
+local CC_Title = Instance.new("TextLabel", ConfigCard)
+CC_Title.BackgroundTransparency = 1
+CC_Title.Position = UDim2.new(0, 10, 0, 6)
+CC_Title.Size = UDim2.new(1, -20, 0, 16)
+CC_Title.Font = Enum.Font.GothamBold
+CC_Title.Text = "⚙️ Config Manager (ระบบบันทึกและโหลดค่า)"
+CC_Title.TextColor3 = Color3.fromRGB(0, 180, 255)
+CC_Title.TextSize = 8
+CC_Title.TextXAlignment = Enum.TextXAlignment.Left
+
+local SaveCfgBtn = Instance.new("TextButton", ConfigCard)
+SaveCfgBtn.BackgroundColor3 = Color3.fromRGB(0, 140, 70)
+SaveCfgBtn.BorderSizePixel = 0
+SaveCfgBtn.Position = UDim2.new(0, 10, 0, 28)
+SaveCfgBtn.Size = UDim2.new(0.5, -15, 0, 26)
+SaveCfgBtn.Font = Enum.Font.GothamBold
+SaveCfgBtn.Text = "💾 Save Config"
+SaveCfgBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+SaveCfgBtn.TextSize = 8
+Instance.new("UICorner", SaveCfgBtn).CornerRadius = UDim.new(0, 4)
+SaveCfgBtn.MouseButton1Click:Connect(SaveConfig)
+
+local LoadCfgBtn = Instance.new("TextButton", ConfigCard)
+LoadCfgBtn.BackgroundColor3 = Color3.fromRGB(0, 100, 180)
+LoadCfgBtn.BorderSizePixel = 0
+LoadCfgBtn.Position = UDim2.new(0.5, 5, 0, 28)
+LoadCfgBtn.Size = UDim2.new(0.5, -15, 0, 26)
+LoadCfgBtn.Font = Enum.Font.GothamBold
+LoadCfgBtn.Text = "📂 Load Config"
+LoadCfgBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+LoadCfgBtn.TextSize = 8
+Instance.new("UICorner", LoadCfgBtn).CornerRadius = UDim.new(0, 4)
+LoadCfgBtn.MouseButton1Click:Connect(LoadConfig)
+
+-- 2. Player
+local PlayerPage = CreatePage("🏃‍♂️ Player", 420)
+AddTabButton("🏃‍♂️ Player", "ผู้เล่น")
+CreateToggle(PlayerPage, "👻 Noclip (Walk Through Walls)", "เดินทะลุกำแพง", getgenv().UltimateStg.NoclipEnabled, function(state) getgenv().UltimateStg.NoclipEnabled = state ShowNotification("Player", "Noclip: " .. tostring(state)) end)
+CreateToggle(PlayerPage, "🦘 Infinite Jump (Air Jump)", "กระโดดกลางอากาศ", getgenv().UltimateStg.InfiniteJumpEnabled, function(state) getgenv().UltimateStg.InfiniteJumpEnabled = state ShowNotification("Player", "Infinite Jump: " .. tostring(state)) end)
+CreateToggle(PlayerPage, "🛡️ Anti-AFK (No Kick)", "ป้องกันหลุดห้อง (AFK)", getgenv().UltimateStg.AntiAFKEnabled, function(state) getgenv().UltimateStg.AntiAFKEnabled = state ShowNotification("Player", "Anti-AFK: " .. tostring(state)) end)
+CreateToggle(PlayerPage, "📦 Hitbox Expander", "ขยายฮิตบ็อกซ์ตัวละคร", getgenv().UltimateStg.HitboxExpander, function(state) getgenv().UltimateStg.HitboxExpander = state ShowNotification("Player", "Hitbox Expander: " .. tostring(state)) end)
+CreateSlider(PlayerPage, "📏 Hitbox Size", "ขนาดฮิตบ็อกซ์", 2, 10, getgenv().UltimateStg.HitboxSize, function(val) getgenv().UltimateStg.HitboxSize = val end)
+
+-- 3. ESP
+local EspPage = CreatePage("👀 ESP", 420)
+AddTabButton("👀 ESP", "การมองเห็น")
+CreateToggle(EspPage, "✨ ESP Glow", "เรืองแสงตัวละคร (Glow)", getgenv().UltimateStg.ESPGlow, function(state)
+    getgenv().UltimateStg.ESPGlow = state
+    ShowNotification("ESP", "ESP Glow: " .. tostring(state))
+    if not state then
+        for _, plr in pairs(Players:GetPlayers()) do
+            if plr.Character and plr.Character:FindFirstChild("UltimateGlow") then
+                plr.Character.UltimateGlow:Destroy()
+            end
+        end
+    end
+end)
+CreateToggle(EspPage, "🔲 ESP Box", "แสดงกรอบรอบตัว (Box)", getgenv().UltimateStg.ESPBox, function(state)
+    getgenv().UltimateStg.ESPBox = state
+    ShowNotification("ESP", "ESP Box: " .. tostring(state))
+    if not state then
+        for _, espData in pairs(ESPContainer) do
+            if espData.Box then espData.Box.Visible = false end
+        end
+    end
+end)
+CreateToggle(EspPage, "📈 ESP Tracer", "แสดงเส้นโยง (Tracer)", getgenv().UltimateStg.ESPTracer, function(state)
+    getgenv().UltimateStg.ESPTracer = state
+    ShowNotification("ESP", "ESP Tracer: " .. tostring(state))
+    if not state then
+        for _, espData in pairs(ESPContainer) do
+            if espData.Tracer then espData.Tracer.Visible = false end
+        end
+    end
+end)
+CreateToggle(EspPage, "🏷️ ESP Name / Health / Dist", "ชื่อ เลือด ระยะห่าง", getgenv().UltimateStg.ESPNameInfo, function(state)
+    getgenv().UltimateStg.ESPNameInfo = state
+    ShowNotification("ESP", "ESP Info: " .. tostring(state))
+    if not state then
+        for _, espData in pairs(ESPContainer) do
+            if espData.NameTag then espData.NameTag.Visible = false end
+        end
+    end
+end)
+CreateSlider(EspPage, "🎯 Max ESP Distance", "ระยะทาง ESP สูงสุด", 50, 500, getgenv().UltimateStg.ESPDistanceMax, function(val) getgenv().UltimateStg.ESPDistanceMax = val end)
+
+-- 4. Aimbot
+local AimbotPage = CreatePage("🎯 Aimbot", 420)
+AddTabButton("🎯 Aimbot", "ล็อคเป้า")
+CreateToggle(AimbotPage, "👑 Aimbot - Head Lock", "ล็อคหัว", getgenv().UltimateStg.AimbotHead, function(state)
+    getgenv().UltimateStg.AimbotHead = state
+    if state then getgenv().UltimateStg.AimbotTorso = false end
+    ShowNotification("Aimbot", "Head Lock: " .. tostring(state))
+end)
+CreateToggle(AimbotPage, "🎯 Aimbot - Torso Lock", "ล็อคตัว", getgenv().UltimateStg.AimbotTorso, function(state)
+    getgenv().UltimateStg.AimbotTorso = state
+    if state then getgenv().UltimateStg.AimbotHead = false end
+    ShowNotification("Aimbot", "Torso Lock: " .. tostring(state))
+end)
+CreateToggle(AimbotPage, "🔮 Show FOV", "แสดงวง FOV", getgenv().UltimateStg.ShowFOV, function(state)
+    getgenv().UltimateStg.ShowFOV = state
+    if FOVCircle then FOVCircle.Visible = state end
+    ShowNotification("Aimbot", "Show FOV: " .. tostring(state))
+end)
+CreateSlider(AimbotPage, "⚙️ FOV Size", "ขนาด FOV", 30, 500, getgenv().UltimateStg.FOVSize, function(val) getgenv().UltimateStg.FOVSize = val end)
+
+local FOVColorBtn = Instance.new("TextButton", AimbotPage)
+FOVColorBtn.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+FOVColorBtn.BorderColor3 = Color3.fromRGB(45, 60, 90)
+FOVColorBtn.BorderSizePixel = 1
+FOVColorBtn.Size = UDim2.new(1, -6, 0, 32)
+FOVColorBtn.Font = Enum.Font.GothamSemibold
+FOVColorBtn.Text = "🎨 FOV Color Style: " .. FOVColorNames[1]
+FOVColorBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+FOVColorBtn.TextSize = 8
+Instance.new("UICorner", FOVColorBtn).CornerRadius = UDim.new(0, 5)
+
+FOVColorBtn.MouseButton1Click:Connect(function()
+    getgenv().UltimateStg.FOVColorMode = getgenv().UltimateStg.FOVColorMode + 1
+    if getgenv().UltimateStg.FOVColorMode > 5 then
+        getgenv().UltimateStg.FOVColorMode = 1
+    end
+    local mode = getgenv().UltimateStg.FOVColorMode
+    FOVColorBtn.Text = "🎨 FOV Color Style: " .. FOVColorNames[mode]
+    if mode == 1 then
+        FOVColorBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    else
+        FOVColorBtn.TextColor3 = FOVColorList[mode - 1]
+    end
+end)
+
+-- 5. Settings
+local SettingsPage = CreatePage("⚙️ Settings")
+AddTabButton("⚙️ Settings", "ตั้งค่า")
+CreateToggle(SettingsPage, "📊 Floating FPS/Ping", "สถิติลอย", getgenv().UltimateStg.FloatingStats, function(state)
+    getgenv().UltimateStg.FloatingStats = state
+    FloatFrame.Visible = state
+    ShowNotification("Settings", "Floating Stats: " .. tostring(state))
+end)
+CreateToggle(SettingsPage, "⚡ FPS & Ping Booster", "บูสความลื่น", getgenv().UltimateStg.FPSBoost, function(state)
+    getgenv().UltimateStg.FPSBoost = state
+    if state then
+        pcall(function()
+            settings():GetService("NetworkSettings").IncomingReplicationLag = 0
+            Lighting.GlobalShadows = false
+        end)
+        ShowNotification("Settings", "FPS Booster: ON")
+    else
+        pcall(function()
+            settings():GetService("NetworkSettings").IncomingReplicationLag = 0.1
+            Lighting.GlobalShadows = true
+        end)
+        ShowNotification("Settings", "FPS Booster: OFF")
+    end
+end)
+
+-- 6. Security
+local SecurityPage = CreatePage("🛡️ Security")
+AddTabButton("🛡️ Security", "ความปลอดภัย")
+local SecInfoCard = Instance.new("Frame", SecurityPage)
+SecInfoCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+SecInfoCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
+SecInfoCard.BorderSizePixel = 1
+SecInfoCard.Size = UDim2.new(1, -6, 0, 130)
+Instance.new("UICorner", SecInfoCard).CornerRadius = UDim.new(0, 6)
+
+local SI_Title = Instance.new("TextLabel", SecInfoCard)
+SI_Title.BackgroundTransparency = 1
+SI_Title.Position = UDim2.new(0, 10, 0, 8)
+SI_Title.Size = UDim2.new(1, -20, 0, 16)
+SI_Title.Font = Enum.Font.GothamBold
+SI_Title.Text = "🛡️ Shield Protection Active"
+SI_Title.TextColor3 = Color3.fromRGB(0, 180, 255)
+SI_Title.TextSize = 9
+SI_Title.TextXAlignment = Enum.TextXAlignment.Left
+
+local SI_Desc = Instance.new("TextLabel", SecInfoCard)
+SI_Desc.BackgroundTransparency = 1
+SI_Desc.Position = UDim2.new(0, 10, 0, 28)
+SI_Desc.Size = UDim2.new(1, -20, 0, 95)
+SI_Desc.Font = Enum.Font.Gotham
+SI_Desc.Text = "• Anti-Ban & Telemetry: ป้องกันแบน\n• Anti-Report: บล็อกการรีพอร์ต\n• Anti-Kick: ป้องกันเตะ/ดึงตัว\n• Clean Cache: ล้างแรมอัตโนมัติ"
+SI_Desc.TextColor3 = Color3.fromRGB(160, 180, 210)
+SI_Desc.TextSize = 8
+SI_Desc.TextXAlignment = Enum.TextXAlignment.Left
+
+-- 7. DEV & ADMIN PANEL
+if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
+    local DevPage = CreatePage("🛠️ DEV / ADMIN", 460)
+    AddTabButton("🛠️ DEV", "ระบบแอดมิน")
+    
+    local DevCard = Instance.new("Frame", DevPage)
+    DevCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+    DevCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
+    DevCard.BorderSizePixel = 1
+    DevCard.Size = UDim2.new(1, -6, 0, 215)
+    Instance.new("UICorner", DevCard).CornerRadius = UDim.new(0, 6)
+    
+    local DC_Head = Instance.new("TextLabel", DevCard)
+    DC_Head.BackgroundTransparency = 1
+    DC_Head.Position = UDim2.new(0, 10, 0, 8)
+    DC_Head.Size = UDim2.new(1, -20, 0, 16)
+    DC_Head.Font = Enum.Font.GothamBold
+    local roleText = Owners[LocalPlayer.Name] and "⭐ OWNER KEY GENERATOR PANEL" : "🛡️ ADMIN KEY GENERATOR PANEL"
+    DC_Head.Text = roleText
+    DC_Head.TextColor3 = Color3.fromRGB(255, 200, 0)
+    DC_Head.TextSize = 9
+    DC_Head.TextXAlignment = Enum.TextXAlignment.Left
+    
+    local KeyInput = Instance.new("TextBox", DevCard)
+    KeyInput.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
+    KeyInput.BorderColor3 = Color3.fromRGB(45, 60, 90)
+    KeyInput.BorderSizePixel = 1
+    KeyInput.Position = UDim2.new(0, 10, 0, 32)
+    KeyInput.Size = UDim2.new(1, -20, 0, 30)
+    KeyInput.Font = Enum.Font.Gotham
+    KeyInput.PlaceholderText = "พิมพ์ชื่อคีย์ที่ต้องการสร้าง (เช่น MIN-VIP-XYZ)"
+    KeyInput.Text = ""
+    KeyInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+    KeyInput.PlaceholderColor3 = Color3.fromRGB(110, 130, 170)
+    KeyInput.TextSize = 8
+    Instance.new("UICorner", KeyInput).CornerRadius = UDim.new(0, 4)
+    
+    local selectedDays = 1
+    local DaysLabel = Instance.new("TextLabel", DevCard)
+    DaysLabel.BackgroundTransparency = 1
+    DaysLabel.Position = UDim2.new(0, 10, 0, 68)
+    DaysLabel.Size = UDim2.new(1, -20, 0, 16)
+    DaysLabel.Font = Enum.Font.GothamBold
+    DaysLabel.Text = "⏱️ เลือกอายุของคีย์: [ 1 วัน ]"
+    DaysLabel.TextColor3 = Color3.fromRGB(0, 180, 255)
+    DaysLabel.TextSize = 8
+    DaysLabel.TextXAlignment = Enum.TextXAlignment.Left
+    
+    local function CreateDayBtn(posX, text, daysVal)
+        local btn = Instance.new("TextButton", DevCard)
+        btn.BackgroundColor3 = Color3.fromRGB(30, 40, 65)
+        btn.BorderSizePixel = 0
+        btn.Position = UDim2.new(posX, 0, 0, 90)
+        btn.Size = UDim2.new(0.15, -4, 0, 24)
+        btn.Font = Enum.Font.GothamBold
+        btn.Text = text
+        btn.TextColor3 = Color3.fromRGB(255, 255, 255)
+        btn.TextSize = 8
+        Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 4)
+        
+        btn.MouseButton1Click:Connect(function()
+            if daysVal == 0 and not Owners[LocalPlayer.Name] then
+                AlertPopup.Visible = true
+                return
+            end
+            selectedDays = daysVal
+            DaysLabel.Text = "⏱️ เลือกอายุของคีย์: [ " .. text .. " ]"
+        end)
+    end
+    
+    CreateDayBtn(0.00, "1 วัน", 1)
+    CreateDayBtn(0.16, "3 วัน", 3)
+    CreateDayBtn(0.32, "7 วัน", 7)
+    CreateDayBtn(0.48, "15 วัน", 15)
+    CreateDayBtn(0.64, "30 วัน", 30)
+    CreateDayBtn(0.80, "ถาวร", 0)
+    
+    local GenBtn = Instance.new("TextButton", DevCard)
+    GenBtn.BackgroundColor3 = Color3.fromRGB(0, 160, 100)
+    GenBtn.BorderSizePixel = 0
+    GenBtn.Position = UDim2.new(0, 10, 0, 124)
+    GenBtn.Size = UDim2.new(1, -20, 0, 32)
+    GenBtn.Font = Enum.Font.GothamBold
+    GenBtn.Text = "➕ สร้างคีย์ & คัดลอก (Generate Key)"
+    GenBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    GenBtn.TextSize = 9
+    Instance.new("UICorner", GenBtn).CornerRadius = UDim.new(0, 4)
+    
+    GenBtn.MouseButton1Click:Connect(function()
+        if selectedDays == 0 and not Owners[LocalPlayer.Name] then
+            AlertPopup.Visible = true
+            return
+        end
+
+        local newKey = KeyInput.Text
+        if newKey == "" then
+            newKey = "MIN-" .. math.random(100000, 999999)
+        end
+        
+        local expiryTime = 0
+        if selectedDays > 0 then
+            expiryTime = os.time() + (selectedDays * 24 * 60 * 60)
+        end
+        
+        KeyDatabase[newKey] = {Used = false, ExpiresAt = expiryTime}
+        pcall(function() setclipboard(newKey) end)
+        
+        GenBtn.Text = "✅ สร้างและคัดลอกคีย์สำเร็จ: " .. newKey
+        ShowNotification("🔑 KEY CREATED", "สร้างและคัดลอกคีย์สำเร็จ!")
+        
+        SendDiscordWebhook("🛠️ New Key Generated", "Creator: **" .. LocalPlayer.Name .. "**\nNew Key: `" .. newKey .. "`\nExpires: `" .. selectedDays .. " Days`", 16776960)
+
+        task.wait(2)
+        GenBtn.Text = "➕ สร้างคีย์ & คัดลอก (Generate Key)"
+    end)
+end
+
+RenderConnection = RunService.RenderStepped:Connect(function(dt)
+    if not getgenv().HubLoaded then
+        if FOVCircle then FOVCircle.Visible = false end
+        for _, espData in pairs(ESPContainer) do
+            if espData.Box then espData.Box.Visible = false end
+            if espData.Tracer then espData.Tracer.Visible = false end
+            if espData.NameTag then espData.NameTag.Visible = false end
+        end
+        return 
+    end
+
+    local tickVal = tick() * 0.4
+    local rgbColor = Color3.fromHSV(tickVal % 1, 1, 1)
+    for _, stroke in pairs(MinimalRGBStrokes) do
+        if stroke and stroke.Parent then
+            stroke.Color = rgbColor
+        end
+    end
+
+    local currentFPS = math.floor(1 / math.max(dt, 0.001))
+    local pingVal = 0
+    pcall(function() pingVal = math.floor(Stats.Network.ServerStatsItem["Data Ping"]:GetValue()) end)
+    if getgenv().UltimateStg.FloatingStats then
+        FloatText.Text = "📊 FPS: " .. currentFPS .. " | Ping: " .. pingVal .. "ms"
+    end
+
+    pcall(function()
+        if getgenv().UltimateStg.NoclipEnabled and LocalPlayer.Character then
+            for _, part in pairs(LocalPlayer.Character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = false
+                end
+            end
+        end
+    end)
+
+    pcall(function()
+        for _, plr in pairs(Players:GetPlayers()) do
+            if plr ~= LocalPlayer and plr.Character and plr.Character:FindFirstChild("HumanoidRootPart") then
+                local hrp = plr.Character.HumanoidRootPart
+                if getgenv().UltimateStg.HitboxExpander then
+                    hrp.Size = Vector3.new(getgenv().UltimateStg.HitboxSize, getgenv().UltimateStg.HitboxSize, getgenv().UltimateStg.HitboxSize)
+                    hrp.Transparency = 0.7
+                    hrp.CanCollide = false
+                else
+                    hrp.Size = Vector3.new(2, 2, 1)
+                    hrp.Transparency = 1
+                end
+            end
+        end
+    end)
+
+    pcall(function()
+        for _, plr in pairs(Players:GetPlayers()) do
+            if plr ~= LocalPlayer then
+                local char = plr.Character
+                if getgenv().UltimateStg.ESPGlow and char and char:FindFirstChild("Humanoid") and char.Humanoid.Health > 0 then
+                    local myRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                    local targetRoot = char:FindFirstChild("HumanoidRootPart")
+                    local inDist = true
+                    if myRoot and targetRoot then
+                        local dist = (myRoot.Position - targetRoot.Position).Magnitude
+                        if dist > getgenv().UltimateStg.ESPDistanceMax then inDist = false end
+                    end
+
+                    if inDist then
+                        if not char:FindFirstChild("UltimateGlow") then
+                            local glow = Instance.new("Highlight")
+                            glow.Name = "UltimateGlow"
+                            glow.Adornee = char
+                            glow.FillColor = Color3.fromRGB(0, 120, 255)
+                            glow.OutlineColor = Color3.fromRGB(150, 100, 255)
+                            glow.FillTransparency = 0.3
+                            glow.Parent = char
+                        end
+                    else
+                        if char:FindFirstChild("UltimateGlow") then char.UltimateGlow:Destroy() end
+                    end
+                else
+                    if char and char:FindFirstChild("UltimateGlow") then char.UltimateGlow:Destroy() end
+                end
+            end
+        end
+    end)
+
+    pcall(function()
+        for _, plr in pairs(Players:GetPlayers()) do
+            if plr ~= LocalPlayer then
+                if getgenv().UltimateStg.ESPBox or getgenv().UltimateStg.ESPTracer or getgenv().UltimateStg.ESPNameInfo then
+                    if not ESPContainer[plr] then
+                        local box, tracer, nameTag = nil, nil, nil
+                        pcall(function()
+                            if Drawing then
+                                box = Drawing.new("Square")
+                                box.Visible = false
+                                box.Color = Color3.fromRGB(0, 162, 255)
+                                box.Thickness = 1.5
+                                box.Filled = false
+
+                                tracer = Drawing.new("Line")
+                                tracer.Visible = false
+                                tracer.Color = Color3.fromRGB(150, 100, 255)
+                                tracer.Thickness = 1
+                                tracer.Transparency = 0.7
+
+                                nameTag = Drawing.new("Text")
+                                nameTag.Visible = false
+                                nameTag.Center = true
+                                nameTag.Outline = true
+                                nameTag.Color = Color3.fromRGB(255, 255, 255)
+                                nameTag.Size = 12
+                                nameTag.Font = 2
+                            end
+                        end)
+                        ESPContainer[plr] = {Box = box, Tracer = tracer, NameTag = nameTag}
+                    end
+
+                    local char = plr.Character
+                    local myRoot = LocalPlayer.Character and LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                    if char and char:FindFirstChild("HumanoidRootPart") and char:FindFirstChild("Humanoid") and char.Humanoid.Health > 0 and myRoot then
+                        local hrp = char.HumanoidRootPart
+                        local head = char:FindFirstChild("Head")
+                        local dist = (myRoot.Position - hrp.Position).Magnitude
+
+                        if head and dist <= getgenv().UltimateStg.ESPDistanceMax then
+                            local topPosition = head.Position + Vector3.new(0, 0.7, 0)
+                            local bottomPosition = hrp.Position - Vector3.new(0, 2.8, 0)
+                            local topPos, topOnScreen = Camera:WorldToViewportPoint(topPosition)
+                            local bottomPos, bottomOnScreen = Camera:WorldToViewportPoint(bottomPosition)
+
+                            if topOnScreen or bottomOnScreen then
+                                local box = ESPContainer[plr].Box
+                                local tracer = ESPContainer[plr].Tracer
+                                local nameTag = ESPContainer[plr].NameTag
+                                local height = math.abs(bottomPos.Y - topPos.Y)
+                                local width = height / 2
+
+                                if getgenv().UltimateStg.ESPBox and box then
+                                    box.Size = Vector2.new(width, height)
+                                    box.Position = Vector2.new(topPos.X - width / 2, topPos.Y)
+                                    box.Visible = true
+                                elseif box then
+                                    box.Visible = false
+                                end
+
+                                if getgenv().UltimateStg.ESPTracer and tracer then
+                                    tracer.From = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y - 20)
+                                    tracer.To = Vector2.new(bottomPos.X, bottomPos.Y)
+                                    tracer.Visible = true
+                                elseif tracer then
+                                    tracer.Visible = false
+                                end
+
+                                if getgenv().UltimateStg.ESPNameInfo and nameTag then
+                                    local health = math.floor(char.Humanoid.Health)
+                                    nameTag.Text = "👤 " .. plr.Name .. " | 💖 " .. health .. " HP | 📍 " .. math.floor(dist) .. "m"
+                                    nameTag.Position = Vector2.new(topPos.X, topPos.Y - 20)
+                                    nameTag.Visible = true
+                                elseif nameTag then
+                                    nameTag.Visible = false
+                                end
+                            else
+                                if ESPContainer[plr].Box then ESPContainer[plr].Box.Visible = false end
+                                if ESPContainer[plr].Tracer then ESPContainer[plr].Tracer.Visible = false end
+                                if ESPContainer[plr].NameTag then ESPContainer[plr].NameTag.Visible = false end
+                            end
+                        else
+                            if ESPContainer[plr] then
+                                if ESPContainer[plr].Box then ESPContainer[plr].Box.Visible = false end
+                                if ESPContainer[plr].Tracer then ESPContainer[plr].Tracer.Visible = false end
+                                if ESPContainer[plr].NameTag then ESPContainer[plr].NameTag.Visible = false end
+                            end
+                        end
+                    else
+                        if ESPContainer[plr] then
+                            if ESPContainer[plr].Box then ESPContainer[plr].Box.Visible = false end
+                            if ESPContainer[plr].Tracer then ESPContainer[plr].Tracer.Visible = false end
+                            if ESPContainer[plr].NameTag then ESPContainer[plr].NameTag.Visible = false end
+                        end
+                    end
+                else
+                    if ESPContainer[plr] then
+                        if ESPContainer[plr].Box then ESPContainer[plr].Box.Visible = false end
+                        if ESPContainer[plr].Tracer then ESPContainer[plr].Tracer.Visible = false end
+                        if ESPContainer[plr].NameTag then ESPContainer[plr].NameTag.Visible = false end
+                    end
+                end
+            end
+        end
+    end
+
+    pcall(function()
+        if FOVCircle and getgenv().UltimateStg.ShowFOV then
+            FOVCircle.Position = Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2)
+            FOVCircle.Radius = getgenv().UltimateStg.FOVSize
+            local mode = getgenv().UltimateStg.FOVColorMode
+            if mode == 1 then
+                local hue = tick() % 5 / 5
+                FOVCircle.Color = Color3.fromHSV(hue, 1, 1)
+            else
+                FOVCircle.Color = FOVColorList[mode - 1]
+            end
+            FOVCircle.Visible = true
+        elseif FOVCircle then
+            FOVCircle.Visible = false
+        end
+    end)
+
+    pcall(function()
+        if getgenv().UltimateStg.AimbotHead or getgenv().UltimateStg.AimbotTorso then
+            local closestTarget = nil
+            local shortestDist = getgenv().UltimateStg.FOVSize
+            local origin = Camera.CFrame.Position
+
+            for _, plr in pairs(Players:GetPlayers()) do
+                if plr ~= LocalPlayer and plr.Character and plr.Character:FindFirstChild("Humanoid") and plr.Character.Humanoid.Health > 0 then
+                    local targetPart = nil
+                    if getgenv().UltimateStg.AimbotHead then
+                        targetPart = plr.Character:FindFirstChild("Head")
+                    elseif getgenv().UltimateStg.AimbotTorso then
+                        targetPart = plr.Character:FindFirstChild("UpperTorso") or plr.Character:FindFirstChild("Torso")
+                    end
+
+                    if targetPart then
+                        local screenPos, onScreen = Camera:WorldToViewportPoint(targetPart.Position)
+                        if onScreen then
+                            local mouseDist = (Vector2.new(Camera.ViewportSize.X / 2, Camera.ViewportSize.Y / 2) - Vector2.new(screenPos.X, screenPos.Y)).Magnitude
+                            if mouseDist < shortestDist then
+                                local direction = targetPart.Position - origin
+                                local raycastParams = RaycastParams.new()
+                                raycastParams.FilterType = Enum.RaycastFilterType.Exclude
+                                raycastParams.FilterDescendantsInstances = {LocalPlayer.Character, plr.Character}
+                                local raycastResult = Workspace:Raycast(origin, direction, raycastParams)
+
+                                if not raycastResult then
+                                    shortestDist = mouseDist
+                                    closestTarget = targetPart
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+
+            if closestTarget then
+                Camera.CFrame = CFrame.new(Camera.CFrame.Position, closestTarget.Position)
+            end
+        end
+    end)
+end)
+
+Players.PlayerRemoving:Connect(function(plr)
+    if ESPContainer[plr] then
+        pcall(function()
+            if ESPContainer[plr].Box then ESPContainer[plr].Box:Remove() end
+            if ESPContainer[plr].Tracer then ESPContainer[plr].Tracer:Remove() end
+            if ESPContainer[plr].NameTag then ESPContainer[plr].NameTag:Remove() end
+        end)
+        ESPContainer[plr] = nil
+    end
+end)
+
+UserInputService.JumpRequest:Connect(function()
+    if getgenv().HubLoaded and getgenv().UltimateStg.InfiniteJumpEnabled then
+        pcall(function()
+            local char = LocalPlayer.Character
+            if char and char:FindFirstChildOfClass("Humanoid") then
+                char:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Jumping)
+            end
+        end)
+    end
+end)
+
+task.spawn(function()
+    while task.wait(60) do
+        if getgenv().HubLoaded and getgenv().UltimateStg.AntiAFKEnabled then
+            pcall(function()
+                VirtualUser:CaptureController()
+                VirtualUser:ClickButton2(Vector2.new())
+            end)
+        end
+    end
+end)
