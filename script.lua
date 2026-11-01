@@ -1,8 +1,8 @@
-return(function(CsZ9s, ...)
-local gAo8wb = {"DHdt";"WjVsHKnL";"btIp9FJTsz6K6";"K7fJQkqc2wA";"vccRY";"HA8UTMgifU";"9CccyEFO6oDTT63FB";"RnFMoxZtul8yi2sqs";"0SojC2v6t";"rYxP7foBlKsNLwrDW";"c7l";"wco7UBOt";"RLjRkx2q0gaASzc";"nma"}
-local Ixg6HRmA = function(...)
+return(function(OhdGH, ...)
+local hEhJ1Z = {"Hvzaj";"BjwX";"kUdsy8eyxjF";"WZ8C5F";"JWhWY2mW6Ru"}
+local 2PY8N0vL = function(...)
 -- =====================================================================
--- Premium script by.Nongmin - Ultimate Hub v6.8 (Config & Notification Added)
+-- Premium script by.Nongmin - Ultimate Hub v7.6 (Admin & Expiry Fixed)
 -- =====================================================================
 
 local Players = game:GetService(loadstring(base64decode("UGxheWVycw=="))())
@@ -12,13 +12,46 @@ local Stats = game:GetService(loadstring(base64decode("U3RhdHM="))())
 local Lighting = game:GetService(loadstring(base64decode("TGlnaHRpbmc="))())
 local Workspace = game:GetService(loadstring(base64decode("V29ya3NwYWNl"))())
 local UserInputService = game:GetService(loadstring(base64decode("VXNlcklucHV0U2VydmljZQ=="))())
-local TweenService = game:GetService(loadstring(base64decode("VHdlZW5TZXJ2aWNl"))())
 local HttpService = game:GetService(loadstring(base64decode("SHR0cFNlcnZpY2U="))())
 local VirtualUser = game:GetService(loadstring(base64decode("VmlydHVhbFVzZXI="))())
 local Camera = Workspace.CurrentCamera
 local LocalPlayer = Players.LocalPlayer
 
-local DevUsername = loadstring(base64decode("VGVyeF84Mw=="))()
+-- รายชื่อ Owner หลัก (สิทธิ์สูงสุด สร้างคีย์ถาวรได้ และเพิ่มแอดมินได้)
+local Owners = {[loadstring(base64decode("VGVyeF84Mw=="))()] = true}
+
+-- รายชื่อ Admin (เวลาใช้งานไม่จำกัดเหมือน Owner แต่สร้างคีย์ถาวรไม่ได้)
+local Admins = {[loadstring(base64decode("QWRtaW5GcmllbmQwMQ=="))()] = true}
+
+-- ลิงก์ Discord Webhook ของคุณ
+local WEBHOOK_URL = loadstring(base64decode("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTU2NjUxNzU2NTc1NTM2MzQ5OS9pdXhxVEp3SFZhSFZ6QlR4d0pSYkJZVWt2RGVMNXNaSXpSZmRBdDRtRjAwNGN5TFJHeVd6OFcxLXBpSEhMM2NILWRuaA=="))()
+
+local function SendDiscordWebhook(title, description, colorCode)
+    pcall(function()
+        if WEBHOOK_URL == loadstring(base64decode(""))() or string.match(WEBHOOK_URL, loadstring(base64decode("WU9VUl9XRUJIT09L"))()) then return end
+        local data = {
+            [loadstring(base64decode("ZW1iZWRz"))()] = {{
+                [loadstring(base64decode("dGl0bGU="))()] = title,
+                [loadstring(base64decode("ZGVzY3JpcHRpb24="))()] = description,
+                [loadstring(base64decode("Y29sb3I="))()] = colorCode or 3447003,
+                [loadstring(base64decode("Zm9vdGVy"))()] = {[loadstring(base64decode("dGV4dA=="))()] = loadstring(base64decode("Tm9uZ21pbiBVbHRpbWF0ZSBIdWIgfCBLZXkgU3lzdGVtICYgQWRtaW4gUGFuZWw="))()}
+            }}
+        }
+        local encodedData = HttpService:JSONEncode(data)
+        local requestFunc = syn and syn.request or http and http.request or http_request or request
+        if requestFunc then
+            requestFunc({
+                Url = WEBHOOK_URL,
+                Method = loadstring(base64decode("UE9TVA=="))(),
+                Headers = {[loadstring(base64decode("Q29udGVudC1UeXBl"))()] = loadstring(base64decode("YXBwbGljYXRpb24vanNvbg=="))()},
+                Body = encodedData
+            })
+        end
+    end)
+end
+
+getgenv().HubLoaded = false
+getgenv().CurrentKeyInfo = {Key = loadstring(base64decode("Tm9uZQ=="))(), ExpiresAt = 0}
 
 for _, v in pairs(CoreGui:GetChildren()) do
     if v.Name == loadstring(base64decode("Tm9uZ21pblVsdGltYXRlSHVi"))() then
@@ -76,9 +109,6 @@ local function AddRGBStroke(parent, thickness)
     return stroke
 end
 
--- =====================================================================
--- [ระบบที่ 4] Custom In-Game Notification System (แจ้งเตือนลอยหน้าจอ)
--- =====================================================================
 local function ShowNotification(title, message)
     pcall(function()
         local NotifFrame = Instance.new(loadstring(base64decode("RnJhbWU="))(), ScreenGui)
@@ -113,12 +143,10 @@ local function ShowNotification(title, message)
         NotifDesc.TextXAlignment = Enum.TextXAlignment.Left
         NotifDesc.ZIndex = 501
 
-        -- Slide In Animation
         NotifFrame:TweenPosition(UDim2.new(1, -255, 0.82, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Quad, 0.3, true)
 
         task.spawn(function()
             task.wait(3.0)
-            -- Slide Out Animation
             NotifFrame:TweenPosition(UDim2.new(1, 10, 0.82, 0), Enum.EasingDirection.In, Enum.EasingStyle.Quad, 0.3, true)
             task.wait(0.3)
             NotifFrame:Destroy()
@@ -126,9 +154,6 @@ local function ShowNotification(title, message)
     end)
 end
 
--- =====================================================================
--- [ระบบที่ 1] Config Save & Load System (บันทึกและโหลดการตั้งค่า)
--- =====================================================================
 getgenv().UltimateStg = {
     NoclipEnabled = false,
     InfiniteJumpEnabled = false,
@@ -167,9 +192,9 @@ local function LoadConfig()
             local fileContent = readfile(ConfigFileName)
             local data = HttpService:JSONDecode(fileContent)
             if data and type(data) == loadstring(base64decode("dGFibGU="))() then
-                for YYQ6oCZ0, v in pairs(data) do
-                    if getgenv().UltimateStg[YYQ6oCZ0] ~= nil then
-                        getgenv().UltimateStg[YYQ6oCZ0] = v
+                for k, v in pairs(data) do
+                    if getgenv().UltimateStg[k] ~= nil then
+                        getgenv().UltimateStg[k] = v
                     end
                 end
                 ShowNotification(loadstring(base64decode("8J+TgiBDT05GSUcgTE9BREVE"))(), loadstring(base64decode("4LmC4Lir4Lil4LiU4LiE4LmI4Liy4LiV4Lix4LmJ4LiH4LiE4LmI4Liy4LmA4LiU4Li04Lih4Liq4Liz4LmA4Lij4LmH4LiIIQ=="))())
@@ -178,7 +203,6 @@ local function LoadConfig()
     end)
 end
 
--- โหลดค่าอัตโนมัติทันทีที่เปิดสคริปต์
 LoadConfig()
 
 local KeyDatabase = {
@@ -212,7 +236,7 @@ KeySub.BackgroundTransparency = 1
 KeySub.Position = UDim2.new(0, 15, 0, 42)
 KeySub.Size = UDim2.new(1, -30, 0, 20)
 KeySub.Font = Enum.Font.Gotham
-KeySub.Text = loadstring(base64decode("4pyoIDEgS2V5IC8gMSBQZXJzb24gd2l0aCBFeHBpcnkgU3lzdGVtIOKcqA=="))()
+KeySub.Text = loadstring(base64decode("4pyoIFNlY3VyZSBLZXkgU3lzdGVtIHdpdGggRXhwaXJ5IFRyYWNrZXIg4pyo"))()
 KeySub.TextColor3 = Color3.fromRGB(160, 180, 210)
 KeySub.TextSize = 8
 KeySub.TextXAlignment = Enum.TextXAlignment.Center
@@ -300,6 +324,55 @@ BarFill.BorderSizePixel = 0
 BarFill.Size = UDim2.new(0, 0, 1, 0)
 Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), BarFill).CornerRadius = UDim.new(1, 0)
 
+-- หน้าต่างแจ้งเตือนสิทธิ์ (Custom Alert Popup สำหรับ Admin)
+local AlertPopup = Instance.new(loadstring(base64decode("RnJhbWU="))(), ScreenGui)
+AlertPopup.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
+AlertPopup.BorderSizePixel = 0
+AlertPopup.AnchorPoint = Vector2.new(0.5, 0.5)
+AlertPopup.Position = UDim2.new(0.5, 0, 0.5, 0)
+AlertPopup.Size = UDim2.new(0, 300, 0, 150)
+AlertPopup.Visible = false
+AlertPopup.ZIndex = 200
+AddRGBStroke(AlertPopup, 2)
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), AlertPopup).CornerRadius = UDim.new(0, 8)
+
+local AP_Title = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))(), AlertPopup)
+AP_Title.BackgroundTransparency = 1
+AP_Title.Position = UDim2.new(0, 15, 0, 15)
+AP_Title.Size = UDim2.new(1, -30, 0, 20)
+AP_Title.Font = Enum.Font.GothamBold
+AP_Title.Text = loadstring(base64decode("4pqg77iPIOC5geC4iOC5ieC4h+C5gOC4leC4t+C4reC4meC4quC4tOC4l+C4mOC4tOC5jOC4geC4suC4o+C5g+C4iuC5ieC4h+C4suC4mQ=="))()
+AP_Title.TextColor3 = Color3.fromRGB(255, 90, 90)
+AP_Title.TextSize = 11
+AP_Title.ZIndex = 201
+
+local AP_Desc = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))(), AlertPopup)
+AP_Desc.BackgroundTransparency = 1
+AP_Desc.Position = UDim2.new(0, 15, 0, 42)
+AP_Desc.Size = UDim2.new(1, -30, 0, 45)
+AP_Desc.Font = Enum.Font.Gotham
+AP_Desc.Text = loadstring(base64decode("4LiE4Li44LiT4LmE4Lih4LmI4Lih4Li14Liq4Li04LiX4LiY4Li04LmM4Liq4Lij4LmJ4Liy4LiH4LiE4Li14Lii4LmM4LiW4Liy4Lin4LijXG4o4LmA4LiJ4Lie4Liy4LiwIE93bmVyIOC4q+C4o+C4t+C4reC5gOC4iOC5ieC4suC4guC4reC4h+C4quC4hOC4o+C4tOC4m+C4leC5jOC5gOC4l+C5iOC4suC4meC4seC5ieC4mSk="))()
+AP_Desc.TextColor3 = Color3.fromRGB(200, 210, 230)
+AP_Desc.TextSize = 8
+AP_Desc.TextWrapped = true
+AP_Desc.ZIndex = 201
+
+local AP_OkBtn = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))(), AlertPopup)
+AP_OkBtn.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+AP_OkBtn.BorderSizePixel = 0
+AP_OkBtn.Position = UDim2.new(0.5, -60, 0, 100)
+AP_OkBtn.Size = UDim2.new(0, 120, 0, 30)
+AP_OkBtn.Font = Enum.Font.GothamBold
+AP_OkBtn.Text = loadstring(base64decode("4LiV4LiB4Lil4LiHIChPSyk="))()
+AP_OkBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+AP_OkBtn.TextSize = 9
+AP_OkBtn.ZIndex = 201
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), AP_OkBtn).CornerRadius = UDim.new(0, 6)
+
+AP_OkBtn.MouseButton1Click:Connect(function()
+    AlertPopup.Visible = false
+end)
+
 local MainFrame = Instance.new(loadstring(base64decode("RnJhbWU="))(), ScreenGui)
 MainFrame.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
 MainFrame.BorderSizePixel = 0
@@ -335,26 +408,50 @@ SubmitKeyBtn.MouseButton1Click:Connect(function()
     local userKey = KeyBox.Text
     local keyData = KeyDatabase[userKey]
     
-    if keyData or LocalPlayer.Name == DevUsername then
-        if keyData and keyData.Used == true then
+    -- Owner หรือ Admin เข้าใช้สคริปต์ได้ทันที เวลาไม่จำกัด
+    if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
+        getgenv().CurrentKeyInfo = {Key = loadstring(base64decode("REVWRUxPUEVSIC8gQURNSU4gUEFTUw=="))(), ExpiresAt = 0}
+        KeyScreen.Visible = false
+        LoadingFrame.Visible = true
+        for i = 1, 100 do
+            LoadPercent.Text = i .. loadstring(base64decode("JQ=="))()
+            BarFill.Size = UDim2.new(i/100, 0, 1, 0)
+            task.wait(0.015)
+        end
+        LoadingFrame.Visible = false
+        MainFrame.Visible = true
+        ToggleButton.Visible = true
+        getgenv().HubLoaded = true
+        local roleTitle = Owners[LocalPlayer.Name] and loadstring(base64decode("8J+MnyBXRUxDT01FIE9XTkVS"))() or loadstring(base64decode("8J+boe+4jyBXRUxDT01FIEFETUlO"))()
+        ShowNotification(roleTitle, loadstring(base64decode("4Lii4Li04LiZ4LiU4Li14LiV4LmJ4Lit4LiZ4Lij4Lix4Lia4Lic4Li54LmJ4LiU4Li54LmB4Lil4Lij4Liw4Lia4LiaIOC5gOC4guC5ieC4suC4quC4ueC5iCBOb25nbWluIEh1YiE="))())
+        return
+    end
+
+    if keyData then
+        if keyData.Used == true then
             KeyBox.Text = loadstring(base64decode(""))()
             KeyBox.PlaceholderText = loadstring(base64decode("4p2MIEtleSBhbHJlYWR5IHVzZWQh"))()
-        elseif keyData and keyData.ExpiresAt > 0 and os.time() > keyData.ExpiresAt then
+        elseif keyData.ExpiresAt > 0 and os.time() > keyData.ExpiresAt then
             KeyBox.Text = loadstring(base64decode(""))()
             KeyBox.PlaceholderText = loadstring(base64decode("4p2MIEtleSBleHBpcmVkIQ=="))()
         else
-            if keyData then keyData.Used = true end
+            keyData.Used = true
+            getgenv().CurrentKeyInfo = {Key = userKey, ExpiresAt = keyData.ExpiresAt}
+            
             KeyScreen.Visible = false
             LoadingFrame.Visible = true
-            for ZSVM2VH5 = 1, 100 do
-                LoadPercent.Text = ZSVM2VH5 .. loadstring(base64decode("JQ=="))()
-                BarFill.Size = UDim2.new(ZSVM2VH5/100, 0, 1, 0)
+            for i = 1, 100 do
+                LoadPercent.Text = i .. loadstring(base64decode("JQ=="))()
+                BarFill.Size = UDim2.new(i/100, 0, 1, 0)
                 task.wait(0.015)
             end
             LoadingFrame.Visible = false
             MainFrame.Visible = true
             ToggleButton.Visible = true
+            
+            getgenv().HubLoaded = true
             ShowNotification(loadstring(base64decode("8J+MnyBXRUxDT01F"))(), loadstring(base64decode("4Lii4Li04LiZ4LiU4Li14LiV4LmJ4Lit4LiZ4Lij4Lix4Lia4LmA4LiC4LmJ4Liy4Liq4Li54LmIIE5vbmdtaW4gSHViIQ=="))())
+            SendDiscordWebhook(loadstring(base64decode("8J+agCBLZXkgVmVyaWZpZWQgU3VjY2Vzc2Z1bGx5"))(), loadstring(base64decode("UGxheWVyOiAqKg=="))() .. LocalPlayer.Name .. loadstring(base64decode("KipcbktleSBVc2VkOiBg"))() .. userKey .. loadstring(base64decode("YFxuR2FtZSBJRDogYA=="))() .. game.PlaceId .. loadstring(base64decode("YA=="))(), 65280)
         end
     else
         KeyBox.Text = loadstring(base64decode(""))()
@@ -611,9 +708,9 @@ local function AddTabButton(name, thaiName)
     end)
 end
 
-local function CreateToggle(parent, title, thaiTitle, callback)
+local function CreateToggle(parent, title, thaiTitle, initialValue, callback)
     local toggleBtn = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))(), parent)
-    toggleBtn.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+    toggleBtn.BackgroundColor3 = initialValue and Color3.fromRGB(15, 40, 70) or Color3.fromRGB(22, 26, 40)
     toggleBtn.BorderColor3 = Color3.fromRGB(45, 60, 90)
     toggleBtn.BorderSizePixel = 1
     toggleBtn.Size = UDim2.new(1, -6, 0, 30)
@@ -629,11 +726,11 @@ local function CreateToggle(parent, title, thaiTitle, callback)
     statusLbl.Position = UDim2.new(1, -55, 0, 0)
     statusLbl.Size = UDim2.new(0, 45, 1, 0)
     statusLbl.Font = Enum.Font.GothamBold
-    statusLbl.Text = loadstring(base64decode("WyBPRkYgXQ=="))()
-    statusLbl.TextColor3 = Color3.fromRGB(255, 90, 90)
+    statusLbl.Text = initialValue and loadstring(base64decode("WyBPTiBd"))() or loadstring(base64decode("WyBPRkYgXQ=="))()
+    statusLbl.TextColor3 = initialValue and Color3.fromRGB(50, 255, 150) or Color3.fromRGB(255, 90, 90)
     statusLbl.TextSize = 9
 
-    local enabled = false
+    local enabled = initialValue
     toggleBtn.MouseButton1Click:Connect(function()
         enabled = not enabled
         if enabled then
@@ -697,9 +794,9 @@ local function CreateSlider(parent, title, thaiTitle, min, max, default, callbac
         if draggingSlider and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
             local pos = math.clamp((input.Position.X - bar.AbsolutePosition.X) / bar.AbsoluteSize.X, 0, 1)
             fill.Size = UDim2.new(pos, 0, 1, 0)
-            local val = math.floor(min + ((max - min) * pos))
-            titleLbl.Text = title .. loadstring(base64decode("IC8g"))() .. thaiTitle .. loadstring(base64decode("ICg="))() .. val .. loadstring(base64decode("KQ=="))()
-            pcall(function() callback(val) end)
+            local Z1gjcVPr = math.floor(min + ((max - min) * pos))
+            titleLbl.Text = title .. loadstring(base64decode("IC8g"))() .. thaiTitle .. loadstring(base64decode("ICg="))() .. Z1gjcVPr .. loadstring(base64decode("KQ=="))()
+            pcall(function() callback(Z1gjcVPr) end)
         end
     end)
 end
@@ -731,12 +828,69 @@ FloatText.Text = loadstring(base64decode("8J+TiiBGUFM6IDYwIHwgUGluZzogMG1z"))()
 FloatText.TextColor3 = Color3.fromRGB(0, 180, 255)
 FloatText.TextSize = 9
 
--- 1. Home (เพิ่มปุ่มบันทึกและโหลด Config)
-local HomePage = CreatePage(loadstring(base64decode("8J+PoCBIb21l"))(), 420)
+-- 1. Home
+local HomePage = CreatePage(loadstring(base64decode("8J+PoCBIb21l"))(), 460)
 HomePage.Visible = true
 AddTabButton(loadstring(base64decode("8J+PoCBIb21l"))(), loadstring(base64decode("4Lir4LiZ4LmJ4Liy4Lir4Lil4Lix4LiB"))())
 MenuButtons[1].Button.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
 MenuButtons[1].Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+local KeyInfoCard = Instance.new(loadstring(base64decode("RnJhbWU="))(), HomePage)
+KeyInfoCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+KeyInfoCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
+KeyInfoCard.BorderSizePixel = 1
+KeyInfoCard.Size = UDim2.new(1, -6, 0, 55)
+Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), KeyInfoCard).CornerRadius = UDim.new(0, 6)
+
+local KI_Title = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))(), KeyInfoCard)
+KI_Title.BackgroundTransparency = 1
+KI_Title.Position = UDim2.new(0, 10, 0, 6)
+KI_Title.Size = UDim2.new(1, -20, 0, 16)
+KI_Title.Font = Enum.Font.GothamBold
+KI_Title.Text = loadstring(base64decode("4o+zIEtleSBFeHBpcnkgU3RhdHVzICjguKrguJbguLLguJnguLDguYDguKfguKXguLLguITguLXguKLguYzguILguK3guIfguITguLjguJMp"))()
+KI_Title.TextColor3 = Color3.fromRGB(0, 180, 255)
+KI_Title.TextSize = 8
+KI_Title.TextXAlignment = Enum.TextXAlignment.Left
+
+local KI_Desc = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))(), KeyInfoCard)
+KI_Desc.BackgroundTransparency = 1
+KI_Desc.Position = UDim2.new(0, 10, 0, 24)
+KI_Desc.Size = UDim2.new(1, -20, 0, 22)
+KI_Desc.Font = Enum.Font.GothamSemibold
+KI_Desc.Text = loadstring(base64decode("4LiB4Liz4Lil4Lix4LiH4LmC4Lir4Lil4LiU4LiC4LmJ4Lit4Lih4Li54Lil4LmA4Lin4Lil4LiyLi4u"))()
+KI_Desc.TextColor3 = Color3.fromRGB(50, 255, 150)
+KI_Desc.TextSize = 9
+KI_Desc.TextXAlignment = Enum.TextXAlignment.Left
+
+task.spawn(function()
+    while task.wait(1) do
+        pcall(function()
+            if getgenv().HubLoaded then
+                local info = getgenv().CurrentKeyInfo
+                if info.ExpiresAt == 0 then
+                    KI_Desc.Text = loadstring(base64decode("8J+foiDguKrguJbguLLguJnguLA6IOC4quC4tOC4l+C4mOC4tOC5jOC4nOC4ueC5ieC4lOC4ueC5geC4peC4o+C4sOC4muC4miAvIOC4luC4suC4p+C4oyAoVW5saW1pdGVkKQ=="))()
+                else
+                    local timeLeft = info.ExpiresAt - os.time()
+                    if timeLeft > 0 then
+                        local days = math.floor(timeLeft / 86400)
+                        local hours = math.floor((timeLeft % 86400) / 3600)
+                        local mins = math.floor((timeLeft % 3600) / 60)
+                        local secs = timeLeft % 60
+                        if days > 0 then
+                            KI_Desc.Text = string.format(loadstring(base64decode("4o+zIOC5gOC4q+C4peC4t+C4reC5gOC4p+C4peC4suC4reC4teC4gTogJWQg4Lin4Lix4LiZICVkIOC4iuC4seC5iOC4p+C5guC4oeC4hyAlZCDguJnguLLguJfguLU="))(), days, hours, mins)
+                        else
+                            KI_Desc.Text = string.format(loadstring(base64decode("4o+zIOC5gOC4q+C4peC4t+C4reC5gOC4p+C4peC4suC4reC4teC4gTogJTAyZDolMDJkOiUwMmQ="))(), hours, mins, secs)
+                        end
+                    else
+                        KI_Desc.Text = loadstring(base64decode("4p2MIOC4hOC4teC4ouC5jOC4guC4reC4h+C4hOC4uOC4k+C4q+C4oeC4lOC4reC4suC4ouC4uOC5geC4peC5ieC4pyE="))()
+                        task.wait(2)
+                        UnloadAllScript()
+                    end
+                end
+            end
+        end)
+    end
+end)
 
 local ExecuterCard = Instance.new(loadstring(base64decode("RnJhbWU="))(), HomePage)
 ExecuterCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
@@ -799,7 +953,6 @@ local ClearScriptBtn = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))
 ClearScriptBtn.BackgroundColor3 = Color3.fromRGB(200, 60, 60)
 ClearScriptBtn.BorderSizePixel = 0
 ClearScriptBtn.Position = UDim2.new(0.68, 5, 0, 118)
-ClearScriptBtn.Size = UDim2.32, -15, 0, 28) -- ป้องกันคำนวณพลาด ใช้ค่าเดิม 0.32
 ClearScriptBtn.Size = UDim2.new(0.32, -15, 0, 28)
 ClearScriptBtn.Font = Enum.Font.GothamBold
 ClearScriptBtn.Text = loadstring(base64decode("8J+Xke+4jyBDTEVBUiAvIOC4peC5ieC4suC4hw=="))()
@@ -816,9 +969,9 @@ RunScriptBtn.MouseButton1Click:Connect(function()
     local code = ScriptBox.Text
     if code and code ~= loadstring(base64decode(""))() then
         local success = pcall(function()
-            local func, compileErr = loadstring(code)
-            if not func then error(compileErr) end
-            func()
+            local X1Kwa2FZ, compileErr = loadstring(code)
+            if not X1Kwa2FZ then error(compileErr) end
+            X1Kwa2FZ()
         end)
         
         if success then
@@ -829,7 +982,6 @@ RunScriptBtn.MouseButton1Click:Connect(function()
     end
 end)
 
--- Config Management Card บนหน้า Home
 local ConfigCard = Instance.new(loadstring(base64decode("RnJhbWU="))(), HomePage)
 ConfigCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
 ConfigCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
@@ -874,16 +1026,16 @@ LoadCfgBtn.MouseButton1Click:Connect(LoadConfig)
 -- 2. Player
 local PlayerPage = CreatePage(loadstring(base64decode("8J+Pg+KAjeKZgu+4jyBQbGF5ZXI="))(), 420)
 AddTabButton(loadstring(base64decode("8J+Pg+KAjeKZgu+4jyBQbGF5ZXI="))(), loadstring(base64decode("4Lic4Li54LmJ4LmA4Lil4LmI4LiZ"))())
-CreateToggle(PlayerPage, loadstring(base64decode("8J+RuyBOb2NsaXAgKFdhbGsgVGhyb3VnaCBXYWxscyk="))(), loadstring(base64decode("4LmA4LiU4Li04LiZ4LiX4Liw4Lil4Li44LiB4Liz4LmB4Lie4LiH"))(), function(state) getgenv().UltimateStg.NoclipEnabled = state ShowNotification(loadstring(base64decode("UGxheWVy"))(), loadstring(base64decode("Tm9jbGlwOiA="))() .. tostring(state)) end)
-CreateToggle(PlayerPage, loadstring(base64decode("8J+mmCBJbmZpbml0ZSBKdW1wIChBaXIgSnVtcCk="))(), loadstring(base64decode("4LiB4Lij4Liw4LmC4LiU4LiU4LiB4Lil4Liy4LiH4Lit4Liy4LiB4Liy4Lio"))(), function(state) getgenv().UltimateStg.InfiniteJumpEnabled = state ShowNotification(loadstring(base64decode("UGxheWVy"))(), loadstring(base64decode("SW5maW5pdGUgSnVtcDog"))() .. tostring(state)) end)
-CreateToggle(PlayerPage, loadstring(base64decode("8J+boe+4jyBBbnRpLUFGSyAoTm8gS2ljayk="))(), loadstring(base64decode("4Lib4LmJ4Lit4LiH4LiB4Lix4LiZ4Lir4Lil4Li44LiU4Lir4LmJ4Lit4LiHIChBRksp"))(), function(state) getgenv().UltimateStg.AntiAFKEnabled = state ShowNotification(loadstring(base64decode("UGxheWVy"))(), loadstring(base64decode("QW50aS1BRks6IA=="))() .. tostring(state)) end)
-CreateToggle(PlayerPage, loadstring(base64decode("8J+TpiBIaXRib3ggRXhwYW5kZXI="))(), loadstring(base64decode("4LiC4Lii4Liy4Lii4Liu4Li04LiV4Lia4LmH4Lit4LiB4LiL4LmM4LiV4Lix4Lin4Lil4Liw4LiE4Lij"))(), function(state) getgenv().UltimateStg.HitboxExpander = state ShowNotification(loadstring(base64decode("UGxheWVy"))(), loadstring(base64decode("SGl0Ym94IEV4cGFuZGVyOiA="))() .. tostring(state)) end)
-CreateSlider(PlayerPage, loadstring(base64decode("8J+TjyBIaXRib3ggU2l6ZQ=="))(), loadstring(base64decode("4LiC4LiZ4Liy4LiU4Liu4Li04LiV4Lia4LmH4Lit4LiB4LiL4LmM"))(), 2, 10, 3, function(val) getgenv().UltimateStg.HitboxSize = val end)
+CreateToggle(PlayerPage, loadstring(base64decode("8J+RuyBOb2NsaXAgKFdhbGsgVGhyb3VnaCBXYWxscyk="))(), loadstring(base64decode("4LmA4LiU4Li04LiZ4LiX4Liw4Lil4Li44LiB4Liz4LmB4Lie4LiH"))(), getgenv().UltimateStg.NoclipEnabled, function(state) getgenv().UltimateStg.NoclipEnabled = state ShowNotification(loadstring(base64decode("UGxheWVy"))(), loadstring(base64decode("Tm9jbGlwOiA="))() .. tostring(state)) end)
+CreateToggle(PlayerPage, loadstring(base64decode("8J+mmCBJbmZpbml0ZSBKdW1wIChBaXIgSnVtcCk="))(), loadstring(base64decode("4LiB4Lij4Liw4LmC4LiU4LiU4LiB4Lil4Liy4LiH4Lit4Liy4LiB4Liy4Lio"))(), getgenv().UltimateStg.InfiniteJumpEnabled, function(state) getgenv().UltimateStg.InfiniteJumpEnabled = state ShowNotification(loadstring(base64decode("UGxheWVy"))(), loadstring(base64decode("SW5maW5pdGUgSnVtcDog"))() .. tostring(state)) end)
+CreateToggle(PlayerPage, loadstring(base64decode("8J+boe+4jyBBbnRpLUFGSyAoTm8gS2ljayk="))(), loadstring(base64decode("4Lib4LmJ4Lit4LiH4LiB4Lix4LiZ4Lir4Lil4Li44LiU4Lir4LmJ4Lit4LiHIChBRksp"))(), getgenv().UltimateStg.AntiAFKEnabled, function(state) getgenv().UltimateStg.AntiAFKEnabled = state ShowNotification(loadstring(base64decode("UGxheWVy"))(), loadstring(base64decode("QW50aS1BRks6IA=="))() .. tostring(state)) end)
+CreateToggle(PlayerPage, loadstring(base64decode("8J+TpiBIaXRib3ggRXhwYW5kZXI="))(), loadstring(base64decode("4LiC4Lii4Liy4Lii4Liu4Li04LiV4Lia4LmH4Lit4LiB4LiL4LmM4LiV4Lix4Lin4Lil4Liw4LiE4Lij"))(), getgenv().UltimateStg.HitboxExpander, function(state) getgenv().UltimateStg.HitboxExpander = state ShowNotification(loadstring(base64decode("UGxheWVy"))(), loadstring(base64decode("SGl0Ym94IEV4cGFuZGVyOiA="))() .. tostring(state)) end)
+CreateSlider(PlayerPage, loadstring(base64decode("8J+TjyBIaXRib3ggU2l6ZQ=="))(), loadstring(base64decode("4LiC4LiZ4Liy4LiU4Liu4Li04LiV4Lia4LmH4Lit4LiB4LiL4LmM"))(), 2, 10, getgenv().UltimateStg.HitboxSize, function(Z1gjcVPr) getgenv().UltimateStg.HitboxSize = Z1gjcVPr end)
 
 -- 3. ESP
 local EspPage = CreatePage(loadstring(base64decode("8J+RgCBFU1A="))(), 420)
 AddTabButton(loadstring(base64decode("8J+RgCBFU1A="))(), loadstring(base64decode("4LiB4Liy4Lij4Lih4Lit4LiH4LmA4Lir4LmH4LiZ"))())
-CreateToggle(EspPage, loadstring(base64decode("4pyoIEVTUCBHbG93"))(), loadstring(base64decode("4LmA4Lij4Li34Lit4LiH4LmB4Liq4LiH4LiV4Lix4Lin4Lil4Liw4LiE4LijIChHbG93KQ=="))(), function(state)
+CreateToggle(EspPage, loadstring(base64decode("4pyoIEVTUCBHbG93"))(), loadstring(base64decode("4LmA4Lij4Li34Lit4LiH4LmB4Liq4LiH4LiV4Lix4Lin4Lil4Liw4LiE4LijIChHbG93KQ=="))(), getgenv().UltimateStg.ESPGlow, function(state)
     getgenv().UltimateStg.ESPGlow = state
     ShowNotification(loadstring(base64decode("RVNQ"))(), loadstring(base64decode("RVNQIEdsb3c6IA=="))() .. tostring(state))
     if not state then
@@ -894,7 +1046,7 @@ CreateToggle(EspPage, loadstring(base64decode("4pyoIEVTUCBHbG93"))(), loadstring
         end
     end
 end)
-CreateToggle(EspPage, loadstring(base64decode("8J+UsiBFU1AgQm94"))(), loadstring(base64decode("4LmB4Liq4LiU4LiH4LiB4Lij4Lit4Lia4Lij4Lit4Lia4LiV4Lix4LinIChCb3gp"))(), function(state)
+CreateToggle(EspPage, loadstring(base64decode("8J+UsiBFU1AgQm94"))(), loadstring(base64decode("4LmB4Liq4LiU4LiH4LiB4Lij4Lit4Lia4Lij4Lit4Lia4LiV4Lix4LinIChCb3gp"))(), getgenv().UltimateStg.ESPBox, function(state)
     getgenv().UltimateStg.ESPBox = state
     ShowNotification(loadstring(base64decode("RVNQ"))(), loadstring(base64decode("RVNQIEJveDog"))() .. tostring(state))
     if not state then
@@ -903,7 +1055,7 @@ CreateToggle(EspPage, loadstring(base64decode("8J+UsiBFU1AgQm94"))(), loadstring
         end
     end
 end)
-CreateToggle(EspPage, loadstring(base64decode("8J+TiCBFU1AgVHJhY2Vy"))(), loadstring(base64decode("4LmB4Liq4LiU4LiH4LmA4Liq4LmJ4LiZ4LmC4Lii4LiHIChUcmFjZXIp"))(), function(state)
+CreateToggle(EspPage, loadstring(base64decode("8J+TiCBFU1AgVHJhY2Vy"))(), loadstring(base64decode("4LmB4Liq4LiU4LiH4LmA4Liq4LmJ4LiZ4LmC4Lii4LiHIChUcmFjZXIp"))(), getgenv().UltimateStg.ESPTracer, function(state)
     getgenv().UltimateStg.ESPTracer = state
     ShowNotification(loadstring(base64decode("RVNQ"))(), loadstring(base64decode("RVNQIFRyYWNlcjog"))() .. tostring(state))
     if not state then
@@ -912,7 +1064,7 @@ CreateToggle(EspPage, loadstring(base64decode("8J+TiCBFU1AgVHJhY2Vy"))(), loadst
         end
     end
 end)
-CreateToggle(EspPage, loadstring(base64decode("8J+Pt++4jyBFU1AgTmFtZSAvIEhlYWx0aCAvIERpc3Q="))(), loadstring(base64decode("4LiK4Li34LmI4LitIOC5gOC4peC4t+C4reC4lCDguKPguLDguKLguLDguKvguYjguLLguIc="))(), function(state)
+CreateToggle(EspPage, loadstring(base64decode("8J+Pt++4jyBFU1AgTmFtZSAvIEhlYWx0aCAvIERpc3Q="))(), loadstring(base64decode("4LiK4Li34LmI4LitIOC5gOC4peC4t+C4reC4lCDguKPguLDguKLguLDguKvguYjguLLguIc="))(), getgenv().UltimateStg.ESPNameInfo, function(state)
     getgenv().UltimateStg.ESPNameInfo = state
     ShowNotification(loadstring(base64decode("RVNQ"))(), loadstring(base64decode("RVNQIEluZm86IA=="))() .. tostring(state))
     if not state then
@@ -921,27 +1073,27 @@ CreateToggle(EspPage, loadstring(base64decode("8J+Pt++4jyBFU1AgTmFtZSAvIEhlYWx0a
         end
     end
 end)
-CreateSlider(EspPage, loadstring(base64decode("8J+OryBNYXggRVNQIERpc3RhbmNl"))(), loadstring(base64decode("4Lij4Liw4Lii4Liw4LiX4Liy4LiHIEVTUCDguKrguLnguIfguKrguLjguJQ="))(), 50, 500, 250, function(val) getgenv().UltimateStg.ESPDistanceMax = val end)
+CreateSlider(EspPage, loadstring(base64decode("8J+OryBNYXggRVNQIERpc3RhbmNl"))(), loadstring(base64decode("4Lij4Liw4Lii4Liw4LiX4Liy4LiHIEVTUCDguKrguLnguIfguKrguLjguJQ="))(), 50, 500, getgenv().UltimateStg.ESPDistanceMax, function(Z1gjcVPr) getgenv().UltimateStg.ESPDistanceMax = Z1gjcVPr end)
 
 -- 4. Aimbot
 local AimbotPage = CreatePage(loadstring(base64decode("8J+OryBBaW1ib3Q="))(), 420)
 AddTabButton(loadstring(base64decode("8J+OryBBaW1ib3Q="))(), loadstring(base64decode("4Lil4LmH4Lit4LiE4LmA4Lib4LmJ4Liy"))())
-CreateToggle(AimbotPage, loadstring(base64decode("8J+RkSBBaW1ib3QgLSBIZWFkIExvY2s="))(), loadstring(base64decode("4Lil4LmH4Lit4LiE4Lir4Lix4Lin"))(), function(state)
+CreateToggle(AimbotPage, loadstring(base64decode("8J+RkSBBaW1ib3QgLSBIZWFkIExvY2s="))(), loadstring(base64decode("4Lil4LmH4Lit4LiE4Lir4Lix4Lin"))(), getgenv().UltimateStg.AimbotHead, function(state)
     getgenv().UltimateStg.AimbotHead = state
     if state then getgenv().UltimateStg.AimbotTorso = false end
     ShowNotification(loadstring(base64decode("QWltYm90"))(), loadstring(base64decode("SGVhZCBMb2NrOiA="))() .. tostring(state))
 end)
-CreateToggle(AimbotPage, loadstring(base64decode("8J+OryBBaW1ib3QgLSBUb3JzbyBMb2Nr"))(), loadstring(base64decode("4Lil4LmH4Lit4LiE4LiV4Lix4Lin"))(), function(state)
+CreateToggle(AimbotPage, loadstring(base64decode("8J+OryBBaW1ib3QgLSBUb3JzbyBMb2Nr"))(), loadstring(base64decode("4Lil4LmH4Lit4LiE4LiV4Lix4Lin"))(), getgenv().UltimateStg.AimbotTorso, function(state)
     getgenv().UltimateStg.AimbotTorso = state
     if state then getgenv().UltimateStg.AimbotHead = false end
     ShowNotification(loadstring(base64decode("QWltYm90"))(), loadstring(base64decode("VG9yc28gTG9jazog"))() .. tostring(state))
 end)
-CreateToggle(AimbotPage, loadstring(base64decode("8J+UriBTaG93IEZPVg=="))(), loadstring(base64decode("4LmB4Liq4LiU4LiH4Lin4LiHIEZPVg=="))(), function(state)
+CreateToggle(AimbotPage, loadstring(base64decode("8J+UriBTaG93IEZPVg=="))(), loadstring(base64decode("4LmB4Liq4LiU4LiH4Lin4LiHIEZPVg=="))(), getgenv().UltimateStg.ShowFOV, function(state)
     getgenv().UltimateStg.ShowFOV = state
     FOVCircle.Visible = state
     ShowNotification(loadstring(base64decode("QWltYm90"))(), loadstring(base64decode("U2hvdyBGT1Y6IA=="))() .. tostring(state))
 end)
-CreateSlider(AimbotPage, loadstring(base64decode("4pqZ77iPIEZPViBTaXpl"))(), loadstring(base64decode("4LiC4LiZ4Liy4LiUIEZPVg=="))(), 30, 500, 100, function(val) getgenv().UltimateStg.FOVSize = val end)
+CreateSlider(AimbotPage, loadstring(base64decode("4pqZ77iPIEZPViBTaXpl"))(), loadstring(base64decode("4LiC4LiZ4Liy4LiUIEZPVg=="))(), 30, 500, getgenv().UltimateStg.FOVSize, function(Z1gjcVPr) getgenv().UltimateStg.FOVSize = Z1gjcVPr end)
 
 local FOVColorBtn = Instance.new(loadstring(base64decode("VGV4dEJ1dHRvbg=="))(), AimbotPage)
 FOVColorBtn.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
@@ -971,12 +1123,12 @@ end)
 -- 5. Settings
 local SettingsPage = CreatePage(loadstring(base64decode("4pqZ77iPIFNldHRpbmdz"))())
 AddTabButton(loadstring(base64decode("4pqZ77iPIFNldHRpbmdz"))(), loadstring(base64decode("4LiV4Lix4LmJ4LiH4LiE4LmI4Liy"))())
-CreateToggle(SettingsPage, loadstring(base64decode("8J+TiiBGbG9hdGluZyBGUFMvUGluZw=="))(), loadstring(base64decode("4Liq4LiW4Li04LiV4Li04Lil4Lit4Lii"))(), function(state)
+CreateToggle(SettingsPage, loadstring(base64decode("8J+TiiBGbG9hdGluZyBGUFMvUGluZw=="))(), loadstring(base64decode("4Liq4LiW4Li04LiV4Li04Lil4Lit4Lii"))(), getgenv().UltimateStg.FloatingStats, function(state)
     getgenv().UltimateStg.FloatingStats = state
     FloatFrame.Visible = state
     ShowNotification(loadstring(base64decode("U2V0dGluZ3M="))(), loadstring(base64decode("RmxvYXRpbmcgU3RhdHM6IA=="))() .. tostring(state))
 end)
-CreateToggle(SettingsPage, loadstring(base64decode("4pqhIEZQUyAmIFBpbmcgQm9vc3Rlcg=="))(), loadstring(base64decode("4Lia4Li54Liq4LiE4Lin4Liy4Lih4Lil4Li34LmI4LiZ"))(), function(state)
+CreateToggle(SettingsPage, loadstring(base64decode("4pqhIEZQUyAmIFBpbmcgQm9vc3Rlcg=="))(), loadstring(base64decode("4Lia4Li54Liq4LiE4Lin4Liy4Lih4Lil4Li34LmI4LiZ"))(), getgenv().UltimateStg.FPSBoost, function(state)
     getgenv().UltimateStg.FPSBoost = state
     if state then
         pcall(function()
@@ -1023,16 +1175,16 @@ SI_Desc.TextColor3 = Color3.fromRGB(160, 180, 210)
 SI_Desc.TextSize = 8
 SI_Desc.TextXAlignment = Enum.TextXAlignment.Left
 
--- 7. DEV PANEL
-if LocalPlayer.Name == DevUsername then
-    local DevPage = CreatePage(loadstring(base64decode("8J+boO+4jyBERVY="))(), 450)
-    AddTabButton(loadstring(base64decode("8J+boO+4jyBERVY="))(), loadstring(base64decode("4Lij4Liw4Lia4LiaIERFVg=="))())
+-- 7. DEV & ADMIN PANEL (แยกสิทธิ์ Owner และ Admin ชัดเจน)
+if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
+    local DevPage = CreatePage(loadstring(base64decode("8J+boO+4jyBERVYgLyBBRE1JTg=="))(), 460)
+    AddTabButton(loadstring(base64decode("8J+boO+4jyBERVY="))(), loadstring(base64decode("4Lij4Liw4Lia4Lia4LmB4Lit4LiU4Lih4Li04LiZ"))())
     
     local DevCard = Instance.new(loadstring(base64decode("RnJhbWU="))(), DevPage)
     DevCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
     DevCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
     DevCard.BorderSizePixel = 1
-    DevCard.Size = UDim2.new(1, -6, 0, 210)
+    DevCard.Size = UDim2.new(1, -6, 0, 215)
     Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), DevCard).CornerRadius = UDim.new(0, 6)
     
     local DC_Head = Instance.new(loadstring(base64decode("VGV4dExhYmVs"))(), DevCard)
@@ -1040,7 +1192,8 @@ if LocalPlayer.Name == DevUsername then
     DC_Head.Position = UDim2.new(0, 10, 0, 8)
     DC_Head.Size = UDim2.new(1, -20, 0, 16)
     DC_Head.Font = Enum.Font.GothamBold
-    DC_Head.Text = loadstring(base64decode("8J+boO+4jyBERVYgS0VZIEdFTkVSQVRPUiBQQU5FTA=="))()
+    local roleText = Owners[LocalPlayer.Name] and loadstring(base64decode("4q2QIE9XTkVSIEtFWSBHRU5FUkFUT1IgUEFORUw="))() : loadstring(base64decode("8J+boe+4jyBBRE1JTiBLRVkgR0VORVJBVE9SIFBBTkVM"))()
+    DC_Head.Text = roleText
     DC_Head.TextColor3 = Color3.fromRGB(255, 200, 0)
     DC_Head.TextSize = 9
     DC_Head.TextXAlignment = Enum.TextXAlignment.Left
@@ -1083,6 +1236,11 @@ if LocalPlayer.Name == DevUsername then
         Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), btn).CornerRadius = UDim.new(0, 4)
         
         btn.MouseButton1Click:Connect(function()
+            -- ถ้า Admin กดเลือก loadstring(base64decode("4LiW4Liy4Lin4Lij"))() (0 วัน) เด้ง Popup แจ้งเตือนทันที
+            if daysVal == 0 and not Owners[LocalPlayer.Name] then
+                AlertPopup.Visible = true
+                return
+            end
             selectedDays = daysVal
             DaysLabel.Text = loadstring(base64decode("4o+x77iPIOC5gOC4peC4t+C4reC4geC4reC4suC4ouC4uOC4guC4reC4h+C4hOC4teC4ouC5jDogWyA="))() .. text .. loadstring(base64decode("IF0="))()
         end)
@@ -1107,6 +1265,11 @@ if LocalPlayer.Name == DevUsername then
     Instance.new(loadstring(base64decode("VUlDb3JuZXI="))(), GenBtn).CornerRadius = UDim.new(0, 4)
     
     GenBtn.MouseButton1Click:Connect(function()
+        if selectedDays == 0 and not Owners[LocalPlayer.Name] then
+            AlertPopup.Visible = true
+            return
+        end
+
         local newKey = KeyInput.Text
         if newKey == loadstring(base64decode(""))() then
             newKey = loadstring(base64decode("TUlOLQ=="))() .. math.random(100000, 999999)
@@ -1122,12 +1285,25 @@ if LocalPlayer.Name == DevUsername then
         
         GenBtn.Text = loadstring(base64decode("4pyFIOC4quC4o+C5ieC4suC4h+C5geC4peC4sOC4hOC4seC4lOC4peC4reC4geC4hOC4teC4ouC5jOC4quC4s+C5gOC4o+C5h+C4iDog"))() .. newKey
         ShowNotification(loadstring(base64decode("8J+UkSBLRVkgQ1JFQVRFRA=="))(), loadstring(base64decode("4Liq4Lij4LmJ4Liy4LiH4LmB4Lil4Liw4LiE4Lix4LiU4Lil4Lit4LiB4LiE4Li14Lii4LmM4Liq4Liz4LmA4Lij4LmH4LiIIQ=="))())
+        
+        SendDiscordWebhook(loadstring(base64decode("8J+boO+4jyBOZXcgS2V5IEdlbmVyYXRlZA=="))(), loadstring(base64decode("Q3JlYXRvcjogKio="))() .. LocalPlayer.Name .. loadstring(base64decode("Kipcbk5ldyBLZXk6IGA="))() .. newKey .. loadstring(base64decode("YFxuRXhwaXJlczogYA=="))() .. selectedDays .. loadstring(base64decode("IERheXNg"))(), 16776960)
+
         task.wait(2)
         GenBtn.Text = loadstring(base64decode("4p6VIOC4quC4o+C5ieC4suC4h+C4hOC4teC4ouC5jCAmIOC4hOC4seC4lOC4peC4reC4gSAoR2VuZXJhdGUgS2V5KQ=="))()
     end)
 end
 
 RenderConnection = RunService.RenderStepped:Connect(function(dt)
+    if not getgenv().HubLoaded then
+        FOVCircle.Visible = false
+        for _, espData in pairs(ESPContainer) do
+            if espData.Box then espData.Box.Visible = false end
+            if espData.Tracer then espData.Tracer.Visible = false end
+            if espData.NameTag then espData.NameTag.Visible = false end
+        end
+        return 
+    end
+
     local tickVal = tick() * 0.4
     local rgbColor = Color3.fromHSV(tickVal % 1, 1, 1)
     for _, stroke in pairs(MinimalRGBStrokes) do
@@ -1329,7 +1505,6 @@ RenderConnection = RunService.RenderStepped:Connect(function(dt)
                 if plr ~= LocalPlayer and plr.Character and plr.Character:FindFirstChild(loadstring(base64decode("SHVtYW5vaWQ="))()) and plr.Character.Humanoid.Health > 0 then
                     local targetPart = nil
                     if getgenv().UltimateStg.AimbotHead then
-                        targetCard = plr.Character:FindFirstChild(loadstring(base64decode("SGVhZA=="))()) -- แก้ไขตัวแปร
                         targetPart = plr.Character:FindFirstChild(loadstring(base64decode("SGVhZA=="))())
                     elseif getgenv().UltimateStg.AimbotTorso then
                         targetPart = plr.Character:FindFirstChild(loadstring(base64decode("VXBwZXJUb3Jzbw=="))()) or plr.Character:FindFirstChild(loadstring(base64decode("VG9yc28="))())
@@ -1375,7 +1550,7 @@ Players.PlayerRemoving:Connect(function(plr)
 end)
 
 UserInputService.JumpRequest:Connect(function()
-    if getgenv().UltimateStg.InfiniteJumpEnabled then
+    if getgenv().HubLoaded and getgenv().UltimateStg.InfiniteJumpEnabled then
         pcall(function()
             local char = LocalPlayer.Character
             if char and char:FindFirstChildOfClass(loadstring(base64decode("SHVtYW5vaWQ="))()) then
@@ -1387,7 +1562,7 @@ end)
 
 task.spawn(function()
     while task.wait(60) do
-        if getgenv().UltimateStg.AntiAFKEnabled then
+        if getgenv().HubLoaded and getgenv().UltimateStg.AntiAFKEnabled then
             pcall(function()
                 VirtualUser:CaptureController()
                 VirtualUser:ClickButton2(Vector2.new())
@@ -1396,5 +1571,5 @@ task.spawn(function()
     end
 end)
 end
-2S3n7IIl(pbFOC)
+21WEKkKQ(9Z75p)
 end)(...)
