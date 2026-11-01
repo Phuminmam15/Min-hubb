@@ -1,5 +1,5 @@
 -- =====================================================================
--- Premium script by.Nongmin - Ultimate Hub v7.9 (Complete System & Fixed)
+-- Premium script by.Nongmin - Ultimate Hub v8.0 (UI & Admin Fixed 100%)
 -- =====================================================================
 
 local Players = game:GetService("Players")
@@ -17,10 +17,10 @@ local LocalPlayer = Players.LocalPlayer
 -- รายชื่อ Owner หลัก (สิทธิ์สูงสุด สร้างคีย์ถาวรได้ และเพิ่มแอดมินได้)
 local Owners = {["Terx_83"] = true}
 
--- รายชื่อ Admin เริ่มต้น (สร้างคีย์ได้ แต่ห้ามสร้างถาวร)
+-- รายชื่อ Admin เริ่มต้น
 local Admins = {["AdminFriend01"] = true}
 
--- ลิงก์ Discord Webhook ของคุณ
+-- ลิงก์ Discord Webhook
 local WEBHOOK_URL = "https://discord.com/api/webhooks/1566517565755363499/iuxqTJwHVaHVzBTxwJRbBYUkvDeL5sZIzRfdAt4mF004cyLRGyWz8W1-piHHL3cH-dnh"
 
 local function SendDiscordWebhook(title, description, colorCode)
@@ -215,7 +215,7 @@ AlertPopup.AnchorPoint = Vector2.new(0.5, 0.5)
 AlertPopup.Position = UDim2.new(0.5, 0, 0.5, 0)
 AlertPopup.Size = UDim2.new(0, 300, 0, 150)
 AlertPopup.Visible = false
-AlertPopup.ZIndex = 300
+AlertPopup.ZIndex = 400
 AddRGBStroke(AlertPopup, 2)
 Instance.new("UICorner", AlertPopup).CornerRadius = UDim.new(0, 8)
 
@@ -227,7 +227,7 @@ AP_Title.Font = Enum.Font.GothamBold
 AP_Title.Text = "⚠️ แจ้งเตือนสิทธิ์การใช้งาน"
 AP_Title.TextColor3 = Color3.fromRGB(255, 90, 90)
 AP_Title.TextSize = 11
-AP_Title.ZIndex = 301
+AP_Title.ZIndex = 401
 
 local AP_Desc = Instance.new("TextLabel", AlertPopup)
 AP_Desc.BackgroundTransparency = 1
@@ -238,7 +238,7 @@ AP_Desc.Text = "คุณไม่มีสิทธิ์สร้างคี�
 AP_Desc.TextColor3 = Color3.fromRGB(200, 210, 230)
 AP_Desc.TextSize = 8
 AP_Desc.TextWrapped = true
-AP_Desc.ZIndex = 301
+AP_Desc.ZIndex = 401
 
 local AP_OkBtn = Instance.new("TextButton", AlertPopup)
 AP_OkBtn.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
@@ -249,7 +249,7 @@ AP_OkBtn.Font = Enum.Font.GothamBold
 AP_OkBtn.Text = "ตกลง (OK)"
 AP_OkBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 AP_OkBtn.TextSize = 9
-AP_OkBtn.ZIndex = 301
+AP_OkBtn.ZIndex = 401
 Instance.new("UICorner", AP_OkBtn).CornerRadius = UDim.new(0, 6)
 
 AP_OkBtn.MouseButton1Click:Connect(function()
@@ -405,7 +405,6 @@ SubmitKeyBtn.MouseButton1Click:Connect(function()
     local userKey = KeyBox.Text
     local keyData = KeyDatabase[userKey]
     
-    -- Owner หรือ Admin สามารถเข้าได้ทันทีโดยไม่ต้องใช้คีย์ (สิทธิ์ถาวรตลอดชีพ)
     if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
         getgenv().CurrentKeyInfo = {Key = "DEVELOPER / ADMIN PASS", ExpiresAt = 0}
         KeyScreen.Visible = false
@@ -504,9 +503,11 @@ UserInputService.InputBegan:Connect(function(input, gp)
     if not gp and input.KeyCode == Enum.KeyCode.H then ToggleMenu() end
 end)
 
+-- TopBar สำหรับเลือกหน้าต่าง (ปรับขนาดพอดี ไม่ล้นขอบ)
 local TopBarHolder = Instance.new("ScrollingFrame", MainFrame)
 TopBarHolder.BackgroundColor3 = Color3.fromRGB(10, 12, 20)
 TopBarHolder.BorderSizePixel = 0
+TopBarHolder.Position = UDim2.new(0, 0, 0, 0)
 TopBarHolder.Size = UDim2.new(1, -35, 0, 36)
 TopBarHolder.CanvasSize = UDim2.new(0, 600, 0, 0)
 TopBarHolder.ScrollBarThickness = 0
@@ -667,7 +668,7 @@ local function CreatePage(name, customHeight)
     local page = Instance.new("ScrollingFrame", PagesHolder)
     page.BackgroundTransparency = 1
     page.Size = UDim2.new(1, 0, 1, 0)
-    page.CanvasSize = UDim2.new(0, 0, 0, customHeight or 500)
+    page.CanvasSize = UDim2.new(0, 0, 0, customHeight or 600) -- Fix บัคหน้าจอว่างเปล่า 100%
     page.ScrollBarThickness = 2
     page.Visible = false
     
@@ -832,7 +833,6 @@ AddTabButton("🏠 Home", "หน้าหลัก")
 MenuButtons[1].Button.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
 MenuButtons[1].Button.TextColor3 = Color3.fromRGB(255, 255, 255)
 
--- Card แสดงข้อมูลคีย์และเวลาหมดอายุของผู้ใช้แบบเรียลไทม์
 local KeyInfoCard = Instance.new("Frame", HomePage)
 KeyInfoCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
 KeyInfoCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
@@ -1173,10 +1173,10 @@ SI_Desc.TextColor3 = Color3.fromRGB(160, 180, 210)
 SI_Desc.TextSize = 8
 SI_Desc.TextXAlignment = Enum.TextXAlignment.Left
 
--- 7. DEV & ADMIN PANEL (ระบบสร้างคีย์และการเพิ่มแอดมิน)
+-- 7. DEV & ADMIN PANEL (จัดดีไซน์เหมือนรูปที่ 2 และใส่ระบบครบถ้วน)
 if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
     local isOwner = Owners[LocalPlayer.Name]
-    local DevPage = CreatePage("🛠️ DEV / ADMIN", 460)
+    local DevPage = CreatePage("🛠️ DEV / ADMIN", 650)
     AddTabButton("🛠️ DEV", "ระบบแอดมิน")
     
     local DevCard = Instance.new("Frame", DevPage)
@@ -1191,8 +1191,8 @@ if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
     DC_Head.Position = UDim2.new(0, 10, 0, 8)
     DC_Head.Size = UDim2.new(1, -20, 0, 16)
     DC_Head.Font = Enum.Font.GothamBold
-    DC_Head.Text = isOwner and "⭐ OWNER KEY GENERATOR PANEL" or "🛡️ ADMIN KEY GENERATOR PANEL"
-    DC_Head.TextColor3 = isOwner and Color3.fromRGB(255, 200, 0) or Color3.fromRGB(0, 180, 255)
+    DC_Head.Text = isOwner and "🛠️ DEV KEY GENERATOR PANEL" or "🛡️ ADMIN KEY GENERATOR PANEL"
+    DC_Head.TextColor3 = Color3.fromRGB(255, 200, 0)
     DC_Head.TextSize = 9
     DC_Head.TextXAlignment = Enum.TextXAlignment.Left
     
@@ -1234,9 +1234,8 @@ if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
         Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 4)
         
         btn.MouseButton1Click:Connect(function()
-            -- ถ้าเป็น Admin แล้วกดเลือก "ถาวร" (0 วัน) ให้เด้ง Popup แจ้งเตือนทันที
             if daysVal == 0 and not isOwner then
-                AlertPopup.Visible = true
+                AlertPopup.Visible = true -- เด้ง Popup แจ้งเตือนสิทธิ์แอดมินตามต้องการ
                 return
             end
             selectedDays = daysVal
@@ -1290,7 +1289,7 @@ if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
         GenBtn.Text = "➕ สร้างคีย์ & คัดลอก (Generate Key)"
     end)
 
-    -- เพิ่มฟังก์ชันพิเศษสำหรับ Owner ในการเพิ่มเพื่อนเป็น Admin
+    -- เพิ่มฟังก์ชันสำหรับ Owner ในการเพิ่มผู้เล่นเป็น Admin
     if isOwner then
         local AddAdminCard = Instance.new("Frame", DevPage)
         AddAdminCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
@@ -1316,7 +1315,7 @@ if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
         AdminInput.Position = UDim2.new(0, 10, 0, 30)
         AdminInput.Size = UDim2.new(1, -20, 0, 30)
         AdminInput.Font = Enum.Font.Gotham
-        AdminInput.PlaceholderText = "พิมพ์ชื่อ Roblox ของเพื่อนที่ต้องการเพิ่มเป็น Admin"
+        AdminInput.PlaceholderText = "พิมพ์ชื่อ Roblox ของผู้เล่นที่ต้องการเพิ่มเป็น Admin"
         AdminInput.Text = ""
         AdminInput.TextColor3 = Color3.fromRGB(255, 255, 255)
         AdminInput.PlaceholderColor3 = Color3.fromRGB(110, 130, 170)
