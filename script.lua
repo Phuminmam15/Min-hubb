@@ -1,5 +1,5 @@
 -- =====================================================================
--- Premium script by.Nongmin - Ultimate Hub v8.4 (Fully Fixed for Delta)
+-- Premium script by.Nongmin - Ultimate Hub v8.6 (Locked Dev & Unique Config)
 -- =====================================================================
 
 local Players = game:GetService("Players")
@@ -167,14 +167,42 @@ getgenv().UltimateStg = {
     FloatingStats = false
 }
 
-local ConfigFileName = "NongminHub_Config.json"
+-- แยกไฟล์ Config ตามชื่อไอดีผู้เล่นแต่ละคนโดยเฉพาะ
+local ConfigFileName = "NongminHub_Config_" .. LocalPlayer.Name .. ".json"
+
+local function ResetAllSettings()
+    getgenv().UltimateStg = {
+        NoclipEnabled = false,
+        InfiniteJumpEnabled = false,
+        AntiAFKEnabled = false,
+        ESPGlow = false,
+        ESPBox = false,
+        ESPTracer = false,
+        ESPNameInfo = false,
+        ESPDistanceMax = 250,
+        HitboxExpander = false,
+        HitboxSize = 3,
+        AimbotHead = false,
+        AimbotTorso = false,
+        ShowFOV = false,
+        FOVSize = 100,
+        FOVColorMode = 1,
+        FPSBoost = false,
+        FloatingStats = false
+    }
+    pcall(function()
+        if writefile and isfile and isfile(ConfigFileName) then
+            delfile(ConfigFileName)
+        end
+    end)
+end
 
 local function SaveConfig()
     pcall(function()
         if writefile then
             local jsonDecoded = HttpService:JSONEncode(getgenv().UltimateStg)
             writefile(ConfigFileName, jsonDecoded)
-            ShowNotification("💾 CONFIG SAVED", "บันทึกการตั้งค่าสำเร็จแล้ว!")
+            ShowNotification("💾 CONFIG SAVED", "บันทึกการตั้งค่าของไอดี " .. LocalPlayer.Name .. " สำเร็จ!")
         end
     end)
 end
@@ -190,7 +218,7 @@ local function LoadConfig()
                         getgenv().UltimateStg[k] = v
                     end
                 end
-                ShowNotification("📂 CONFIG LOADED", "โหลดค่าตั้งค่าเดิมสำเร็จ!")
+                ShowNotification("📂 CONFIG LOADED", "โหลดค่าตั้งค่าเฉพาะไอดีนี้สำเร็จ!")
             end
         end
     end)
@@ -602,6 +630,13 @@ local function UnloadAllScript()
     ESPContainer = {}
     pcall(function() FOVCircle:Remove() end)
     ScreenGui:Destroy()
+end
+
+local function LogoutAndReset()
+    ResetAllSettings()
+    getgenv().HubLoaded = false
+    getgenv().CurrentKeyInfo = {Key = "None", ExpiresAt = 0}
+    UnloadAllScript()
 end
 
 CloseBtn.MouseButton1Click:Connect(function()
@@ -1138,6 +1173,38 @@ CreateToggle(SettingsPage, "⚡ FPS & Ping Booster", "บูสความล�
     end
 end)
 
+local LogoutCard = Instance.new("Frame", SettingsPage)
+LogoutCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+LogoutCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
+LogoutCard.BorderSizePixel = 1
+LogoutCard.Size = UDim2.new(1, -6, 0, 70)
+Instance.new("UICorner", LogoutCard).CornerRadius = UDim.new(0, 6)
+
+local LC_Title = Instance.new("TextLabel", LogoutCard)
+LC_Title.BackgroundTransparency = 1
+LC_Title.Position = UDim2.new(0, 10, 0, 6)
+LC_Title.Size = UDim2.new(1, -20, 0, 16)
+LC_Title.Font = Enum.Font.GothamBold
+LC_Title.Text = "🚪 Account Session (ระบบออกจากระบบ)"
+LC_Title.TextColor3 = Color3.fromRGB(255, 90, 90)
+LC_Title.TextSize = 8
+LC_Title.TextXAlignment = Enum.TextXAlignment.Left
+
+local LogoutBtn = Instance.new("TextButton", LogoutCard)
+LogoutBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+LogoutBtn.BorderSizePixel = 0
+LogoutBtn.Position = UDim2.new(0, 10, 0, 28)
+LogoutBtn.Size = UDim2.new(1, -20, 0, 30)
+LogoutBtn.Font = Enum.Font.GothamBold
+LogoutBtn.Text = "🚪 LOGOUT & RESET ALL / ออกจากระบบและรีเซ็ตค่า"
+LogoutBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+LogoutBtn.TextSize = 8
+Instance.new("UICorner", LogoutBtn).CornerRadius = UDim.new(0, 4)
+
+LogoutBtn.MouseButton1Click:Connect(function()
+    LogoutAndReset()
+end)
+
 -- 6. Security
 local SecurityPage = CreatePage("🛡️ Security")
 AddTabButton("🛡️ Security", "ความปลอดภัย")
@@ -1168,11 +1235,12 @@ SI_Desc.TextColor3 = Color3.fromRGB(160, 180, 210)
 SI_Desc.TextSize = 8
 SI_Desc.TextXAlignment = Enum.TextXAlignment.Left
 
--- 7. DEV & ADMIN PANEL (แสดงผลทันทีสำหรับ Owner / Admin)
+-- 7. DEV & ADMIN PANEL (สร้างหน้า DEV เสมอ แต่ถ้าไม่ใช่ Owner/Admin จะขึ้นหน้าจอล็อกแจ้งเตือน)
+local DevPage = CreatePage("🛠️ DEV")
+AddTabButton("🛠️ DEV", "ระบบแอดมิน")
+
 if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
     local isOwner = Owners[LocalPlayer.Name]
-    local DevPage = CreatePage("🛠️ DEV")
-    AddTabButton("🛠️ DEV", "ระบบแอดมิน")
     
     local DevCard = Instance.new("Frame", DevPage)
     DevCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
@@ -1284,6 +1352,64 @@ if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
         GenBtn.Text = "➕ สร้างคีย์ & คัดลอก (Generate Key)"
     end)
 
+    local KickCard = Instance.new("Frame", DevPage)
+    KickCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+    KickCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
+    KickCard.BorderSizePixel = 1
+    KickCard.Size = UDim2.new(1, -6, 0, 110)
+    Instance.new("UICorner", KickCard).CornerRadius = UDim.new(0, 6)
+
+    local KC_Head = Instance.new("TextLabel", KickCard)
+    KC_Head.BackgroundTransparency = 1
+    KC_Head.Position = UDim2.new(0, 10, 0, 8)
+    KC_Head.Size = UDim2.new(1, -20, 0, 16)
+    KC_Head.Font = Enum.Font.GothamBold
+    KC_Head.Text = "🚫 ADMIN: KICK PLAYER FROM SERVER"
+    KC_Head.TextColor3 = Color3.fromRGB(255, 90, 90)
+    KC_Head.TextSize = 9
+    KC_Head.TextXAlignment = Enum.TextXAlignment.Left
+
+    local KickInput = Instance.new("TextBox", KickCard)
+    KickInput.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
+    KickInput.BorderColor3 = Color3.fromRGB(45, 60, 90)
+    KickInput.BorderSizePixel = 1
+    KickInput.Position = UDim2.new(0, 10, 0, 30)
+    KickInput.Size = UDim2.new(1, -20, 0, 30)
+    KickInput.Font = Enum.Font.Gotham
+    KickInput.PlaceholderText = "พิมพ์ชื่อ Roblox ของผู้เล่นที่ต้องการเตะออก"
+    KickInput.Text = ""
+    KickInput.TextColor3 = Color3.fromRGB(255, 255, 255)
+    KickInput.PlaceholderColor3 = Color3.fromRGB(110, 130, 170)
+    KickInput.TextSize = 8
+    Instance.new("UICorner", KickInput).CornerRadius = UDim.new(0, 4)
+
+    local KickBtn = Instance.new("TextButton", KickCard)
+    KickBtn.BackgroundColor3 = Color3.fromRGB(200, 40, 40)
+    KickBtn.BorderSizePixel = 0
+    KickBtn.Position = UDim2.new(0, 10, 0, 68)
+    KickBtn.Size = UDim2.new(1, -20, 0, 28)
+    KickBtn.Font = Enum.Font.GothamBold
+    KickBtn.Text = "🚫 เตะผู้เล่นออกจากเซิร์ฟเวอร์ (Kick)"
+    KickBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    KickBtn.TextSize = 9
+    Instance.new("UICorner", KickBtn).CornerRadius = UDim.new(0, 4)
+
+    KickBtn.MouseButton1Click:Connect(function()
+        local targetName = KickInput.Text
+        if targetName ~= "" then
+            local targetPlr = Players:FindFirstChild(targetName)
+            if targetPlr then
+                pcall(function() targetPlr:Kick("คุณถูกเตะออกจากเซิร์ฟเวอร์โดย Dev/Admin") end)
+                ShowNotification("🚫 KICK SUCCESS", "เตะ " .. targetName .. " สำเร็จ!")
+                KickInput.Text = ""
+            else
+                ShowNotification("❌ ERROR", "ไม่พบผู้เล่นชื่อนี้ในเซิร์ฟเวอร์!")
+            end
+        else
+            ShowNotification("❌ ERROR", "กรุณากรอกชื่อผู้เล่นก่อน!")
+        end
+    end)
+
     if isOwner then
         local AddAdminCard = Instance.new("Frame", DevPage)
         AddAdminCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
@@ -1338,6 +1464,57 @@ if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
             end
         end)
     end
+else
+    -- 🛑 หน้าจอล็อกและแจ้งเตือนสำหรับผู้เล่นทั่วไปที่กดเข้ามาหน้า DEV
+    local LockFrame = Instance.new("Frame", DevPage)
+    LockFrame.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+    LockFrame.BorderColor3 = Color3.fromRGB(200, 40, 40)
+    LockFrame.BorderSizePixel = 1
+    LockFrame.Size = UDim2.new(1, -6, 0, 140)
+    Instance.new("UICorner", LockFrame).CornerRadius = UDim.new(0, 6)
+
+    local LF_Title = Instance.new("TextLabel", LockFrame)
+    LF_Title.BackgroundTransparency = 1
+    LF_Title.Position = UDim2.new(0, 15, 0, 20)
+    LF_Title.Size = UDim2.new(1, -30, 0, 25)
+    LF_Title.Font = Enum.Font.GothamBold
+    LF_Title.Text = "⛔ ACCESS DENIED / ปิดกั้นการเข้าถึง"
+    LF_Title.TextColor3 = Color3.fromRGB(255, 90, 90)
+    LF_Title.TextSize = 11
+    LF_Title.TextXAlignment = Enum.TextXAlignment.Center
+
+    local LF_Desc = Instance.new("TextLabel", LockFrame)
+    LF_Desc.BackgroundTransparency = 1
+    LF_Desc.Position = UDim2.new(0, 15, 0, 50)
+    LF_Desc.Size = UDim2.new(1, -30, 0, 40)
+    LF_Desc.Font = Enum.Font.Gotham
+    LF_Desc.Text = "คุณไม่มีสิทธิ์ใช้งานเมนู DEV นี้\n(สำหรับผู้ดูแลระบบหรือ Owner เท่านั้น)"
+    LF_Desc.TextColor3 = Color3.fromRGB(200, 210, 230)
+    LF_Desc.TextSize = 8
+    LF_Desc.TextWrapped = true
+    LF_Desc.TextXAlignment = Enum.TextXAlignment.Center
+
+    local BackHomeBtn = Instance.new("TextButton", LockFrame)
+    BackHomeBtn.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+    BackHomeBtn.BorderSizePixel = 0
+    BackHomeBtn.Position = UDim2.new(0.5, -75, 0, 95)
+    BackHomeBtn.Size = UDim2.new(0, 150, 0, 30)
+    BackHomeBtn.Font = Enum.Font.GothamBold
+    BackHomeBtn.Text = "⬅️ กลับสู่หน้าหลัก (Home)"
+    BackHomeBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    BackHomeBtn.TextSize = 8
+    Instance.new("UICorner", BackHomeBtn).CornerRadius = UDim.new(0, 5)
+
+    BackHomeBtn.MouseButton1Click:Connect(function()
+        for _, p in pairs(Pages) do p.Visible = false end
+        for _, mb in ipairs(MenuButtons) do
+            mb.Button.BackgroundColor3 = Color3.fromRGB(10, 12, 20)
+            mb.Button.TextColor3 = Color3.fromRGB(160, 180, 210)
+        end
+        Pages["🏠 Home"].Visible = true
+        MenuButtons[1].Button.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+        MenuButtons[1].Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    end)
 end
 
 RenderConnection = RunService.RenderStepped:Connect(function(dt)
