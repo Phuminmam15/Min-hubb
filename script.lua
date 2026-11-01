@@ -1,5 +1,5 @@
 -- =====================================================================
--- Premium script by.Nongmin - Ultimate Hub v8.3 (Owner Fixed 100%)
+-- Premium script by.Nongmin - Ultimate Hub v8.4 (Fully Fixed for Delta)
 -- =====================================================================
 
 local Players = game:GetService("Players")
@@ -14,7 +14,6 @@ local VirtualUser = game:GetService("VirtualUser")
 local Camera = Workspace.CurrentCamera
 local LocalPlayer = Players.LocalPlayer
 
--- กำหนดให้ไอดีของคุณเป็น Owner ทันที (รวมถึงไอดีหลัก Terx_83)
 local Owners = {["Terx_83"] = true, [LocalPlayer.Name] = true}
 local Admins = {}
 
@@ -204,7 +203,6 @@ local KeyDatabase = {
     ["MIN-VIP-7DAYS"] = {Used = false, ExpiresAt = os.time() + (7 * 24 * 60 * 60)}
 }
 
--- Popup เตือนสิทธิ์ Admin
 local AlertPopup = Instance.new("Frame", ScreenGui)
 AlertPopup.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
 AlertPopup.BorderSizePixel = 0
@@ -1609,13 +1607,13 @@ UserInputService.JumpRequest:Connect(function()
     end
 end)
 
-Task.spawn(function()
-    While task.wait(60) do
-        If getgenv().HubLoaded and getgenv().UltimateStg.AntiAFKEnabled then
-            Pcall(function()
+task.spawn(function()
+    while task.wait(60) do
+        if getgenv().HubLoaded and getgenv().UltimateStg.AntiAFKEnabled then
+            pcall(function()
                 VirtualUser:CaptureController()
                 VirtualUser:ClickButton2(Vector2.new())
             end)
-        End
+        end
     end
 end)
