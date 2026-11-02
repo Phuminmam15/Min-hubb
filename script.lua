@@ -1,5 +1,5 @@
 -- =====================================================================
--- Nongmin Ultimate Hub v10.0 (Online JSONBin Key System - Connected)
+-- Nongmin Ultimate Hub v10.1 (Unlocked & Full Features - Cross-Server Key)
 -- =====================================================================
 
 local Players = game:GetService("Players")
@@ -28,11 +28,13 @@ local requestFunc = syn and syn.request or http and http.request or http_request
 
 local function GetOnlineKeyDatabase()
     local success, response = pcall(function()
-        return requestFunc({
-            Url = "https://api.jsonbin.io/v3/b/" .. JSONBIN_BIN_ID .. "/latest",
-            Method = "GET",
-            Headers = {["X-Master-Key"] = JSONBIN_API_KEY}
-        })
+        if requestFunc then
+            return requestFunc({
+                Url = "https://api.jsonbin.io/v3/b/" .. JSONBIN_BIN_ID .. "/latest",
+                Method = "GET",
+                Headers = {["X-Master-Key"] = JSONBIN_API_KEY}
+            })
+        end
     end)
     if success and response and response.StatusCode == 200 then
         local data = HttpService:JSONDecode(response.Body)
@@ -43,15 +45,17 @@ end
 
 local function UpdateOnlineKeyDatabase(dbTable)
     local success, response = pcall(function()
-        return requestFunc({
-            Url = "https://api.jsonbin.io/v3/b/" .. JSONBIN_BIN_ID,
-            Method = "PUT",
-            Headers = {
-                ["Content-Type"] = "application/json",
-                ["X-Master-Key"] = JSONBIN_API_KEY
-            },
-            Body = HttpService:JSONEncode(dbTable)
-        })
+        if requestFunc then
+            return requestFunc({
+                Url = "https://api.jsonbin.io/v3/b/" .. JSONBIN_BIN_ID,
+                Method = "PUT",
+                Headers = {
+                    ["Content-Type"] = "application/json",
+                    ["X-Master-Key"] = JSONBIN_API_KEY
+                },
+                Body = HttpService:JSONEncode(dbTable)
+            })
+        end
     end)
     return success and response.StatusCode == 200
 end
@@ -92,33 +96,31 @@ end
 
 pcall(function()
     local mt = getrawmetatable(game)
-    setreadonly(mt, false)
-    local oldNamecall = mt.__namecall
-    
-    mt.__namecall = newcclosure(function(self, ...)
-        local method = getnamecallmethod()
-        local args = {...}
+    if mt then
+        setreadonly(mt, false)
+        local oldNamecall = mt.__namecall
         
-        if method == "Kick" and self == LocalPlayer then return nil end
-        if method == "Teleport" or method == "TeleportToNotInServer" then return nil end
-        
-        if method == "ReportAbuse" or method == "PostAsync" or method == "GetAsync" or method == "JSONEncode" then
-            if type(args[1]) == "string" then
-                local str = string.lower(args[1])
-                if string.match(str, "ban") or string.match(str, "detect") or string.match(str, "telemetry") or string.match(str, "exploit") then
-                    return nil
-                end
-            end
-        end
-        
-        return oldNamecall(self, ...)
-    end)
-    setreadonly(mt, true)
+        mt.__namecall = newcclosure(function(self, ...)
+            local method = getnamecallmethod()
+            local args = {...}
+            
+            if method == "Kick" and self == LocalPlayer then return nil end
+            if method == "Teleport" or method == "TeleportToNotInServer" then return nil end
+            
+            return oldNamecall(self, ...)
+        end)
+        setreadonly(mt, true)
+    end
 end)
 
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "NongminUltimateHub"
-ScreenGui.Parent = CoreGui
+pcall(function()
+    ScreenGui.Parent = CoreGui
+end)
+if not ScreenGui.Parent then
+    ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+end
 ScreenGui.ResetOnSpawn = false
 
 local MinimalRGBStrokes = {}
