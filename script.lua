@@ -1,5 +1,5 @@
 -- =====================================================================
--- Nongmin Ultimate Hub v10.1 (Unlocked & Full Features - Cross-Server Key)
+-- Nongmin Ultimate Hub v10.2 (Fully Unlocked & Optimized)
 -- =====================================================================
 
 local Players = game:GetService("Players")
@@ -21,7 +21,6 @@ if not getgenv().ActiveHubUsers then
     getgenv().ActiveHubUsers = {}
 end
 
--- 🌐 เชื่อมต่อออนไลน์ JSONBin.io (ใส่ API Key และ Bin ID ของคุณเรียบร้อยแล้ว)
 local JSONBIN_API_KEY = "$2a$10$gj5E1zETPuBjvtA.iAbQa.mcs/sWs5v8RmkGY2SE.IEMCu3T0Wfku" 
 local JSONBIN_BIN_ID = "6ae7dad0ffd5d160539e31f8"           
 local requestFunc = syn and syn.request or http and http.request or http_request or request
@@ -88,37 +87,25 @@ end
 getgenv().HubLoaded = false
 getgenv().CurrentKeyInfo = {Key = "None", ExpiresAt = 0}
 
-for _, v in pairs(CoreGui:GetChildren()) do
-    if v.Name == "NongminUltimateHub" then
-        v:Destroy()
-    end
-end
-
 pcall(function()
-    local mt = getrawmetatable(game)
-    if mt then
-        setreadonly(mt, false)
-        local oldNamecall = mt.__namecall
-        
-        mt.__namecall = newcclosure(function(self, ...)
-            local method = getnamecallmethod()
-            local args = {...}
-            
-            if method == "Kick" and self == LocalPlayer then return nil end
-            if method == "Teleport" or method == "TeleportToNotInServer" then return nil end
-            
-            return oldNamecall(self, ...)
-        end)
-        setreadonly(mt, true)
+    for _, v in pairs(CoreGui:GetChildren()) do
+        if v.Name == "NongminUltimateHub" then
+            v:Destroy()
+        end
     end
 end)
 
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "NongminUltimateHub"
 pcall(function()
-    ScreenGui.Parent = CoreGui
+    if syn and syn.protect_gui then
+        syn.protect_gui(ScreenGui)
+        ScreenGui.Parent = CoreGui
+    else
+        ScreenGui.Parent = CoreGui
+    end
 end)
-if not ScreenGui.Parent then
+if not ScreenGui.Parent or ScreenGui.Parent ~= CoreGui then
     ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
 end
 ScreenGui.ResetOnSpawn = false
