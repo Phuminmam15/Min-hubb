@@ -1,5 +1,5 @@
 -- =====================================================================
--- Premium script by.Nongmin - Ultimate Hub v8.8 (Fixed Key & Quick Logout)
+-- Premium script by.Nongmin - Ultimate Hub v9.1 (Key Timer on Use & Dev Lock)
 -- =====================================================================
 
 local Players = game:GetService("Players")
@@ -14,7 +14,6 @@ local VirtualUser = game:GetService("VirtualUser")
 local Camera = Workspace.CurrentCamera
 local LocalPlayer = Players.LocalPlayer
 
--- ลบ [LocalPlayer.Name] ออก เพื่อให้ไอดีอื่นต้องใช้คีย์จริงๆ (เหลือเฉพาะ Owner หลัก)
 local Owners = {["Terx_83"] = true}
 local Admins = {}
 
@@ -251,8 +250,8 @@ end
 LoadConfig()
 
 local KeyDatabase = {
-    ["MIN-VIP-1111"] = {Used = false, ExpiresAt = 0},
-    ["MIN-VIP-7DAYS"] = {Used = false, ExpiresAt = os.time() + (7 * 24 * 60 * 60)}
+    ["MIN-VIP-1111"] = {Used = false, Days = 0, ExpiresAt = 0},
+    ["MIN-VIP-7DAYS"] = {Used = false, Days = 7, ExpiresAt = 0}
 }
 
 local AlertPopup = Instance.new("Frame", ScreenGui)
@@ -476,13 +475,24 @@ SubmitKeyBtn.MouseButton1Click:Connect(function()
 
     if keyData then
         if keyData.Used == true then
-            KeyBox.Text = ""
-            KeyBox.PlaceholderText = "❌ Key already used!"
-        elseif keyData.ExpiresAt > 0 and os.time() > keyData.ExpiresAt then
+            if keyData.ExpiresAt > 0 and os.time() > keyData.ExpiresAt then
+                KeyBox.Text = ""
+                KeyBox.PlaceholderText = "❌ Key expired!"
+                return
+            end
+        else
+            keyData.Used = true
+            if keyData.Days > 0 then
+                keyData.ExpiresAt = os.time() + (keyData.Days * 24 * 60 * 60)
+            else
+                keyData.ExpiresAt = 0
+            end
+        end
+
+        if keyData.ExpiresAt > 0 and os.time() > keyData.ExpiresAt then
             KeyBox.Text = ""
             KeyBox.PlaceholderText = "❌ Key expired!"
         else
-            keyData.Used = true
             getgenv().CurrentKeyInfo = {Key = userKey, ExpiresAt = keyData.ExpiresAt}
             
             KeyScreen.Visible = false
@@ -862,29 +872,6 @@ AddTabButton("🏠 Home", "หน้าหลัก")
 MenuButtons[1].Button.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
 MenuButtons[1].Button.TextColor3 = Color3.fromRGB(255, 255, 255)
 
--- 🔴 ย้ายปุ่ม Logout มาไว้ที่หน้า Home ด้านบนสุด เพื่อให้กดง่ายและเห็นชัดเจน
-local LogoutCard = Instance.new("Frame", HomePage)
-LogoutCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
-LogoutCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
-LogoutCard.BorderSizePixel = 1
-LogoutCard.Size = UDim2.new(1, -6, 0, 45)
-Instance.new("UICorner", LogoutCard).CornerRadius = UDim.new(0, 6)
-
-local LogoutBtn = Instance.new("TextButton", LogoutCard)
-LogoutBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
-LogoutBtn.BorderSizePixel = 0
-LogoutBtn.Position = UDim2.new(0, 8, 0, 8)
-LogoutBtn.Size = UDim2.new(1, -16, 0, 28)
-LogoutBtn.Font = Enum.Font.GothamBold
-LogoutBtn.Text = "🚪 LOGOUT & RESET ALL / ออกจากระบบและเปลี่ยนคีย์"
-LogoutBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-LogoutBtn.TextSize = 8
-Instance.new("UICorner", LogoutBtn).CornerRadius = UDim.new(0, 4)
-
-LogoutBtn.MouseButton1Click:Connect(function()
-    LogoutAndReset()
-end)
-
 local KeyInfoCard = Instance.new("Frame", HomePage)
 KeyInfoCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
 KeyInfoCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
@@ -1173,11 +1160,45 @@ end)
 -- 5. Settings
 local SettingsPage = CreatePage("⚙️ Settings")
 AddTabButton("⚙️ Settings", "ตั้งค่า")
+
+local LogoutCard = Instance.new("Frame", SettingsPage)
+LogoutCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+LogoutCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
+LogoutCard.BorderSizePixel = 1
+LogoutCard.Size = UDim2.new(1, -6, 0, 65)
+Instance.new("UICorner", LogoutCard).CornerRadius = UDim.new(0, 6)
+
+local LC_Title = Instance.new("TextLabel", LogoutCard)
+LC_Title.BackgroundTransparency = 1
+LC_Title.Position = UDim2.new(0, 10, 0, 6)
+LC_Title.Size = UDim2.new(1, -20, 0, 16)
+LC_Title.Font = Enum.Font.GothamBold
+LC_Title.Text = "🚪 Account Session (ระบบออกจากระบบ)"
+LC_Title.TextColor3 = Color3.fromRGB(255, 90, 90)
+LC_Title.TextSize = 8
+LC_Title.TextXAlignment = Enum.TextXAlignment.Left
+
+local LogoutBtn = Instance.new("TextButton", LogoutCard)
+LogoutBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+LogoutBtn.BorderSizePixel = 0
+LogoutBtn.Position = UDim2.new(0, 10, 0, 26)
+LogoutBtn.Size = UDim2.new(1, -20, 0, 30)
+LogoutBtn.Font = Enum.Font.GothamBold
+LogoutBtn.Text = "🚪 LOGOUT & RESET ALL / ออกจากระบบและเปลี่ยนคีย์"
+LogoutBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+LogoutBtn.TextSize = 8
+Instance.new("UICorner", LogoutBtn).CornerRadius = UDim.new(0, 4)
+
+LogoutBtn.MouseButton1Click:Connect(function()
+    LogoutAndReset()
+end)
+
 CreateToggle(SettingsPage, "📊 Floating FPS/Ping", "สถิติลอย", getgenv().UltimateStg.FloatingStats, function(state)
     getgenv().UltimateStg.FloatingStats = state
     FloatFrame.Visible = state
     ShowNotification("Settings", "Floating Stats: " .. tostring(state))
 end)
+
 CreateToggle(SettingsPage, "⚡ FPS & Ping Booster", "บูสความลื่น", getgenv().UltimateStg.FPSBoost, function(state)
     getgenv().UltimateStg.FPSBoost = state
     if state then
@@ -1225,7 +1246,7 @@ SI_Desc.TextColor3 = Color3.fromRGB(160, 180, 210)
 SI_Desc.TextSize = 8
 SI_Desc.TextXAlignment = Enum.TextXAlignment.Left
 
--- 7. DEV & ADMIN PANEL
+-- 7. DEV & ADMIN PANEL (Locked for regular players)
 local DevPage = CreatePage("🛠️ DEV")
 AddTabButton("🛠️ DEV", "ระบบแอดมิน")
 
@@ -1325,18 +1346,13 @@ if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
             newKey = "MIN-" .. math.random(100000, 999999)
         end
         
-        local expiryTime = 0
-        if selectedDays > 0 then
-            expiryTime = os.time() + (selectedDays * 24 * 60 * 60)
-        end
-        
-        KeyDatabase[newKey] = {Used = false, ExpiresAt = expiryTime}
+        KeyDatabase[newKey] = {Used = false, Days = selectedDays, ExpiresAt = 0}
         pcall(function() setclipboard(newKey) end)
         
         GenBtn.Text = "✅ สร้างและคัดลอกคีย์สำเร็จ: " .. newKey
         ShowNotification("🔑 KEY CREATED", "สร้างและคัดลอกคีย์สำเร็จ!")
         
-        SendDiscordWebhook("🛠️ New Key Generated", "Creator: **" .. LocalPlayer.Name .. "**\nNew Key: `" .. newKey .. "`\nExpires: `" .. selectedDays .. " Days`", 16776960)
+        SendDiscordWebhook("🛠️ New Key Generated", "Creator: **" .. LocalPlayer.Name .. "**\nNew Key: `" .. newKey .. "`\nExpires: `" .. selectedDays .. " Days (Starts on Use)`", 16776960)
 
         task.wait(2)
         GenBtn.Text = "➕ สร้างคีย์ & คัดลอก (Generate Key)"
