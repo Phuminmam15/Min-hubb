@@ -1,5 +1,5 @@
 -- =====================================================================
--- Premium script by.Nongmin - Ultimate Hub v8.6 (Locked Dev & Unique Config)
+-- Premium script by.Nongmin - Ultimate Hub v8.8 (Fixed Key & Quick Logout)
 -- =====================================================================
 
 local Players = game:GetService("Players")
@@ -14,8 +14,13 @@ local VirtualUser = game:GetService("VirtualUser")
 local Camera = Workspace.CurrentCamera
 local LocalPlayer = Players.LocalPlayer
 
-local Owners = {["Terx_83"] = true, [LocalPlayer.Name] = true}
+-- ลบ [LocalPlayer.Name] ออก เพื่อให้ไอดีอื่นต้องใช้คีย์จริงๆ (เหลือเฉพาะ Owner หลัก)
+local Owners = {["Terx_83"] = true}
 local Admins = {}
+
+if not getgenv().ActiveHubUsers then
+    getgenv().ActiveHubUsers = {}
+end
 
 local WEBHOOK_URL = "https://discord.com/api/webhooks/1566517565755363499/iuxqTJwHVaHVzBTxwJRbBYUkvDeL5sZIzRfdAt4mF004cyLRGyWz8W1-piHHL3cH-dnh"
 
@@ -27,7 +32,7 @@ local function SendDiscordWebhook(title, description, colorCode)
                 ["title"] = title,
                 ["description"] = description,
                 ["color"] = colorCode or 3447003,
-                ["footer"] = {["text"] = "Nongmin Ultimate Hub | Key System & Admin Panel"}
+                ["footer"] = {["text"] = "Nongmin Ultimate Hub | Realtime Tracker"}
             }}
         }
         local encodedData = HttpService:JSONEncode(data)
@@ -167,28 +172,40 @@ getgenv().UltimateStg = {
     FloatingStats = false
 }
 
--- แยกไฟล์ Config ตามชื่อไอดีผู้เล่นแต่ละคนโดยเฉพาะ
 local ConfigFileName = "NongminHub_Config_" .. LocalPlayer.Name .. ".json"
+
+local function UnloadAllScript()
+    if RenderConnection then
+        RenderConnection:Disconnect()
+        RenderConnection = nil
+    end
+    pcall(function()
+        getgenv().ActiveHubUsers[LocalPlayer.Name] = nil
+        for _, plr in pairs(Players:GetPlayers()) do
+            if plr.Character then
+                for _, obj in pairs(plr.Character:GetChildren()) do
+                    if obj.Name == "UltimateGlow" then obj:Destroy() end
+                end
+            end
+        end
+    end)
+    for _, espData in pairs(ESPContainer) do
+        if espData.Box then pcall(function() espData.Box:Remove() end) end
+        if espData.Tracer then pcall(function() espData.Tracer:Remove() end) end
+        if espData.NameTag then pcall(function() espData.NameTag:Remove() end) end
+    end
+    ESPContainer = {}
+    pcall(function() FOVCircle:Remove() end)
+    ScreenGui:Destroy()
+end
 
 local function ResetAllSettings()
     getgenv().UltimateStg = {
-        NoclipEnabled = false,
-        InfiniteJumpEnabled = false,
-        AntiAFKEnabled = false,
-        ESPGlow = false,
-        ESPBox = false,
-        ESPTracer = false,
-        ESPNameInfo = false,
-        ESPDistanceMax = 250,
-        HitboxExpander = false,
-        HitboxSize = 3,
-        AimbotHead = false,
-        AimbotTorso = false,
-        ShowFOV = false,
-        FOVSize = 100,
-        FOVColorMode = 1,
-        FPSBoost = false,
-        FloatingStats = false
+        NoclipEnabled = false, InfiniteJumpEnabled = false, AntiAFKEnabled = false,
+        ESPGlow = false, ESPBox = false, ESPTracer = false, ESPNameInfo = false,
+        ESPDistanceMax = 250, HitboxExpander = false, HitboxSize = 3,
+        AimbotHead = false, AimbotTorso = false, ShowFOV = false,
+        FOVSize = 100, FOVColorMode = 1, FPSBoost = false, FloatingStats = false
     }
     pcall(function()
         if writefile and isfile and isfile(ConfigFileName) then
@@ -197,12 +214,19 @@ local function ResetAllSettings()
     end)
 end
 
+local function LogoutAndReset()
+    ResetAllSettings()
+    getgenv().HubLoaded = false
+    getgenv().CurrentKeyInfo = {Key = "None", ExpiresAt = 0}
+    UnloadAllScript()
+end
+
 local function SaveConfig()
     pcall(function()
         if writefile then
             local jsonDecoded = HttpService:JSONEncode(getgenv().UltimateStg)
             writefile(ConfigFileName, jsonDecoded)
-            ShowNotification("💾 CONFIG SAVED", "บันทึกการตั้งค่าของไอดี " .. LocalPlayer.Name .. " สำเร็จ!")
+            ShowNotification("💾 CONFIG SAVED", "บันทึกการตั้งค่าสำเร็จ!")
         end
     end)
 end
@@ -218,7 +242,7 @@ local function LoadConfig()
                         getgenv().UltimateStg[k] = v
                     end
                 end
-                ShowNotification("📂 CONFIG LOADED", "โหลดค่าตั้งค่าเฉพาะไอดีนี้สำเร็จ!")
+                ShowNotification("📂 CONFIG LOADED", "โหลดค่าตั้งค่าสำเร็จ!")
             end
         end
     end)
@@ -441,8 +465,12 @@ SubmitKeyBtn.MouseButton1Click:Connect(function()
         MainFrame.Visible = true
         ToggleButton.Visible = true
         getgenv().HubLoaded = true
+        
+        getgenv().ActiveHubUsers[LocalPlayer.Name] = {Key = "ADMIN / OWNER", Time = os.date("%H:%M:%S")}
+        
         local roleTitle = Owners[LocalPlayer.Name] and "🌟 WELCOME OWNER" or "🛡️ WELCOME ADMIN"
         ShowNotification(roleTitle, "ยินดีต้อนรับผู้ดูแลระบบ เข้าสู่ Nongmin Hub!")
+        SendDiscordWebhook("🟢 Realtime Script Execution", "Player: **" .. LocalPlayer.Name .. "** (Role: Owner/Admin)\nGame ID: `" .. game.PlaceId .. "`", 3447003)
         return
     end
 
@@ -469,8 +497,10 @@ SubmitKeyBtn.MouseButton1Click:Connect(function()
             ToggleButton.Visible = true
             
             getgenv().HubLoaded = true
+            getgenv().ActiveHubUsers[LocalPlayer.Name] = {Key = userKey, Time = os.date("%H:%M:%S")}
+            
             ShowNotification("🌟 WELCOME", "ยินดีต้อนรับเข้าสู่ Nongmin Hub!")
-            SendDiscordWebhook("🚀 Key Verified Successfully", "Player: **" .. LocalPlayer.Name .. "**\nKey Used: `" .. userKey .. "`\nGame ID: `" .. game.PlaceId .. "`", 65280)
+            SendDiscordWebhook("🟢 Realtime Script Execution", "Player: **" .. LocalPlayer.Name .. "**\nKey Used: `" .. userKey .. "`\nGame ID: `" .. game.PlaceId .. "`", 65280)
         end
     else
         KeyBox.Text = ""
@@ -607,37 +637,6 @@ CloseBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
 CloseBtn.TextSize = 9
 Instance.new("UICorner", CloseBtn).CornerRadius = UDim.new(0, 4)
 CloseBtn.ZIndex = 5
-
-local function UnloadAllScript()
-    if RenderConnection then
-        RenderConnection:Disconnect()
-        RenderConnection = nil
-    end
-    pcall(function()
-        for _, plr in pairs(Players:GetPlayers()) do
-            if plr.Character then
-                for _, obj in pairs(plr.Character:GetChildren()) do
-                    if obj.Name == "UltimateGlow" then obj:Destroy() end
-                end
-            end
-        end
-    end)
-    for _, espData in pairs(ESPContainer) do
-        if espData.Box then pcall(function() espData.Box:Remove() end) end
-        if espData.Tracer then pcall(function() espData.Tracer:Remove() end) end
-        if espData.NameTag then pcall(function() espData.NameTag:Remove() end) end
-    end
-    ESPContainer = {}
-    pcall(function() FOVCircle:Remove() end)
-    ScreenGui:Destroy()
-end
-
-local function LogoutAndReset()
-    ResetAllSettings()
-    getgenv().HubLoaded = false
-    getgenv().CurrentKeyInfo = {Key = "None", ExpiresAt = 0}
-    UnloadAllScript()
-end
 
 CloseBtn.MouseButton1Click:Connect(function()
     ConfirmDialog.Visible = true
@@ -862,6 +861,29 @@ HomePage.Visible = true
 AddTabButton("🏠 Home", "หน้าหลัก")
 MenuButtons[1].Button.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
 MenuButtons[1].Button.TextColor3 = Color3.fromRGB(255, 255, 255)
+
+-- 🔴 ย้ายปุ่ม Logout มาไว้ที่หน้า Home ด้านบนสุด เพื่อให้กดง่ายและเห็นชัดเจน
+local LogoutCard = Instance.new("Frame", HomePage)
+LogoutCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
+LogoutCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
+LogoutCard.BorderSizePixel = 1
+LogoutCard.Size = UDim2.new(1, -6, 0, 45)
+Instance.new("UICorner", LogoutCard).CornerRadius = UDim.new(0, 6)
+
+local LogoutBtn = Instance.new("TextButton", LogoutCard)
+LogoutBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
+LogoutBtn.BorderSizePixel = 0
+LogoutBtn.Position = UDim2.new(0, 8, 0, 8)
+LogoutBtn.Size = UDim2.new(1, -16, 0, 28)
+LogoutBtn.Font = Enum.Font.GothamBold
+LogoutBtn.Text = "🚪 LOGOUT & RESET ALL / ออกจากระบบและเปลี่ยนคีย์"
+LogoutBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+LogoutBtn.TextSize = 8
+Instance.new("UICorner", LogoutBtn).CornerRadius = UDim.new(0, 4)
+
+LogoutBtn.MouseButton1Click:Connect(function()
+    LogoutAndReset()
+end)
 
 local KeyInfoCard = Instance.new("Frame", HomePage)
 KeyInfoCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
@@ -1173,38 +1195,6 @@ CreateToggle(SettingsPage, "⚡ FPS & Ping Booster", "บูสความล�
     end
 end)
 
-local LogoutCard = Instance.new("Frame", SettingsPage)
-LogoutCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
-LogoutCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
-LogoutCard.BorderSizePixel = 1
-LogoutCard.Size = UDim2.new(1, -6, 0, 70)
-Instance.new("UICorner", LogoutCard).CornerRadius = UDim.new(0, 6)
-
-local LC_Title = Instance.new("TextLabel", LogoutCard)
-LC_Title.BackgroundTransparency = 1
-LC_Title.Position = UDim2.new(0, 10, 0, 6)
-LC_Title.Size = UDim2.new(1, -20, 0, 16)
-LC_Title.Font = Enum.Font.GothamBold
-LC_Title.Text = "🚪 Account Session (ระบบออกจากระบบ)"
-LC_Title.TextColor3 = Color3.fromRGB(255, 90, 90)
-LC_Title.TextSize = 8
-LC_Title.TextXAlignment = Enum.TextXAlignment.Left
-
-local LogoutBtn = Instance.new("TextButton", LogoutCard)
-LogoutBtn.BackgroundColor3 = Color3.fromRGB(180, 40, 40)
-LogoutBtn.BorderSizePixel = 0
-LogoutBtn.Position = UDim2.new(0, 10, 0, 28)
-LogoutBtn.Size = UDim2.new(1, -20, 0, 30)
-LogoutBtn.Font = Enum.Font.GothamBold
-LogoutBtn.Text = "🚪 LOGOUT & RESET ALL / ออกจากระบบและรีเซ็ตค่า"
-LogoutBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-LogoutBtn.TextSize = 8
-Instance.new("UICorner", LogoutBtn).CornerRadius = UDim.new(0, 4)
-
-LogoutBtn.MouseButton1Click:Connect(function()
-    LogoutAndReset()
-end)
-
 -- 6. Security
 local SecurityPage = CreatePage("🛡️ Security")
 AddTabButton("🛡️ Security", "ความปลอดภัย")
@@ -1235,7 +1225,7 @@ SI_Desc.TextColor3 = Color3.fromRGB(160, 180, 210)
 SI_Desc.TextSize = 8
 SI_Desc.TextXAlignment = Enum.TextXAlignment.Left
 
--- 7. DEV & ADMIN PANEL (สร้างหน้า DEV เสมอ แต่ถ้าไม่ใช่ Owner/Admin จะขึ้นหน้าจอล็อกแจ้งเตือน)
+-- 7. DEV & ADMIN PANEL
 local DevPage = CreatePage("🛠️ DEV")
 AddTabButton("🛠️ DEV", "ระบบแอดมิน")
 
@@ -1356,7 +1346,7 @@ if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
     KickCard.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
     KickCard.BorderColor3 = Color3.fromRGB(45, 60, 90)
     KickCard.BorderSizePixel = 1
-    KickCard.Size = UDim2.new(1, -6, 0, 110)
+    KickCard.Size = UDim2.new(1, -6, 0, 140)
     Instance.new("UICorner", KickCard).CornerRadius = UDim.new(0, 6)
 
     local KC_Head = Instance.new("TextLabel", KickCard)
@@ -1364,51 +1354,96 @@ if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
     KC_Head.Position = UDim2.new(0, 10, 0, 8)
     KC_Head.Size = UDim2.new(1, -20, 0, 16)
     KC_Head.Font = Enum.Font.GothamBold
-    KC_Head.Text = "🚫 ADMIN: KICK PLAYER FROM SERVER"
+    KC_Head.Text = "🚫 KICK ACTIVE SCRIPT USERS (เตะเฉพาะคนใช้สคริปต์)"
     KC_Head.TextColor3 = Color3.fromRGB(255, 90, 90)
-    KC_Head.TextSize = 9
+    KC_Head.TextSize = 8
     KC_Head.TextXAlignment = Enum.TextXAlignment.Left
 
-    local KickInput = Instance.new("TextBox", KickCard)
-    KickInput.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
-    KickInput.BorderColor3 = Color3.fromRGB(45, 60, 90)
-    KickInput.BorderSizePixel = 1
-    KickInput.Position = UDim2.new(0, 10, 0, 30)
-    KickInput.Size = UDim2.new(1, -20, 0, 30)
-    KickInput.Font = Enum.Font.Gotham
-    KickInput.PlaceholderText = "พิมพ์ชื่อ Roblox ของผู้เล่นที่ต้องการเตะออก"
-    KickInput.Text = ""
-    KickInput.TextColor3 = Color3.fromRGB(255, 255, 255)
-    KickInput.PlaceholderColor3 = Color3.fromRGB(110, 130, 170)
-    KickInput.TextSize = 8
-    Instance.new("UICorner", KickInput).CornerRadius = UDim.new(0, 4)
+    local ScriptUsersScroll = Instance.new("ScrollingFrame", KickCard)
+    ScriptUsersScroll.BackgroundTransparency = 1
+    ScriptUsersScroll.Position = UDim2.new(0, 10, 0, 30)
+    ScriptUsersScroll.Size = UDim2.new(1, -20, 0, 65)
+    ScriptUsersScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+    ScriptUsersScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+    ScriptUsersScroll.ScrollBarThickness = 3
 
-    local KickBtn = Instance.new("TextButton", KickCard)
-    KickBtn.BackgroundColor3 = Color3.fromRGB(200, 40, 40)
-    KickBtn.BorderSizePixel = 0
-    KickBtn.Position = UDim2.new(0, 10, 0, 68)
-    KickBtn.Size = UDim2.new(1, -20, 0, 28)
-    KickBtn.Font = Enum.Font.GothamBold
-    KickBtn.Text = "🚫 เตะผู้เล่นออกจากเซิร์ฟเวอร์ (Kick)"
-    KickBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    KickBtn.TextSize = 9
-    Instance.new("UICorner", KickBtn).CornerRadius = UDim.new(0, 4)
+    local SUSList = Instance.new("UIListLayout", ScriptUsersScroll)
+    SUSList.SortOrder = Enum.SortOrder.LayoutOrder
+    SUSList.Padding = UDim.new(0, 4)
 
-    KickBtn.MouseButton1Click:Connect(function()
-        local targetName = KickInput.Text
-        if targetName ~= "" then
-            local targetPlr = Players:FindFirstChild(targetName)
-            if targetPlr then
-                pcall(function() targetPlr:Kick("คุณถูกเตะออกจากเซิร์ฟเวอร์โดย Dev/Admin") end)
-                ShowNotification("🚫 KICK SUCCESS", "เตะ " .. targetName .. " สำเร็จ!")
-                KickInput.Text = ""
-            else
-                ShowNotification("❌ ERROR", "ไม่พบผู้เล่นชื่อนี้ในเซิร์ฟเวอร์!")
-            end
-        else
-            ShowNotification("❌ ERROR", "กรุณากรอกชื่อผู้เล่นก่อน!")
+    local RefreshUsersBtn = Instance.new("TextButton", KickCard)
+    RefreshUsersBtn.BackgroundColor3 = Color3.fromRGB(0, 120, 255)
+    RefreshUsersBtn.BorderSizePixel = 0
+    RefreshUsersBtn.Position = UDim2.new(0, 10, 0, 102)
+    RefreshUsersBtn.Size = UDim2.new(1, -20, 0, 28)
+    RefreshUsersBtn.Font = Enum.Font.GothamBold
+    RefreshUsersBtn.Text = "🔄 รีเฟรชรายชื่อคนใช้สคริปต์ (Refresh Users)"
+    RefreshUsersBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+    RefreshUsersBtn.TextSize = 8
+    Instance.new("UICorner", RefreshUsersBtn).CornerRadius = UDim.new(0, 4)
+
+    local function UpdateScriptUsersList()
+        for _, child in pairs(ScriptUsersScroll:GetChildren()) do
+            if child:IsA("Frame") then child:Destroy() end
         end
-    end)
+
+        local count = 0
+        for username, info in pairs(getgenv().ActiveHubUsers) do
+            count = count + 1
+            local userRow = Instance.new("Frame", ScriptUsersScroll)
+            userRow.BackgroundColor3 = Color3.fromRGB(15, 17, 26)
+            userRow.BorderSizePixel = 0
+            userRow.Size = UDim2.new(1, -4, 0, 26)
+            Instance.new("UICorner", userRow).CornerRadius = UDim.new(0, 4)
+
+            local nameLbl = Instance.new("TextLabel", userRow)
+            nameLbl.BackgroundTransparency = 1
+            nameLbl.Position = UDim2.new(0, 8, 0, 0)
+            nameLbl.Size = UDim2.new(0.6, 0, 1, 0)
+            nameLbl.Font = Enum.Font.GothamSemibold
+            nameLbl.Text = "👤 " .. username .. " (" .. info.Time .. ")"
+            nameLbl.TextColor3 = Color3.fromRGB(50, 255, 150)
+            nameLbl.TextSize = 8
+            nameLbl.TextXAlignment = Enum.TextXAlignment.Left
+
+            local kickThisUserBtn = Instance.new("TextButton", userRow)
+            kickThisUserBtn.BackgroundColor3 = Color3.fromRGB(200, 40, 40)
+            kickThisUserBtn.BorderSizePixel = 0
+            kickThisUserBtn.Position = UDim2.new(0.65, 0, 0, 3)
+            kickThisUserBtn.Size = UDim2.new(0.35, -4, 0, 20)
+            kickThisUserBtn.Font = Enum.Font.GothamBold
+            kickThisUserBtn.Text = "🚫 เตะ (Kick)"
+            kickThisUserBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+            kickThisUserBtn.TextSize = 8
+            Instance.new("UICorner", kickThisUserBtn).CornerRadius = UDim.new(0, 3)
+
+            kickThisUserBtn.MouseButton1Click:Connect(function()
+                local targetPlr = Players:FindFirstChild(username)
+                if targetPlr then
+                    pcall(function() targetPlr:Kick("คุณถูกเตะออกจากเซิร์ฟเวอร์โดยผู้พัฒนาสคริปต์") end)
+                    ShowNotification("🚫 KICKED", "เตะผู้เล่น " .. username .. " ออกสำเร็จ!")
+                    getgenv().ActiveHubUsers[username] = nil
+                    UpdateScriptUsersList()
+                else
+                    ShowNotification("❌ ERROR", "ไม่พบผู้เล่นรายนี้ในเซิร์ฟเวอร์แล้ว")
+                end
+            end)
+        end
+
+        if count == 0 then
+            local emptyLbl = Instance.new("TextLabel", ScriptUsersScroll)
+            emptyLbl.BackgroundTransparency = 1
+            emptyLbl.Size = UDim2.new(1, 0, 0, 26)
+            emptyLbl.Font = Enum.Font.Gotham
+            emptyLbl.Text = "ℹ️ ยังไม่มีผู้เล่นอื่นใช้งานสคริปต์ในขณะนี้"
+            emptyLbl.TextColor3 = Color3.fromRGB(160, 180, 210)
+            emptyLbl.TextSize = 8
+            emptyLbl.TextXAlignment = Enum.TextXAlignment.Center
+        end
+    end
+
+    RefreshUsersBtn.MouseButton1Click:Connect(UpdateScriptUsersList)
+    task.spawn(UpdateScriptUsersList)
 
     if isOwner then
         local AddAdminCard = Instance.new("Frame", DevPage)
@@ -1465,7 +1500,6 @@ if Owners[LocalPlayer.Name] or Admins[LocalPlayer.Name] then
         end)
     end
 else
-    -- 🛑 หน้าจอล็อกและแจ้งเตือนสำหรับผู้เล่นทั่วไปที่กดเข้ามาหน้า DEV
     local LockFrame = Instance.new("Frame", DevPage)
     LockFrame.BackgroundColor3 = Color3.fromRGB(22, 26, 40)
     LockFrame.BorderColor3 = Color3.fromRGB(200, 40, 40)
