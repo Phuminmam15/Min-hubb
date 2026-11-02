@@ -1,5 +1,5 @@
 -- =====================================================================
--- Nongmin Ultimate Hub v10.2 (Fully Unlocked & Optimized)
+-- Nongmin Ultimate Hub v10.5 (Optimized & Mobile Stable)
 -- =====================================================================
 
 local Players = game:GetService("Players")
@@ -21,6 +21,7 @@ if not getgenv().ActiveHubUsers then
     getgenv().ActiveHubUsers = {}
 end
 
+-- 🌐 เชื่อมต่อออนไลน์ JSONBin.io
 local JSONBIN_API_KEY = "$2a$10$gj5E1zETPuBjvtA.iAbQa.mcs/sWs5v8RmkGY2SE.IEMCu3T0Wfku" 
 local JSONBIN_BIN_ID = "6ae7dad0ffd5d160539e31f8"           
 local requestFunc = syn and syn.request or http and http.request or http_request or request
@@ -69,7 +70,7 @@ local function SendDiscordWebhook(title, description, colorCode)
                 ["title"] = title,
                 ["description"] = description,
                 ["color"] = colorCode or 3447003,
-                ["footer"] = {["text"] = "Nongmin Ultimate Hub | Realtime Tracker"}
+                ["footer"] = {["text"] = "Nongmin Ultimate Hub | Mobile Stable"}
             }}
         }
         local encodedData = HttpService:JSONEncode(data)
@@ -93,6 +94,13 @@ pcall(function()
             v:Destroy()
         end
     end
+    if LocalPlayer:FindFirstChild("PlayerGui") then
+        for _, v in pairs(LocalPlayer.PlayerGui:GetChildren()) do
+            if v.Name == "NongminUltimateHub" then
+                v:Destroy()
+            end
+        end
+    end
 end)
 
 local ScreenGui = Instance.new("ScreenGui")
@@ -106,7 +114,9 @@ pcall(function()
     end
 end)
 if not ScreenGui.Parent or ScreenGui.Parent ~= CoreGui then
-    ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+    pcall(function()
+        ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
+    end)
 end
 ScreenGui.ResetOnSpawn = false
 
