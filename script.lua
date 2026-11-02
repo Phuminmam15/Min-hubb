@@ -1,5 +1,5 @@
 -- =====================================================================
--- Nongmin Ultimate Hub v10.5 (Optimized & Mobile Stable)
+-- Nongmin Ultimate Hub v10.7 (Full Features Restored & Delta Mobile Stable)
 -- =====================================================================
 
 local Players = game:GetService("Players")
@@ -90,15 +90,11 @@ getgenv().CurrentKeyInfo = {Key = "None", ExpiresAt = 0}
 
 pcall(function()
     for _, v in pairs(CoreGui:GetChildren()) do
-        if v.Name == "NongminUltimateHub" then
-            v:Destroy()
-        end
+        if v.Name == "NongminUltimateHub" then v:Destroy() end
     end
     if LocalPlayer:FindFirstChild("PlayerGui") then
         for _, v in pairs(LocalPlayer.PlayerGui:GetChildren()) do
-            if v.Name == "NongminUltimateHub" then
-                v:Destroy()
-            end
+            if v.Name == "NongminUltimateHub" then v:Destroy() end
         end
     end
 end)
@@ -106,17 +102,10 @@ end)
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "NongminUltimateHub"
 pcall(function()
-    if syn and syn.protect_gui then
-        syn.protect_gui(ScreenGui)
-        ScreenGui.Parent = CoreGui
-    else
-        ScreenGui.Parent = CoreGui
-    end
+    ScreenGui.Parent = CoreGui
 end)
-if not ScreenGui.Parent or ScreenGui.Parent ~= CoreGui then
-    pcall(function()
-        ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
-    end)
+if not ScreenGui.Parent then
+    ScreenGui.Parent = LocalPlayer:WaitForChild("PlayerGui")
 end
 ScreenGui.ResetOnSpawn = false
 
